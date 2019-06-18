@@ -1,0 +1,15 @@
+language: python
+python:
+  - "3.5"
+  - "3.6"
+install:
+  - pip install -r requirements.txt
+  - pip freeze
+before_script:
+  - cd wangwang
+script:
+  - pytest --pep8
+  - isort *.py -c -vb
+  - python manage.py makemigrations
+  - python manage.py migrate
+  - python manage.py test
