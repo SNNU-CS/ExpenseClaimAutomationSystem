@@ -10,6 +10,11 @@
 
 ## 快速开始
 ### 开发环境
+
+- Python>=3.5
+- MySQL>=5.6
+- Django>=2.0
+
 ```bash
 pip3 install virtualenv
 virtualenv env
@@ -24,13 +29,64 @@ python manage.py migrate
 ```bash
 python manage.py test
 isort *.py -c -vb
+tox -e
 ```
 ### 启动服务
 ```bash
 python manage.py runserver
 ```
 
-## 代码风格
+## 开发规范
+
+### 开发流程
+
+按照[Github-flow](https://guides.github.com/introduction/flow/index.html)进行开发，即:
+
+1. 从master分支上checkout出一条新分支 
+2. 新分支开发完成后，向master发起一个[pull requessst](https://help.github.com/articles/using-pull-requests/)
+3. 大家一起review你的代码，不断修改和提交代码
+4. pull request被接受，合并进master
+
+### 代码提交
+
+使用flake8进行风格检查，commit代码前，务必使用下述指令对代码进行格式化
+
+```bash
+autopep8 --aggressive .
+isort -rc .
+```
+
+发起pull request前，务必通过下述命令将其rebase至最新的master分支上:
+
+```bash
+git fetch origin
+git rebase origin/master
+git push origin
+```
+
+### 代码风格
+* [Django编码风格](<https://docs.djangoproject.com/zh-hans/2.2/internals/contributing/writing-code/coding-style/>)
+* [PEP8](<https://www.python.org/dev/peps/pep-0008/>)
+
+### 分支命名
+
+存在一个长期分支master，其余分支命名规则如下，多个单词之间以`-`风格，如无对应issue可省略issue id:
+
+* **feature/{issue id}/***(例:feature/1/add-teacher或feature/add-teacher)
+* **fix/{#issue id}/***  (例:fix/2/fix-travis-ci或fix/fix-travis-ci)
+* **patch/***
+
+### Commit Message
+
+```
+<type>(<scope>): <subject>
+<空行>
+<body>
+<空行>
+<footer>
+```
+
+推荐使用[commitizen](<https://github.com/commitizen/cz-cli>)来格式化commit message
 
 ## 开源协议 & 作者
 * 作者: 
