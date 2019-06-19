@@ -29,7 +29,6 @@ python manage.py migrate
 ```bash
 python manage.py test
 isort *.py -c -vb
-tox -e
 ```
 ### 启动服务
 ```bash

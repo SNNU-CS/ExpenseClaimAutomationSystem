@@ -13,7 +13,6 @@ before_script:
   - cd wangwang
 script:
   - flake8 .
-  - tox -e py36
   - isort *.py -c -vb
   - python manage.py makemigrations
   - python manage.py migrate
