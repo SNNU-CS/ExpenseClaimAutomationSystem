@@ -1,4 +1,4 @@
-# ExpenseClaimAutomationSystem
+# ExpenseClaimAutomationSystem Monorepo
 ---
 [![Build Status](https://www.travis-ci.com/snnucs/ExpenseClaimAutomationSystem.svg?branch=master)](https://www.travis-ci.com/snnucs/ExpenseClaimAutomationSystem)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/919045824a9b4c4681756b0a46664e9b)](https://app.codacy.com/app/ZhaoQi99/ExpenseClaimAutomationSystem?utm_source=github.com&utm_medium=referral&utm_content=snnucs/ExpenseClaimAutomationSystem&utm_campaign=Badge_Grade_Dashboard)
@@ -8,7 +8,7 @@
 大数据时代下的财务自动化报销系统,2019年国家大学生创新创业训练计划创新训练子计划项目
 
 
-## 快速开始
+## 快速开始(后端)
 ### 开发环境
 
 - Python>=3.5
@@ -18,7 +18,7 @@
 ```bash
 pip3 install virtualenv
 virtualenv env
-source env/bin/activate
+source env/bin/activate # source env/Scipts/activate
 pip install -r requirements.txt
 python manage.py makemigrations
 python manage.py migrate
@@ -34,6 +34,14 @@ isort *.py -c -vb
 ```bash
 python manage.py runserver
 ```
+## 快速开始(前端)
+
+使用[yarn](https://yarnpkg.com/zh-Hans/)作为包管理工具,需先在本地安装[yarn](https://yarnpkg.com/zh-Hans/)
+
+```bash
+yarn install
+yarn run dev
+```
 
 ## 开发规范
 
@@ -48,13 +56,6 @@ python manage.py runserver
 
 ### 代码提交
 
-使用flake8进行风格检查，commit代码前，务必使用下述指令对代码进行格式化
-
-```bash
-autopep8 --aggressive .
-isort -rc .
-```
-
 发起pull request前，务必通过下述命令将其rebase至最新的master分支上:
 
 ```bash
@@ -62,10 +63,21 @@ git fetch origin
 git rebase origin/master
 git push origin
 ```
+**后端**:使用flake8进行风格检查，commit代码前，务必使用下述指令对代码进行格式化
+
+```bash
+autopep8 --aggressive .
+isort -rc .
+```
+
+**前端**: #Todo
 
 ### 代码风格
-* [Django编码风格](<https://docs.djangoproject.com/zh-hans/2.2/internals/contributing/writing-code/coding-style/>)
-* [PEP8](<https://www.python.org/dev/peps/pep-0008/>)
+* 后端:
+  * [Django编码风格](<https://docs.djangoproject.com/zh-hans/2.2/internals/contributing/writing-code/coding-style/>)
+  * [PEP8](<https://www.python.org/dev/peps/pep-0008/>)
+* 前端:
+  * #Todo
 
 ### 分支命名
 
