@@ -2,11 +2,14 @@ language: python
 python:
   - "3.5"
   - "3.6"
+services:
+  - mysql
 install:
   - pip install flake8
   - pip install -r requirements.txt
   - pip freeze
 before_script:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
   - cd wangwang
 script:
   - flake8 .
