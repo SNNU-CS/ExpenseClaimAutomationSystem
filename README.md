@@ -5,7 +5,12 @@
 [![GitHub license](https://img.shields.io/github/license/snnucs/ExpenseClaimAutomationSystem.svg)](https://github.com/snnucs/ExpenseClaimAutomationSystem/blob/master/LICENSE)
 ![GitHub release](https://img.shields.io/github/release/snnucs/ExpenseClaimAutomationSystem.svg?style=plastic)
 
+## 简介
+
 大数据时代下的财务自动化报销系统,2019年国家大学生创新创业训练计划创新训练子计划项目
+
+- [wangwang](./wangwang) - back-end 
+- [miaomiao](./miaomiao) - front-end
 
 
 ## 快速开始(后端)
