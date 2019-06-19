@@ -73,7 +73,7 @@ git push origin
 存在一个长期分支master，其余分支命名规则如下，多个单词之间以`-`风格，如无对应issue可省略issue id:
 
 * **feature/{issue id}/***(例:feature/1/add-teacher或feature/add-teacher)
-* **fix/{#issue id}/***  (例:fix/2/fix-travis-ci或fix/fix-travis-ci)
+* **fix/{issue id}/***  (例:fix/2/fix-travis-ci或fix/fix-travis-ci)
 * **patch/***
 
 ### Commit Message
