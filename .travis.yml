@@ -4,6 +4,8 @@ python:
   - "3.6"
 services:
   - mysql
+before_install:
+- mysql -e 'CREATE DATABASE IF NOT EXISTS dev;'
 install:
   - pip install flake8
   - pip install -r requirements.txt
