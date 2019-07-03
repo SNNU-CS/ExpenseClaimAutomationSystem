@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'wangwang.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test',
+        'NAME': 'dev',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '127.0.0.1',
