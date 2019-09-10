@@ -45,7 +45,7 @@ python manage.py runserver
 
 ```bash
 yarn install
-yarn run dev
+yarn serve
 ```
 
 ## 开发规范
