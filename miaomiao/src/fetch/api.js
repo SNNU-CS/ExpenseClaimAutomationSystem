@@ -67,6 +67,6 @@ export function get(url, params) {
 
 export default {
     Login(params) {
-        return fetch('auth/login/', params)
+        return get('user/login/', params)
     },
 }
