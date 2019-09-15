@@ -7,8 +7,9 @@ from django.http import JsonResponse
 
 
 def login(request):
-    username = request.data.get('username')
-    password = request.data.get('password')
+    print(request)
+    username = request.POST.get('username')
+    password = request.POST.get('password')
     try:
         user = User.objects.filter(username=username)
     except User.DoseNotExist:
