@@ -10,7 +10,7 @@ def login(request):
     username = request.POST.get('username')
     password = request.POST.get('password')
     try:
-        user = User.objects.filter(username=username)
+        user = User.objects.get(username=username)
     except User.DoseNotExist:
         return JsonResponse({"status": 1000, "msg": "用户不存在", 'data': ''})
     user = authenticate(username=username, password=password)
