@@ -1,15 +1,15 @@
 <template>
   <v-container>
-    <v-form ref="form" v-model="valid" lazy-validation>
-      <v-text-field v-model="name" :counter="10" :rules="nameRules" label="Name" required></v-text-field>
+    <v-form ref="form" lazy-validation>
+      <v-text-field v-model="username" :counter="10" :rules="nameRules" label="用户名" required></v-text-field>
 
-      <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
+      <v-text-field v-model="password" label="密码" required></v-text-field>
 
       <v-select
         v-model="select"
         :items="items"
         :rules="[v => !!v || 'Item is required']"
-        label="Item"
+        label="身份"
         required
       ></v-select>
 
@@ -20,46 +20,42 @@
         required
       ></v-checkbox>
 
-      <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">Validate</v-btn>
-
-      <v-btn color="error" class="mr-4" @click="reset">Reset Form</v-btn>
-
-      <v-btn color="warning" @click="resetValidation">Reset Validation</v-btn>
+      <v-btn color="success" @click="login">登录</v-btn>
     </v-form>
   </v-container>
 </template>
 
 <script>
+import api from "../fetch/api";
+import router from "../router";
 export default {
   name: "Login",
   data: () => ({
-    valid: true,
-    name: "",
+    username: "",
     nameRules: [
       v => !!v || "Name is required",
       v => (v && v.length <= 10) || "Name must be less than 10 characters"
     ],
-    email: "",
-    emailRules: [
-      v => !!v || "E-mail is required",
-      v => /.+@.+\..+/.test(v) || "E-mail must be valid"
-    ],
+    password: "",
     select: null,
-    items: ["Item 1", "Item 2", "Item 3", "Item 4"],
+    items: ["老师", "学生"],
     checkbox: false
   }),
 
   methods: {
-    validate() {
-      if (this.$refs.form.validate()) {
-        this.snackbar = true;
-      }
-    },
-    reset() {
-      this.$refs.form.reset();
-    },
-    resetValidation() {
-      this.$refs.form.resetValidation();
+    login() {
+      let parms = {
+        username: this.username,
+        password: this.password
+      };
+      api
+        .Login(parms)
+        .then(function(response) {
+          if (response.status === 200) {
+          } else {
+          }
+        })
+        .catch();
     }
   }
 };
