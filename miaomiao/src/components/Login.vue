@@ -51,7 +51,8 @@ export default {
       api
         .Login(parms)
         .then(function(response) {
-          if (response.status === 200) {
+          if (response.status === 401) {
+            router.push("main");
           } else {
           }
         })
