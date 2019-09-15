@@ -1,18 +1,22 @@
 from .models import User
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
+import json
 # class UserAuthView(View):
 #     def __init__(self, *args):
 #         super(UserAuthView, self).__init__(*args))
 
 
 def login(request):
-    username = request.POST.get('username')
-    password = request.POST.get('password')
+    body = json.loads(request.body)
+    username = body.get('username')
+    password = body.get('password')
     try:
         user = User.objects.get(username=username)
-    except User.DoseNotExist:
+    except Exception:
         return JsonResponse({"status": 1000, "msg": "用户不存在", 'data': ''})
+    # if username is not 'admin':
+    #     return JsonResponse({"status": 1000, "msg": "用户不存在", 'data': ''})
     user = authenticate(username=username, password=password)
     if user is None:
         # 先假装登录成功，以后记得把200改成401

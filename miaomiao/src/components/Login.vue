@@ -1,5 +1,14 @@
 <template>
   <v-container>
+    <v-dialog v-model="dialog" max-width="290">
+      <v-card>
+        <v-card-title class="headline">66</v-card-title>
+        <v-card-text>密码错了</v-card-text>
+        <v-card-actions>
+          <v-btn color="green darken-1" text @click="dialog = false">确定</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-form ref="form" lazy-validation>
       <v-text-field v-model="username" :counter="10" :rules="nameRules" label="用户名" required></v-text-field>
 
@@ -39,11 +48,13 @@ export default {
     password: "",
     select: null,
     items: ["老师", "学生"],
-    checkbox: false
+    checkbox: false,
+    dialog: false
   }),
 
   methods: {
     login() {
+      let self = this;
       let parms = {
         username: this.username,
         password: this.password
@@ -54,6 +65,7 @@ export default {
           if (response.status === 200) {
             router.push("main");
           } else {
+            self.dialog = true;
           }
         })
         .catch();
