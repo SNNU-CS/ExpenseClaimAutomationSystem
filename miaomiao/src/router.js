@@ -10,7 +10,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/main'
+      redirect: '/login'
+      // 以后前端加了登录校验,记得把这里改成main
     },
     {
       path: '/main',
