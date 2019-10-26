@@ -4,6 +4,11 @@ url = "http://mirrors.aliyun.com/pypi/simple/"
 verify_ssl = false
 
 [dev-packages]
+flake8 = "*"
+pylint = "*"
+yapf = "*"
+isort = "*"
+pylint-django = "*"
 
 [packages]
 django = "*"
