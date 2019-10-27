@@ -9,8 +9,8 @@ cache:
 env:
   - ENV=test
 install:
-  - pip install -r requirements.txt
-  - pip install -r dev-requirements.txt
+  - pip install -r wangwang/requirements.txt
+  - pip install -r wangwang/dev-requirements.txt
   - pip freeze
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
