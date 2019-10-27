@@ -13,11 +13,10 @@ install:
   - pip install -r wangwang/dev-requirements.txt
   - pip freeze
 before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
+  - psql -c 'create database test;' -U postgres
   - cd wangwang
 script:
-  - flake8 .
-  - isort *.py -c -vb
-  - python manage.py makemigrations
-  - python manage.py migrate
-  - python manage.py test
+  - make check
+  - make migrations
+  - make migrate
+  - make test
