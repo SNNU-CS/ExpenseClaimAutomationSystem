@@ -1,0 +1,4 @@
+[style]
+based_on_style = pep8
+COLUMN_LIMIT = 119
+indent_width =  4
