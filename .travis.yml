@@ -17,6 +17,6 @@ before_script:
   - cd wangwang
 script:
   - make check
-  - make migrations
+  - make makemigrations
   - make migrate
   - make test

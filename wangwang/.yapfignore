@@ -1,5 +1,4 @@
 venv/
 **/migrations/**
 **/tests/**
-wangwang/**
 __pycache__/
