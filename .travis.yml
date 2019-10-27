@@ -3,18 +3,17 @@ python:
   - "3.5"
   - "3.6"
 services:
-  - mysql
+  - postgresql
 cache:
   - pip
+env:
+  - ENV=test
 install:
-  - pip install flake8
   - pip install -r requirements.txt
+  - pip install -r dev-requirements.txt
   - pip freeze
 before_script:
-  - mysql -e 'SET GLOBAL character_set_server=utf8;'
-  - mysql -e 'SET GLOBAL character_set_database=utf8; '
-  - mysql -e 'DROP DATABASE IF  EXISTS dev;'
-  - mysql -e 'CREATE DATABASE dev;'
+  - psql -c 'create database travis_ci_test;' -U postgres
   - cd wangwang
 script:
   - flake8 .
