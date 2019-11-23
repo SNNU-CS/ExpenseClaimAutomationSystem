@@ -1,3 +1,3 @@
 [flake8]
 max-line-length = 119
-exclude = **/migrations/,**/tests/,**/settings/
+exclude = **/migrations/,**/tests/,./wangwang/settings,__pycache__,

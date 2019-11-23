@@ -16,7 +16,8 @@ migrate:
 	cat LOGO
 	$(MANAGE_CMD) migrate
 dev:
-	ENV=dev make serve
+	cat LOGO
+	ENV=dev  $(MANAGE_CMD) runserver 0.0.0.0:8000
 serve:
 	cat LOGO
 	$(MANAGE_CMD) runserver 0.0.0.0:8000
