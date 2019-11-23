@@ -1,17 +1,24 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-
-from .models import User
+from .models import User, Organization
 
 
-class MyUserAdmin(UserAdmin):
-    add_fieldsets = ((None, {
-        'classes': ('wide', ),
-        'fields': ('username', 'password1', 'password2', 'organization', 'avatar'),
-    }), )
-    list_display = ('username', 'email', 'first_name', 'last_name', 'organization', 'is_staff', 'is_active', 'avatar')
-    list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups', 'organization')
+@admin.register(User)
+class MyUserAdmin(admin.ModelAdmin):
+    list_display = (
+        'username',
+        'first_name',
+        'last_name',
+        'email',
+        'is_active',
+        'date_joined',
+        'last_login',
+        'organization',
+        'sex',
+    )
+    list_filter = ('sex', 'organization', 'is_active')
     search_fields = ('username', 'first_name', 'last_name', 'email', 'organization')
 
 
-admin.site.register(User, MyUserAdmin)
+@admin.register(Organization)
+class OrganizationAdmin(admin.ModelAdmin):
+    list_display = ('org_name', )
