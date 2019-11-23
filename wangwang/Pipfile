@@ -12,8 +12,10 @@ pylint-django = "*"
 
 [packages]
 django = "*"
-psycopg2 = "*"
 pillow = "*"
+djangorestframework = "*"
+psycopg2-binary = "*"
+django-cors-headers = "*"
 
 [requires]
-python_version = "3.5"
+python_version = "3.7"
