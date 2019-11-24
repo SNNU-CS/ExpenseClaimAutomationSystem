@@ -4,6 +4,8 @@ from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from .utils import user_avatar_path
+import binascii
+import os
 
 
 class User(AbstractBaseUser):
@@ -59,3 +61,31 @@ class Organization(models.Model):
 
     def __str__(self):
         return self.org_name
+
+
+class Token(models.Model):
+    user = models.ForeignKey('User',
+                             verbose_name=_("User"),
+                             related_name='auth_token',
+                             on_delete=models.CASCADE,
+                             null=True,
+                             blank=True)
+    created = models.DateTimeField(_('create time'), auto_now_add=True)
+    expired = models.DateTimeField()
+    token = models.TextField(_('token'))
+
+    class Meta:
+        ordering = ('user', )
+        verbose_name = _("Token")
+        verbose_name_plural = _("Tokens")
+
+    def save(self, *args, **kwargs):
+        if not self.token:
+            self.token = self.generate_key()
+        return super().save(*args, **kwargs)
+
+    def __str__(self):
+        return 'Token for {} ({})'.format(self.user.username, self.token)
+
+    def generate_key(self):
+        return binascii.hexlify(os.urandom(20)).decode()
