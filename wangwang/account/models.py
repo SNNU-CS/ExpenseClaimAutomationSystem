@@ -6,6 +6,7 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 from .utils import user_avatar_path
 import binascii
 import os
+from django.conf import settings
 
 
 class User(AbstractBaseUser):
@@ -64,6 +65,8 @@ class Organization(models.Model):
 
 
 class Token(models.Model):
+    token_length = settings.AUTH_CONFIG.get('TOKEN_LENGTH')
+    token_expire = settings.AUTH_CONFIG.get('AUTH_TOKEN_EXPIRE')
     user = models.ForeignKey('User',
                              verbose_name=_("User"),
                              related_name='auth_token',
@@ -88,4 +91,19 @@ class Token(models.Model):
         return 'Token for {} ({})'.format(self.user.username, self.token)
 
     def generate_key(self):
-        return binascii.hexlify(os.urandom(20)).decode()
+        return binascii.hexlify(os.urandom(self.token_length)).decode()
+
+    def verify(self):
+        return self.check_exp() and self.token_length == len(self.token.to_python())
+
+    def check_exp(self):
+        return timezone.now() < self.expired
+
+    def refresh_token(self):
+        self.token = self.generate_key()
+        self.expired = timezone.now() + self.token_expire
+        self.save(update_fields=['token', 'expired'])
+
+    def refresf_exp(self):
+        self.expired = timezone.now() + self.token_expire
+        self.save(update_fields=['expired'])

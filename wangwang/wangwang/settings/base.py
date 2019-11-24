@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-
+from datetime import timedelta
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'z!%t)r+jl#nw6&t39&9(r!#yg2fvicutkv5gf$-=b9dz$arg4s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -48,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'wangwang.wangwang.MyMiddleware',
 ]
 
 ROOT_URLCONF = 'wangwang.urls'
@@ -125,3 +126,10 @@ STATIC_URL = '/static/'
 # AUTH_USER_MODEL = 'account.User'
 
 MEDIA_ROOT = 'uploads'
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         'wangwang.wangwang.MyAuthentication',
+#     ]
+# }
+AUTH_CONFIG = {'AUTH_EXCLUDE_PATH': [], 'AUTH_TOKEN_EXPIRE': timedelta(min=10),'TOKEN_LENGTH':20}
