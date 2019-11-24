@@ -1,12 +1,14 @@
-from django.contrib.auth.models import AbstractBaseUser
-from django.db import models
-from django.utils.translation import gettext_lazy as _
-from django.utils import timezone
-from django.contrib.auth.validators import UnicodeUsernameValidator
-from .utils import user_avatar_path
 import binascii
 import os
+
 from django.conf import settings
+from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.validators import UnicodeUsernameValidator
+from django.db import models
+from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
+
+from .utils import user_avatar_path
 
 
 class User(AbstractBaseUser):

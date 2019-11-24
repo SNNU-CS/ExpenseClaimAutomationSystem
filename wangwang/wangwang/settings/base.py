@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 from datetime import timedelta
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -132,4 +133,4 @@ MEDIA_ROOT = 'uploads'
 #         'wangwang.wangwang.MyAuthentication',
 #     ]
 # }
-AUTH_CONFIG = {'AUTH_EXCLUDE_PATH': [], 'AUTH_TOKEN_EXPIRE': timedelta(min=10),'TOKEN_LENGTH':20}
+AUTH_CONFIG = {'AUTH_EXCLUDE_PATH': [], 'AUTH_TOKEN_EXPIRE': timedelta(minutes=10), 'TOKEN_LENGTH': 20}

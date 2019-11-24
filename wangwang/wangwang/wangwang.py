@@ -1,12 +1,13 @@
+from django.conf import settings
+from django.core.serializers.json import DjangoJSONEncoder
+from django.db import models
+from django.http import JsonResponse
 from django.utils import timezone
 from django.utils.deprecation import MiddlewareMixin
-from django.db import models
-from django.core.serializers.json import DjangoJSONEncoder
-from django.http import JsonResponse
-from .exceptions import BaseException, UnknownException
-from account.models import User, Token
-from django.conf import settings
-from .exceptions import AuthenticationFailed, InvalidToken
+
+from account.models import Token
+
+from .exceptions import AuthenticationFailed, BaseException, InvalidToken, UnknownException
 
 
 class MyAuthentication:

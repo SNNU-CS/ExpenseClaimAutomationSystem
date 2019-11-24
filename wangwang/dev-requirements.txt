@@ -1,17 +1,18 @@
 -i http://mirrors.aliyun.com/pypi/simple/
 --trusted-host mirrors.aliyun.com
-astroid==2.3.2
+astroid==2.3.3
+colorama==0.4.1 ; sys_platform == 'win32'
 entrypoints==0.3
-flake8==3.7.8
+flake8==3.7.9
 isort==4.3.21
-lazy-object-proxy==1.4.2
+lazy-object-proxy==1.4.3
 mccabe==0.6.1
 pycodestyle==2.5.0
 pyflakes==2.1.1
-pylint-django==2.0.11
+pylint-django==2.0.13
 pylint-plugin-utils==0.6
-pylint==2.4.3
-six==1.12
+pylint==2.4.4
+six==1.13.0
 typed-ast==1.4.0 ; implementation_name == 'cpython' and python_version < '3.8'
 wrapt==1.11.2
 yapf==0.28.0

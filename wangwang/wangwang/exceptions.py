@@ -1,4 +1,5 @@
 from abc import ABCMeta
+
 from .message import ErrorMsg
 
 
@@ -34,4 +35,3 @@ class InvalidToken(BaseException):
     status_code = 401
     status = 1002
     msg = ErrorMsg.INVALID_TOKEN
-    
