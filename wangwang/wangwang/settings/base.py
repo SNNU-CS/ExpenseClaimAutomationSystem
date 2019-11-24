@@ -109,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'zh-Hans'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -133,4 +133,4 @@ MEDIA_ROOT = 'uploads'
 #         'wangwang.wangwang.MyAuthentication',
 #     ]
 # }
-AUTH_CONFIG = {'AUTH_EXCLUDE_PATH': [], 'AUTH_TOKEN_EXPIRE': timedelta(minutes=10), 'TOKEN_LENGTH': 20}
+AUTH_CONFIG = {'AUTH_EXCLUDE_PATH': ['/admin/'], 'AUTH_TOKEN_EXPIRE': timedelta(minutes=10), 'TOKEN_LENGTH': 20}
