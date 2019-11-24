@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Organization, User
+from .models import Organization, User, Token
 
 
 @admin.register(User)
@@ -23,3 +23,15 @@ class MyUserAdmin(admin.ModelAdmin):
 @admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):
     list_display = ('org_name', )
+
+
+@admin.register(Token)
+class Tokendmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'user',
+        'created',
+        'expired',
+        'token',
+    )
+    ordering = ('id', )
