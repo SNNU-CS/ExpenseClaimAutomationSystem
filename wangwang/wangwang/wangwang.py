@@ -4,7 +4,7 @@ from django.db import models
 from django.http import JsonResponse
 from django.utils import timezone
 from django.utils.deprecation import MiddlewareMixin
-
+from django.urls import resolve
 from account.models import Token
 
 from .exceptions import AuthenticationFailed, BaseException, InvalidToken, UnknownException
@@ -17,8 +17,8 @@ class MyAuthentication:
             # Todo: another exception
             raise AuthenticationFailed
         raw_token = self.get_raw_token(header)
-        token = Token.objects.get(token=raw_token)
-        if not token.verify():
+        token = Token.objects.filter(token=raw_token).first()
+        if not (token and token.verify()):
             raise InvalidToken
         token.refresf_exp()
         request.user = token.user
@@ -35,9 +35,13 @@ class MyMiddleware(MiddlewareMixin):
         user = request.user
         if not user.is_anonymous and user.is_authenticated:
             return None
-        if request.path in settings.AUTH_CONFIG.get('AUTH_EXCLUDE_PATH'):
+        if request.path in settings.AUTH_CONFIG.get('AUTH_EXCLUDE_PATH') or resolve(request.path).app_name == 'admin':
             return None
-        MyAuthentication().authenticate(request)
+        try:
+            MyAuthentication().authenticate(request)
+        except Exception as e:
+            return self.process_exception(request, e)
+        return None
 
     def process_exception(self, request, exception):
         if not isinstance(exception, BaseException):

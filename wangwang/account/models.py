@@ -74,10 +74,10 @@ class Token(models.Model):
                              related_name='auth_token',
                              on_delete=models.CASCADE,
                              null=True,
-                             blank=True)
+                             blank=False)
     created = models.DateTimeField(_('create time'), auto_now_add=True)
-    expired = models.DateTimeField()
-    token = models.TextField(_('token'))
+    expired = models.DateTimeField(_('token expire time'), default=timezone.now() + token_expire)
+    token = models.TextField(_('token'), blank=True)
 
     class Meta:
         ordering = ('user', )
@@ -93,10 +93,10 @@ class Token(models.Model):
         return 'Token for {} ({})'.format(self.user.username, self.token)
 
     def generate_key(self):
-        return binascii.hexlify(os.urandom(self.token_length)).decode()
+        return binascii.hexlify(os.urandom(int(self.token_length / 2))).decode()
 
     def verify(self):
-        return self.check_exp() and self.token_length == len(self.token.to_python())
+        return self.check_exp() and self.token_length == len(self.token)
 
     def check_exp(self):
         return timezone.now() < self.expired
