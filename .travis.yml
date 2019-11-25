@@ -34,11 +34,17 @@ jobs:
       script:
         - cd wangwang
         - COMMIT_ID=$(git rev-parse --short HEAD)
-        - docker build -t wangwang:$COMMIT_ID .
+        - docker build -t wangwang .
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker images
-        - docker tag wangwang $DOCKER_USERNAME/wangwang
+        - docker tag wangwang $DOCKER_USERNAME/wangwang:$COMMIT_ID
         - docker push $DOCKER_USERNAME/wangwang:$COMMIT_ID
+        - echo "Build Success!"
+      env:
+        - DOCKER_USERNAME=zhaoqi99
+    - stage: build
+      name: "Build frontend"
+      script:
         - echo "Build Success!"
       env:
         - DOCKER_USERNAME=zhaoqi99
@@ -46,10 +52,16 @@ jobs:
       name: "Deploy backend"
       script:
         - echo "Deploy Success!"
+    - stage: deploy
+      name: "Deploy frontend"
+      script:
+        - echo "Deploy Success!"
 stages:
-  - name: build
-    if: branch = master 
-  - name: deploy
-    if: branch = master    
-  - test
+  - build
+  - deloy
+  # - name: build
+  #   if: branch = master 
+  # - name: deploy
+  #   if: branch = master    
+  # - test
         
