@@ -1,16 +1,12 @@
 language: python
-python:
-  - "3.6"
 services:
   - postgresql
   - docker
 cache:
   - pip
   - yarn
-env:
-  - ENV=test
-  - DOCKER_USERNAME=zhaoqi99
 install:
+  - pip install -r wangwang/requirements.txt
   - pip install -r wangwang/dev-requirements.txt
   - pip freeze
 
@@ -18,18 +14,23 @@ jobs:
   include:
     - stage: test
       name: "Code style"
+      python: 3.6
       script:
         - cd wangwang && make check
     - stage: test
       name: "Unit test"
+      python: 3.6
       script:
         - psql -c 'create database test;' -U postgres
         - cd wangwang
         - make makemigrations
         - make migrate
         - make test
+      env:
+        - ENV=test
     - stage: build
       name: "Build backend"
+      python: 3.6
       script:
         - cd wangwang
         - COMMIT_ID = $(git rev-parse --short HEAD)
@@ -39,6 +40,8 @@ jobs:
         - docker tag wangwang $DOCKER_USERNAME/wangwang
         - docker push $DOCKER_USERNAME/wangwang:$COMMIT_ID
         - echo "Build Success!"
+      env:
+        - DOCKER_USERNAME=zhaoqi99
     - stage: deploy
       name: "Deploy backend"
       script:
