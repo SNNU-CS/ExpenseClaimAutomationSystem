@@ -39,6 +39,8 @@ jobs:
         - docker images
         - docker tag wangwang $DOCKER_USERNAME/wangwang:$COMMIT_ID
         - docker push $DOCKER_USERNAME/wangwang:$COMMIT_ID
+        - docker tag wangwang $DOCKER_USERNAME/wangwang:latest
+        - docker push $DOCKER_USERNAME/wangwang:latest
         - echo "Build Success!"
       env:
         - DOCKER_USERNAME=zhaoqi99
@@ -50,18 +52,25 @@ jobs:
         - DOCKER_USERNAME=zhaoqi99
     - stage: deploy
       name: "Deploy backend"
+      install: skip
       script:
-        - echo "Deploy Success!"
+        - COMMIT_ID=$(git rev-parse --short HEAD)
+        - apt-get install sshpass -y
+        - export SSHPASS=$SERVER_PASSWOED
+        - sshpass -e ssh root@$PRO_IP -o stricthostkeychecking=no 'docker pull zhaoqi99/wangwang:latest && docker stop wangwang && docker rm wangwang && docker run --name=wangwang  -p 8000:8000 --restart=always zhaoqi99/wangwang:latest'
+        - echo "Deploy Success!" 
     - stage: deploy
       name: "Deploy frontend"
+      install: skip
       script:
         - echo "Deploy Success!"
 stages:
   - build
-  - deloy
+  - deploy
+  - test
   # - name: build
   #   if: branch = master 
   # - name: deploy
   #   if: branch = master    
-  # - test
+  # - test  
         
