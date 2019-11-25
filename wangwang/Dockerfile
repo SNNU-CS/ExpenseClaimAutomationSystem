@@ -6,7 +6,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /usr/src/wangwang
-WORKDIR /usr/src/wangwnag
+WORKDIR /usr/src/wangwang
 COPY requirements.txt  /usr/src/wangwang
 RUN pip install -r requirements.txt
 RUN rm -rf /usr/src/wangwang
