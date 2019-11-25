@@ -2,9 +2,10 @@ from django.conf import settings
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 from django.http import JsonResponse
+from django.urls import resolve
 from django.utils import timezone
 from django.utils.deprecation import MiddlewareMixin
-from django.urls import resolve
+
 from account.models import Token
 
 from .exceptions import AuthenticationFailed, BaseException, InvalidToken, UnknownException
