@@ -1,22 +1,52 @@
 language: python
 python:
-  - "3.5"
   - "3.6"
 services:
   - postgresql
+  - docker
 cache:
   - pip
+  - yarn
 env:
   - ENV=test
+  - DOCKER_USERNAME=zhaoqi99
 install:
-  - pip install -r wangwang/requirements.txt
   - pip install -r wangwang/dev-requirements.txt
   - pip freeze
-before_script:
-  - psql -c 'create database test;' -U postgres
-  - cd wangwang
-script:
-  - make check
-  - make makemigrations
-  - make migrate
-  - make test
+
+jobs:
+  include:
+    - stage: test
+      name: "Code style"
+      script:
+        - cd wangwang && make check
+    - stage: test
+      name: "Unit test"
+      script:
+        - psql -c 'create database test;' -U postgres
+        - cd wangwang
+        - make makemigrations
+        - make migrate
+        - make test
+    - stage: build
+      name: "Build backend"
+      script:
+        - cd wangwang
+        - COMMIT_ID = $(git rev-parse --short HEAD)
+        - docker build -t wangwang:$COMMIT_ID .
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker images
+        - docker tag wangwang $DOCKER_USERNAME/wangwang
+        - docker push $DOCKER_USERNAME/wangwang:$COMMIT_ID
+        - echo "Build Success!"
+    - stage: deploy
+      name: "Deploy backend"
+      script:
+        - echo "Deploy Success!"
+stages:
+  - test
+  - name: build
+    if: branch = master 
+  - name: deploy
+    if: branch = master    
+        
