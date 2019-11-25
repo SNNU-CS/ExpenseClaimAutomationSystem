@@ -33,7 +33,7 @@ jobs:
       python: 3.6
       script:
         - cd wangwang
-        - COMMIT_ID = $(git rev-parse --short HEAD)
+        - COMMIT_ID=$(git rev-parse --short HEAD)
         - docker build -t wangwang:$COMMIT_ID .
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker images
@@ -47,9 +47,9 @@ jobs:
       script:
         - echo "Deploy Success!"
 stages:
-  - test
   - name: build
     if: branch = master 
   - name: deploy
     if: branch = master    
+  - test
         
