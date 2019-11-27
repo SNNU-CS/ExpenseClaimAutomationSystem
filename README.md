@@ -12,12 +12,21 @@
 - [wangwang](./wangwang) - back-end 
 - [miaomiao](./miaomiao) - front-end
 
+## 生产地址
+
+* 后端镜像 https://hub.docker.com/repository/docker/zhaoqi99/wangwang/
+* 数据库:http://139.9.236.103:5432/
+* 数据库Admin: http://139.9.236.103:8080/
+* 前端web:http://139.9.236.103/
+* 后端:http://139.9.236.103:8000/
+* 后端Admin:http://139.9.236.103:8000/admin/
+* API文档:http://139.9.236.103:8000/docs/
 
 ## 快速开始(后端)
 ### 开发环境
 
 - Python>=3.5
-- MySQL>=5.6
+- PostgreSQL>=10
 - Django>=2.0
 
 ```bash
