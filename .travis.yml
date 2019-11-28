@@ -58,7 +58,7 @@ jobs:
         - COMMIT_ID=$(git rev-parse --short HEAD)
         - sudo apt-get install sshpass -y
         - export SSHPASS=$SERVER_PASSWOED
-        - sshpass -e ssh root@$PRO_IP -o stricthostkeychecking=no 'docker pull zhaoqi99/wangwang:latest && docker stop wangwang && docker rm wangwang && docker run --name=wangwang  -p 8000:8000 --net=host --restart=always zhaoqi99/wangwang:latest'
+        - sshpass -e ssh root@$PRO_IP -o stricthostkeychecking=no 'docker pull zhaoqi99/wangwang:latest && docker stop wangwang && docker rm wangwang && docker run --name=wangwang  -p 8000:8000 --net=host --restart=always zhaoqi99/wangwang:latest && exit'
         - echo "Deploy Success!" 
     - stage: deploy
       name: "Deploy frontend"
@@ -67,8 +67,7 @@ jobs:
         - echo "Deploy Success!"
 stages:
   - test  
-  - name: build
-    if: branch = master 
+  - build
   - name: deploy
     if: branch = master    
         
