@@ -48,6 +48,15 @@ jobs:
     - stage: build
       name: "Build frontend"
       script:
+        - cd miaomiao
+        - COMMIT_ID=$(git rev-parse --short HEAD)
+        - docker build -t miaomiao .
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker images
+        - docker tag miaomiao $DOCKER_USERNAME/miaomiao:$COMMIT_ID
+        - docker push $DOCKER_USERNAME/miaomiao:$COMMIT_ID
+        - docker tag miaomiao $DOCKER_USERNAME/miaomiao:latest
+        - docker push $DOCKER_USERNAME/miaomiao:latest
         - echo "Build Success!"
       env:
         - DOCKER_USERNAME=zhaoqi99
@@ -58,7 +67,7 @@ jobs:
         - COMMIT_ID=$(git rev-parse --short HEAD)
         - sudo apt-get install sshpass -y
         - export SSHPASS=$SERVER_PASSWOED
-        - sshpass -e ssh root@$PRO_IP -o stricthostkeychecking=no 'docker pull zhaoqi99/wangwang:latest && docker stop wangwang && docker rm wangwang && docker run --name=wangwang  -p 8000:8000 --net=host --restart=always zhaoqi99/wangwang:latest && exit'
+        - sshpass -e ssh root@$PRO_IP -o stricthostkeychecking=no 'docker pull zhaoqi99/miaomiao:latest && docker stop miaomiao && docker rm miaomiao && docker run --name=miaomiao  -p 8000:8000 --net=host --restart=always zhaoqi99/miaomiao:latest && exit'
         - echo "Deploy Success!" 
     - stage: deploy
       name: "Deploy frontend"
