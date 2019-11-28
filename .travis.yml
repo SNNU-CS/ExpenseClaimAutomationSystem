@@ -75,8 +75,8 @@ jobs:
       script:
         - echo "Deploy Success!"
 stages:
-  - test  
   - build
   - name: deploy
     if: branch = master    
+  - test  
         
