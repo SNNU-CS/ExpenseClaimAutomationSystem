@@ -123,6 +123,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_DIR = os.path.dirname(os.path.dirname(os.path.abspath(os.path.join(__file__, os.pardir))))
+STATIC_ROOT = os.path.join(STATIC_DIR, 'static')
 
 # Using custom user model
 # https://docs.djangoproject.com/en/2.2/topics/auth/customizing/#using-a-custom-user-model-when-starting-a-project
@@ -135,4 +137,4 @@ MEDIA_ROOT = 'uploads'
 #         'wangwang.wangwang.MyAuthentication',
 #     ]
 # }
-AUTH_CONFIG = {'AUTH_EXCLUDE_PATH': ['/admin/'], 'AUTH_TOKEN_EXPIRE': timedelta(minutes=10), 'TOKEN_LENGTH': 20}
+AUTH_CONFIG = {'AUTH_TOKEN_EXPIRE': timedelta(minutes=10), 'TOKEN_LENGTH': 20}
