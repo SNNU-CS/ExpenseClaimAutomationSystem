@@ -6,6 +6,7 @@ services:
 cache:
   - pip
   - yarn
+  - npm
 install:
   - pip install -r wangwang/requirements.txt
   - pip install -r wangwang/dev-requirements.txt
