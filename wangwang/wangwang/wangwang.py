@@ -36,7 +36,7 @@ class MyMiddleware(MiddlewareMixin):
         user = request.user
         if not user.is_anonymous and user.is_authenticated:
             return None
-        if request.path in settings.AUTH_CONFIG.get('AUTH_EXCLUDE_PATH') or resolve(request.path).app_name == 'admin':
+        if request.path.split('/')[1] != 'api':
             return None
         try:
             MyAuthentication().authenticate(request)

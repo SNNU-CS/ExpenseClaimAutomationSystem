@@ -10,6 +10,7 @@ WORKDIR /usr/src/wangwang
 COPY requirements.txt  /usr/src/wangwang
 RUN pip install -r requirements.txt
 RUN rm -rf /usr/src/wangwang
+RUN python manage.py collectstatic
 COPY . /usr/src/wangwang
 ENV ENV=pro
 EXPOSE 8000
