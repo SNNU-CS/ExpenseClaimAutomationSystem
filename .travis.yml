@@ -68,13 +68,17 @@ jobs:
         - COMMIT_ID=$(git rev-parse --short HEAD)
         - sudo apt-get install sshpass -y
         - export SSHPASS=$SERVER_PASSWOED
-        - sshpass -e ssh root@$PRO_IP -o stricthostkeychecking=no 'docker pull zhaoqi99/miaomiao:latest && docker stop miaomiao && docker rm miaomiao && docker run --name=miaomiao  -p 80:80 --net=host --restart=always zhaoqi99/miaomiao:latest && exit'
-        - echo "Deploy Success!" 
+        - sshpass -e ssh root@$PRO_IP -o stricthostkeychecking=no 'docker pull zhaoqi99/wangwang:latest && docker stop wangwang && docker rm wangwang && docker run --name=wangwang  -p 80:80 --net=host --restart=always zhaoqi99/wangwang:latest && exit'
+        - echo "Deploy backend success!" 
     - stage: deploy
       name: "Deploy frontend"
       install: skip
       script:
-        - echo "Deploy Success!"
+        - COMMIT_ID=$(git rev-parse --short HEAD)
+        - sudo apt-get install sshpass -y
+        - export SSHPASS=$SERVER_PASSWOED
+        - sshpass -e ssh root@$PRO_IP -o stricthostkeychecking=no 'docker pull zhaoqi99/miaomiao:latest && docker stop miaomiao && docker rm miaomiao && docker run --name=miaomiao  -p 80:80 --net=host --restart=always zhaoqi99/miaomiao:latest && exit'
+        - echo "Deploy frontend Success!"
 stages:
   - test  
   - build
