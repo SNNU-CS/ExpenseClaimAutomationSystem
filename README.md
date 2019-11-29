@@ -14,11 +14,12 @@
 
 ## 生产地址
 
-* 后端镜像 https://hub.docker.com/repository/docker/zhaoqi99/wangwang/
+* 前端镜像 https://hub.docker.com/r/zhaoqi99/miaomiao
+* 后端镜像 https://hub.docker.com/r/zhaoqi99/wangwang
 * 数据库:http://139.9.236.103:5432/
 * 数据库Admin: http://139.9.236.103:8080/
 * 前端web:http://139.9.236.103/
-* 后端:http://139.9.236.103:8000/
+* 后端API:http://139.9.236.103:8000/api/
 * 后端Admin:http://139.9.236.103:8000/admin/
 * API文档:http://139.9.236.103:8000/docs/
 
@@ -34,19 +35,19 @@ pip3 install virtualenv
 virtualenv env
 source env/bin/activate # source env/Scipts/activate
 pip install -r requirements.txt
-python manage.py makemigrations
-python manage.py migrate
+ENV=dev python manage.py makemigrations
+ENV=dev python manage.py migrate
 ✨🍰✨
 ```
 
 ### 测试
 ```bash
-python manage.py test
+ENV=test python manage.py test
 isort *.py -c -vb
 ```
 ### 启动服务
 ```bash
-python manage.py runserver
+ENV=dev python manage.py runserver(make debv)
 ```
 ## 快速开始(前端)
 
@@ -77,11 +78,12 @@ git fetch origin
 git rebase origin/master
 git push origin
 ```
-**后端**:使用flake8进行风格检查，commit代码前，务必使用下述指令对代码进行格式化
+**后端**:使用flake8,yapf,isort进行风格检查，commit代码前，务必使用下述指令对代码进行格式化
 
 ```bash
-autopep8 --aggressive .
-isort -rc .
+	isort --recursive -c -df .
+	yapf --recursive --diff .
+	flake8 .
 ```
 
 **前端**: #Todo
