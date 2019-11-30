@@ -3,7 +3,7 @@ from django.db import models
 from django.http import JsonResponse
 from django.utils import timezone
 from django.utils.deprecation import MiddlewareMixin
-
+from django.conf import settings
 from account.models import Token
 
 from .exceptions import AuthenticationFailed, BaseException, InvalidToken, UnknownException
@@ -30,11 +30,11 @@ class MyAuthentication:
 
 
 class MyMiddleware(MiddlewareMixin):
-    def process_request(self, request):
+    def process_view(self, request, view_func, view_args, view_kwargs):
         user = request.user
         if not user.is_anonymous and user.is_authenticated:
             return None
-        if request.path.split('/')[1] != 'api':
+        if request.path.split('/')[1] != 'api' or settings.AUTH_CONFIG.get('AUTH_EXCLUDE_PATH'):
             return None
         try:
             MyAuthentication().authenticate(request)
