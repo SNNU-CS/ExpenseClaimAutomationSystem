@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home'
-import Main from './components/Main'
-import Login from './components/Login'
-import DashBoard from './components/DashBoard'
+import Main from './views/Main'
+import Login from './views/Login'
+import DashBoard from './views/DashBoard'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -17,10 +17,6 @@ export default new Router({
       path: '/main',
       component: Main,
       children: [
-        {
-          path: 'test',
-          component: Home
-        },
         {
           path: 'dashboard',
           component: DashBoard
