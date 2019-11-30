@@ -1,12 +1,15 @@
+import json
+import traceback
+
+from django.conf import settings
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 from django.http import JsonResponse
 from django.utils import timezone
 from django.utils.deprecation import MiddlewareMixin
-from django.conf import settings
-from account.models import Token
 
-from .exceptions import AuthenticationFailed, BaseException, InvalidToken, UnknownException
+from account.models import Token
+from utils.exceptions import AuthenticationFailed, BaseException, InvalidToken, UnknownException
 
 
 class MyAuthentication:
@@ -32,6 +35,8 @@ class MyAuthentication:
 class MyMiddleware(MiddlewareMixin):
     def process_view(self, request, view_func, view_args, view_kwargs):
         user = request.user
+        if request.path.split('/')[1] == 'api':
+            request._body = json.loads(request.body.decode())
         if not user.is_anonymous and user.is_authenticated:
             return None
         if request.path.split('/')[1] != 'api' or settings.AUTH_CONFIG.get('AUTH_EXCLUDE_PATH'):
@@ -43,6 +48,8 @@ class MyMiddleware(MiddlewareMixin):
         return None
 
     def process_exception(self, request, exception):
+        if settings.DEBUG is True:
+            print(traceback.format_exc())
         if not isinstance(exception, BaseException):
             return JsonResponse(UnknownException().as_dict(), status=UnknownException().get_http_code())
         else:

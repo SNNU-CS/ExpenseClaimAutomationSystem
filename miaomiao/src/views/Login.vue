@@ -67,6 +67,8 @@ export default {
           self.$message.success("登录成功!欢迎回来," + result.username + "!");
           router.push("main");
         } else if (response.status === 1003) {
+          self.$message.error("当前用户不存在!");
+        } else if (response.status === 1004) {
           self.$message.error("用户名/密码错误,请重新输入!");
         }
       });

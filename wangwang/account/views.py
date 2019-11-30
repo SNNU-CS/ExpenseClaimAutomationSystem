@@ -1,29 +1,17 @@
-import json
+from utils.exceptions import PasswordIncorrect, UsertDoesNotExist
 
-from django.contrib.auth import authenticate
-from django.http import JsonResponse
-
-from .models import User
-
-# class UserAuthView(View):
-#     def __init__(self, *args):
-#         super(UserAuthView, self).__init__(*args))
+from .models import Token, User
 
 
 def login(request):
-    body = json.loads(request.body)
-    username = body.get('username')
-    password = body.get('password')
-    try:
-        user = User.objects.get(username=username)
-    except Exception:
-        return JsonResponse({"status": 1000, "msg": "用户不存在", 'data': ''})
-    # if username is not 'admin':
-    #     return JsonResponse({"status": 1000, "msg": "用户不存在", 'data': ''})
-    user = authenticate(username=username, password=password)
-    if user is None:
-        # 先假装登录成功，以后记得把200改成401
-        return JsonResponse({"status": 200, "msg": "密码错误", 'data': ''})
+    username = request.body.get('username')
+    password = request.body.get('password')
+    query = User.objects.filter(username=username)
+    if query.count() == 0:
+        raise UsertDoesNotExist
+    user = query.get()
+    if user.authenticate(password):
+        token = Token.objects.create(user=user)
     else:
-        data = {'username': username, 'token': 'test token'}
-        return JsonResponse({"status": 200, "msg": "登录成功", 'data': data})
+        raise PasswordIncorrect
+    return {'token': token.token, 'username': username}

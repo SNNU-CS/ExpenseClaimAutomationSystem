@@ -4,7 +4,7 @@ import { Message } from 'element-ui'
 const api = axios.create({
     baseURL: '/api',
     timeout: 3000,
-    // headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' }
+    headers: { 'Content-Type': 'application/json;charset=UTF-8' }
     // headers['Content-Type']: 'application/x-www-form-urlencoded;charset=UTF-8'
 })
 
