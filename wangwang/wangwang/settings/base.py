@@ -47,7 +47,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -137,4 +137,8 @@ MEDIA_ROOT = 'uploads'
 #         'wangwang.wangwang.MyAuthentication',
 #     ]
 # }
-AUTH_CONFIG = {'AUTH_TOKEN_EXPIRE': timedelta(minutes=10), 'TOKEN_LENGTH': 20}
+AUTH_CONFIG = {
+    'AUTH_EXCLUDE_PATH': ['/api/account/login/'],
+    'AUTH_TOKEN_EXPIRE': timedelta(minutes=10),
+    'TOKEN_LENGTH': 20
+}

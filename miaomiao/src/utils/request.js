@@ -1,6 +1,6 @@
 import axios from 'axios'
 import router from '../router'
-
+import { Message } from 'element-ui'
 const api = axios.create({
     baseURL: '/api',
     timeout: 3000,
@@ -10,11 +10,9 @@ const api = axios.create({
 
 // request
 api.interceptors.request.use((config) => {
-    console.log(config.headers)
-    // if (config.method === 'get') {
-    //     config.headers.token = localStorage.token;
-    //     // config.headers['X-Token'] = getToken()
-    // }
+    if (localStorage.Token != undefined) {
+        config.headers['Authorization'] = 'Bearer' + ' ' + localStorage.Token
+    }
     return config;
 }, (error) => {
     return Promise.reject(error);
@@ -22,20 +20,33 @@ api.interceptors.request.use((config) => {
 
 //返回状态判断
 api.interceptors.response.use(res => {
-    console.log('123');
-    // if (!res.data.status && res.data.status !== 0) {
-    //     return Promise.reject(res);
-    // }
-    return res;
+    if (res.data.status === 1000) {
+        Message({
+            message: '发生未知错误,请稍后再试!',
+            type: 'error'
+        })
+    }
+    return res.data;
 }, error => {
-    localStorage.username = '';
-    localStorage.token = "";
-    // router.replace({
-    //     path: 'login',
-    //     query: { redirect: router.currentRoute.fullPath }
-    // });
-    // message
-    console.log(error.response);
-    return Promise.reject(error);
+    if (error.response.status === 401) {
+        localStorage.clear();
+        Message({
+            message: '当前用户没有登录!',
+            type: 'error'
+        })
+        // router.replace({
+        //     path: 'login',
+        //     query: { redirect: router.currentRoute.fullPath }
+        // });
+    }
+    else if (error.response.status === 500) {
+        Message({
+            message: '服务器内部错误!',
+            type: 'error'
+        })
+    }
+    else {
+        return Promise.reject(error);
+    }
 });
 export default api
