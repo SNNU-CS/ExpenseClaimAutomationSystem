@@ -5,7 +5,7 @@ export default {
         return request({
             url: 'account/login/',
             method: 'post',
-            params: params
+            data: params
         })
     }
 }

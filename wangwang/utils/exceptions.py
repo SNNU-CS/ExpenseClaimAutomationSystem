@@ -32,6 +32,19 @@ class AuthenticationFailed(BaseException):
 
 
 class InvalidToken(BaseException):
-    status_code = 401
     status = 1002
     msg = ErrorMsg.INVALID_TOKEN
+
+
+class ObjectDoesNotExist(BaseException):
+    status = 1003
+    msg = ErrorMsg.INVALID_TOKEN
+
+
+class UsertDoesNotExist(ObjectDoesNotExist):
+    msg = ErrorMsg.USERT_DOES_NOT_EXIST
+
+
+class PasswordIncorrect(ObjectDoesNotExist):
+    status = 1004
+    msg = ErrorMsg.PASSWORD_INCORRECT

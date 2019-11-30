@@ -51,6 +51,9 @@ class User(AbstractBaseUser):
         full_name = '%s %s' % (self.first_name, self.last_name)
         return full_name.strip()
 
+    def authenticate(self, password):
+        return password == self.password
+
     class Meta:
         ordering = ['username']
 
