@@ -19,7 +19,7 @@
         <v-img src="https://cdn.vuetifyjs.com/images/logos/v.png" height="34" contain />
       </v-list-item-avatar>
 
-      <v-list-item-title class="title">VUETIFY MD</v-list-item-title>
+      <v-list-item-title class="title">财务报销系统</v-list-item-title>
     </v-list-item>
 
     <v-divider class="mx-3 mb-3" />
@@ -41,18 +41,6 @@
         <v-list-item-title v-text="link.text" />
       </v-list-item>
     </v-list>
-
-    <template v-slot:append>
-      <v-list nav>
-        <v-list-item to="/upgrade">
-          <v-list-item-action>
-            <v-icon>mdi-package-up</v-icon>
-          </v-list-item-action>
-
-          <v-list-item-title class="font-weight-light">Upgrade To PRO</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </template>
   </v-navigation-drawer>
 </template>
 
