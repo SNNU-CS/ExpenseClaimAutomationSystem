@@ -10,7 +10,7 @@
                 <v-spacer />
               </v-toolbar>
               <v-card-text>
-                <v-form>
+                <v-form ref="form">
                   <v-text-field
                     label="用户名"
                     v-model="username"
@@ -22,6 +22,7 @@
                   <v-text-field
                     v-model="password"
                     label="密码"
+                    :rules="passwordRules"
                     prepend-icon="mdi-lock"
                     type="password"
                   />
@@ -50,7 +51,8 @@ export default {
     nameRules: [
       v => !!v || "用户名是必填项",
       v => (v && v.length <= 10) || "用户名长度不能超过10字符"
-    ]
+    ],
+    passwordRules: [v => !!v || "密码是必填项"]
   }),
   methods: {
     login() {
@@ -59,19 +61,21 @@ export default {
         username: this.username,
         password: this.password
       };
-      api.Login(parms).then(function(response) {
-        if (response.status === 200) {
-          let result = response.result;
-          localStorage.Token = result.token;
-          localStorage.username = result.username;
-          self.$message.success("登录成功!欢迎回来," + result.username + "!");
-          router.push("main");
-        } else if (response.status === 1003) {
-          self.$message.error("当前用户不存在!");
-        } else if (response.status === 1004) {
-          self.$message.error("用户名/密码错误,请重新输入!");
-        }
-      });
+      if (this.$refs.form.validate()) {
+        api.Login(parms).then(function(response) {
+          if (response.status === 200) {
+            let result = response.result;
+            localStorage.Token = result.token.token;
+            localStorage.username = result.user.username;
+            self.$message.success("登录成功!欢迎回来," + result.user.organization+"的"+result.user.username + "!");
+            router.push("main");
+          } else if (response.status === 1003) {
+            self.$message.error("当前用户不存在!");
+          } else if (response.status === 1004) {
+            self.$message.error("用户名/密码错误,请重新输入!");
+          }
+        });
+      }
     }
   }
 };
