@@ -6,9 +6,14 @@ from .models import Token, User
 
 
 class UserSerializer(serializers.ModelSerializer):
+    organization = serializers.SerializerMethodField()
+
     class Meta:
         model = User
         exclude = ('id', 'password')
+
+    def get_organization(self, obj):
+        return obj.organization.org_name
 
 
 class TokenSerializer(serializers.ModelSerializer):
