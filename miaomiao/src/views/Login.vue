@@ -67,7 +67,14 @@ export default {
             let result = response.result;
             localStorage.Token = result.token.token;
             localStorage.username = result.user.username;
-            self.$message.success("登录成功!欢迎回来," + result.user.organization+"的"+result.user.username + "!");
+            let name = result.user.last_name + result.user.first_name;
+            self.$message.success(
+              "登录成功!欢迎回来," +
+                result.user.organization +
+                "的" +
+                name +
+                "!"
+            );
             router.push("main");
           } else if (response.status === 1003) {
             self.$message.error("当前用户不存在!");
