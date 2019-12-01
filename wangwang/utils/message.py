@@ -8,3 +8,4 @@ class ErrorMsg:
     OBJECT_DOES_NOT_EXIST = _("Objectd does not exists.")
     USERT_DOES_NOT_EXIST = _('Usert does not exists.')
     PASSWORD_INCORRECT = _('Password incorrect.')
+    VALIDATION_ERROR = _('Valid input.')

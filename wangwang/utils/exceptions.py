@@ -15,7 +15,7 @@ class BaseException(Exception):
         return getattr(self, 'status_code', 200)
 
     def as_dict(self):
-        ret = {'result': '', 'msg': getattr(self, 'msg', ''), 'status': getattr(self, 'status', '')}
+        ret = {'msg': getattr(self, 'msg', ''), 'status': getattr(self, 'status', '')}
         return ret
 
 
@@ -48,3 +48,8 @@ class UsertDoesNotExist(ObjectDoesNotExist):
 class PasswordIncorrect(ObjectDoesNotExist):
     status = 1004
     msg = ErrorMsg.PASSWORD_INCORRECT
+
+
+class ValidationError(BaseException):
+    status = 1005
+    msg = ErrorMsg.VALIDATION_ERROR

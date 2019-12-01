@@ -1,17 +1,22 @@
-from utils.exceptions import PasswordIncorrect, UsertDoesNotExist
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from .models import Token, User
+from utils.exceptions import ValidationError
+
+from .serializers import LoginSerializer
 
 
-def login(request):
-    username = request.body.get('username')
-    password = request.body.get('password')
-    query = User.objects.filter(username=username)
-    if query.count() == 0:
-        raise UsertDoesNotExist
-    user = query.get()
-    if user.authenticate(password):
-        token = Token.objects.create(user=user)
-    else:
-        raise PasswordIncorrect
-    return {'token': token.token, 'username': username}
+class AuthView(APIView):
+    authentication_classes = []
+
+    def post(self, request, format=None):
+        serializer = LoginSerializer(data=request.body)
+        if not serializer.is_valid():
+            raise ValidationError(serializer.errors)
+        serializer.save()
+        return Response(serializer.data)
+
+
+# class UserViewSet(ModelViewSet):
+#     serializer_class = UserSerializer
+#     queryset = User.objects.all()
