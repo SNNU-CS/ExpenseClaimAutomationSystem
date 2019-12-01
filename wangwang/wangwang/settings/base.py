@@ -45,9 +45,10 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -132,13 +133,16 @@ STATIC_ROOT = os.path.join(STATIC_DIR, 'static')
 
 MEDIA_ROOT = 'uploads'
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': [
-#         'wangwang.wangwang.MyAuthentication',
-#     ]
-# }
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': ('wangwang.wangwang.MyJSONRenderer', 'rest_framework.renderers.BrowsableAPIRenderer'),
+    'DEFAULT_SCHEMA_CLASS':
+    'rest_framework.schemas.AutoSchema',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        # 'rest_framework.authentication.BasicAuthentication',
+        'wangwang.wangwang.MyAuthentication', ),
+}
 AUTH_CONFIG = {
-    'AUTH_EXCLUDE_PATH': ['/api/account/login/'],
+    # 'AUTH_EXCLUDE_PATH': ['/api/account/login/'],
     'AUTH_TOKEN_EXPIRE': timedelta(minutes=10),
     'TOKEN_LENGTH': 20
 }
