@@ -65,8 +65,8 @@ export default {
         api.Login(parms).then(function(response) {
           if (response.status === 200) {
             let result = response.result;
-            localStorage.Token = result.token.token;
-            localStorage.username = result.user.username;
+            localStorage.Token = result.token;
+            localStorage.username = result.username;
             let name = result.user.last_name + result.user.first_name;
             self.$message.success(
               "登录成功!欢迎回来," +

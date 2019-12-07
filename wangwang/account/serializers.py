@@ -1,7 +1,5 @@
 from rest_framework import serializers
 
-from utils.exceptions import PasswordIncorrect, UsertDoesNotExist
-
 from .models import Token, User
 
 
@@ -13,34 +11,30 @@ class UserSerializer(serializers.ModelSerializer):
         exclude = ('id', 'password')
 
     def get_organization(self, obj):
-        return obj.organization.org_name
+        return obj.organization.org_name if obj.organization else None
 
 
 class TokenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Token
-        fields = '__all__'
+        exclude = ('id', 'user')
 
 
 class LoginSerializer(serializers.Serializer):
-    username = serializers.CharField(write_only=True, required=True)
+    username = serializers.CharField(required=True)
     password = serializers.CharField(write_only=True, required=True)
-    user = UserSerializer(read_only=True)
-    token = TokenSerializer(read_only=True)
+    user = serializers.SerializerMethodField(read_only=True)
+    token = serializers.SerializerMethodField(read_only=True)
 
+    # in order to use serializer.save(user=user, token=token)
     def create(self, validated_data):
-        token = Token.objects.create(user=validated_data['user'])
-        validated_data['token'] = token
         return validated_data
 
-    def validate(self, attrs):
-        username = attrs.get('username')
-        password = attrs.get('password')
-        query = User.objects.filter(username=username)
-        if query.count() == 0:
-            raise UsertDoesNotExist
-        user = query.get()
-        if not user.authenticate(password):
-            raise PasswordIncorrect
-        attrs['user'] = user
-        return super().validate(attrs)
+    def get_token(self, obj):
+        return obj['token'].token
+
+    def get_user(self, obj):
+        data = UserSerializer(obj['user']).data
+        del data['is_active']
+        del data['username']
+        return data
