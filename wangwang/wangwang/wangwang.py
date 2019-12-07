@@ -1,4 +1,3 @@
-import json
 import traceback
 
 from django.conf import settings
@@ -45,10 +44,7 @@ class MyAuthentication(BaseAuthentication):
 class MyMiddleware(MiddlewareMixin):
     def process_view(self, request, view_func, view_args, view_kwargs):
         # Todo auth role
-
         # user = request.user
-        if request.path.split('/')[1] == 'api':
-            request._body = json.loads(request.body.decode())
         # if not user.is_anonymous and user.is_authenticated:
         #     return None
         # if request.path.split('/')[1] != 'api' or settings.AUTH_CONFIG.get('AUTH_EXCLUDE_PATH'):
