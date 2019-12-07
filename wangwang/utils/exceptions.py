@@ -20,13 +20,12 @@ class BaseException(Exception):
 
 
 class UnknownException(BaseException):
-    status_code = 200
+    status_code = 500
     status = 1000
     msg = ErrorMsg.UNKNOWN_EXCEPTION
 
 
 class AuthenticationFailed(BaseException):
-    status_code = 401
     status = 1001
     msg = ErrorMsg.AUTH_FAILED
 

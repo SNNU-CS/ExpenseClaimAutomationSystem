@@ -7,8 +7,8 @@ from django.http import JsonResponse
 from django.utils import timezone
 from django.utils.deprecation import MiddlewareMixin
 from rest_framework.authentication import BaseAuthentication
+from rest_framework.exceptions import APIException
 from rest_framework.renderers import JSONRenderer
-from rest_framework.response import Response
 
 from account.models import Token
 from utils.exceptions import AuthenticationFailed, BaseException, InvalidToken, UnknownException
@@ -66,18 +66,11 @@ class MyMiddleware(MiddlewareMixin):
     def process_response(self, request, response):
         # if isinstance(response, models.Model):
         # response = str(response)
-        ret = {'result': response, 'msg': 'success', 'status': 200}
+        ret = {'result': response, 'status': 200}
         if isinstance(response, procese_type):
             return JsonResponse(ret, encoder=DjangoJSONEncoder)
-        elif isinstance(response, Response) and response.status_code in [
-                405,
-        ]:
-            data = {
-                "msg": response.data['detail'],
-                'status': response.status_code
-            }  # msg also can be response.status_text
-            return JsonResponse(data, status=response.status_code)
-        return response
+        else:
+            return response
 
 
 def update_last_login(sender, user, **kwargs):
@@ -91,8 +84,15 @@ def update_last_login(sender, user, **kwargs):
 
 class MyJSONRenderer(JSONRenderer):
     def render(self, data, accepted_media_type=None, renderer_context=None):
-        if isinstance(data, procese_type) and renderer_context.get('response', {}).status_code == 200:
-            data = {'result': data, 'msg': 'success', 'status': 200}
+        if isinstance(data, procese_type):
+            data = {'result': data, 'status': 200}
             return super().render(data, accepted_media_type=accepted_media_type, renderer_context=renderer_context)
         else:
             return super().render(data, accepted_media_type=accepted_media_type, renderer_context=renderer_context)
+
+
+def my_exception_handler(exc, context):
+    if isinstance(exc, APIException):
+        return JsonResponse({'status': exc.status_code, 'msg': exc.detail})
+    else:
+        return None
