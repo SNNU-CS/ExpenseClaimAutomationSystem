@@ -1,25 +1,29 @@
 <template>
   <v-app>
-    <div class="box">
-      <Menu></Menu>
-    </div>
-    <div class="content-view">
+    <ToolBar></ToolBar>
+    <Menu></Menu>
+    <v-container fluid>
       <transition name="move" mode="out-in">
         <router-view></router-view>
       </transition>
-    </div>
+    </v-container>
+    <v-footer app>
+      <!-- -->
+    </v-footer>
   </v-app>
 </template>
 
 <script>
 import Menu from "../components/Menu";
+import ToolBar from "../components/ToolBar";
 export default {
   name: "main",
   data() {
     return {};
   },
   components: {
-    Menu
+    Menu,
+    ToolBar
   }
 };
 </script>
