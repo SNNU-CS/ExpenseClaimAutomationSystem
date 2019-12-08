@@ -1,10 +1,11 @@
 from rest_framework import serializers
 
-from .models import Token, User
+from .models import Organization, Role, Token, User
 
 
 class UserSerializer(serializers.ModelSerializer):
-    organization = serializers.SerializerMethodField()
+    organization = serializers.SerializerMethodField(read_only=True)
+    roles = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = User
@@ -12,6 +13,9 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_organization(self, obj):
         return obj.organization.org_name if obj.organization else None
+
+    def get_roles(self, obj):
+        return [_.name for _ in obj.user_roles.all()]
 
 
 class TokenSerializer(serializers.ModelSerializer):
@@ -25,7 +29,6 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True, required=True)
     user = serializers.SerializerMethodField(read_only=True)
     token = serializers.SerializerMethodField(read_only=True)
-    roles = serializers.SerializerMethodField(read_only=True)
 
     # in order to use serializer.save(user=user, token=token)
     def create(self, validated_data):
@@ -40,5 +43,24 @@ class LoginSerializer(serializers.Serializer):
         del data['username']
         return data
 
-    def get_roles(self, obj):
-        return [_.name for _ in obj['user'].user_roles.all()]
+
+class RoleSerializer(serializers.ModelSerializer):
+    users = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = Role
+        fields = '__all__'
+
+    def get_users(self, obj):
+        return [_.username for _ in obj.users.all()]
+
+
+class OrganizationSerializer(serializers.ModelSerializer):
+    users = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = Organization
+        fields = '__all__'
+
+    def get_users(self, obj):
+        return [_.username for _ in obj.organization_users.all()]
