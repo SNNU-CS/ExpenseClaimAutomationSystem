@@ -4,7 +4,6 @@ from django.conf import settings
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 from django.http import JsonResponse
-from django.utils import timezone
 from django.utils.deprecation import MiddlewareMixin
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import APIException
