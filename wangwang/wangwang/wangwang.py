@@ -1,12 +1,13 @@
 import traceback
 
 from django.conf import settings
+from django.core.exceptions import PermissionDenied
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
-from django.http import JsonResponse
+from django.http import Http404, JsonResponse
 from django.utils.deprecation import MiddlewareMixin
+from rest_framework import exceptions
 from rest_framework.authentication import BaseAuthentication
-from rest_framework.exceptions import APIException
 from rest_framework.renderers import JSONRenderer
 
 from account.models import Token
@@ -22,7 +23,7 @@ class MyAuthentication(BaseAuthentication):
         token = Token.objects.filter(token=raw_token).first()
         if not (token and token.verify()):
             raise InvalidToken
-        token.refresf_exp()
+        # token.refresf_exp()
         request.user = token.user
         return token.user, token.token
 
@@ -82,7 +83,11 @@ class MyJSONRenderer(JSONRenderer):
 
 
 def my_exception_handler(exc, context):
-    if isinstance(exc, APIException):
+    if isinstance(exc, Http404):
+        exc = exceptions.NotFound()
+    elif isinstance(exc, PermissionDenied):
+        exc = exceptions.PermissionDenied()
+    if isinstance(exc, exceptions.APIException):
         return JsonResponse({'status': exc.status_code, 'msg': exc.detail})
     else:
         return None
