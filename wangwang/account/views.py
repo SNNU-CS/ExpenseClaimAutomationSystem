@@ -1,10 +1,11 @@
-from rest_framework import generics, viewsets
+from rest_framework import generics, mixins, viewsets
 from rest_framework.response import Response
 
 from utils.exceptions import PasswordIncorrect, UsertDoesNotExist, ValidationError
+from wangwang.wangwang import DestroyModelMixin
 
-from .models import Token, User
-from .serializers import LoginSerializer, UserSerializer
+from .models import Organization, Role, Token, User
+from .serializers import LoginSerializer, OrganizationSerializer, RoleSerializer, UserSerializer
 from .signals import user_logged_in
 
 
@@ -30,6 +31,17 @@ class AuthView(generics.GenericAPIView):
         return Response(serializer.data)
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(viewsets.ReadOnlyModelViewSet, mixins.CreateModelMixin, mixins.UpdateModelMixin, DestroyModelMixin):
     serializer_class = UserSerializer
     queryset = User.objects.all()
+
+
+class RoleViewSet(viewsets.ReadOnlyModelViewSet, mixins.CreateModelMixin, mixins.UpdateModelMixin, DestroyModelMixin):
+    serializer_class = RoleSerializer
+    queryset = Role.objects.all()
+
+
+class OrganizationViewSet(viewsets.ReadOnlyModelViewSet, mixins.CreateModelMixin, mixins.UpdateModelMixin,
+                          DestroyModelMixin):
+    serializer_class = OrganizationSerializer
+    queryset = Organization.objects.all()
