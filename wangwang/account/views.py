@@ -5,6 +5,7 @@ from utils.exceptions import PasswordIncorrect, UsertDoesNotExist, ValidationErr
 
 from .models import Token, User
 from .serializers import LoginSerializer
+from .signals import user_logged_in
 
 
 class AuthView(generics.GenericAPIView):
@@ -25,6 +26,7 @@ class AuthView(generics.GenericAPIView):
             raise PasswordIncorrect
         token = Token.objects.create(user=user)
         serializer.save(user=user, token=token)
+        user_logged_in.send(sender=user.__class__, user=user)
         return Response(serializer.data)
 
 

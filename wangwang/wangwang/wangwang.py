@@ -73,15 +73,6 @@ class MyMiddleware(MiddlewareMixin):
             return response
 
 
-def update_last_login(sender, user, **kwargs):
-    """
-    A signal receiver which updates the last_login date for
-    the user logging in.
-    """
-    user.last_login = timezone.now()
-    user.save(update_fields=['last_login'])
-
-
 class MyJSONRenderer(JSONRenderer):
     def render(self, data, accepted_media_type=None, renderer_context=None):
         if isinstance(data, procese_type):

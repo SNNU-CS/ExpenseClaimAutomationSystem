@@ -11,6 +11,15 @@ from django.utils.translation import gettext_lazy as _
 from .utils import user_avatar_path
 
 
+def update_last_login(sender, user, **kwargs):
+    """
+    A signal receiver which updates the last_login date for
+    the user logging in.
+    """
+    user.last_login = timezone.now()
+    user.save(update_fields=['last_login'])
+
+
 class User(AbstractBaseUser):
     username_validator = UnicodeUsernameValidator()
     USERNAME_FIELD = 'username'
