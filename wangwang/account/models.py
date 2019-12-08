@@ -69,6 +69,10 @@ class Organization(models.Model):
         return self.org_name
 
 
+def _default_expire_time():
+    return timezone.now() + Token.token_expire
+
+
 class Token(models.Model):
     token_length = settings.AUTH_CONFIG.get('TOKEN_LENGTH')
     token_expire = settings.AUTH_CONFIG.get('AUTH_TOKEN_EXPIRE')
@@ -79,7 +83,7 @@ class Token(models.Model):
                              null=True,
                              blank=False)
     created = models.DateTimeField(_('create time'), auto_now_add=True)
-    expired = models.DateTimeField(_('token expire time'), default=timezone.now() + token_expire)
+    expired = models.DateTimeField(_('token expire time'), default=_default_expire_time)
     token = models.TextField(_('token'), blank=True)
 
     class Meta:
@@ -112,3 +116,16 @@ class Token(models.Model):
     def refresf_exp(self):
         self.expired = timezone.now() + self.token_expire
         self.save(update_fields=['expired'])
+
+
+class Role(models.Model):
+    name = models.CharField(_('name'), max_length=255, blank=False, null=False)
+    description = models.CharField(_("description"), max_length=255, blank=True, null=True)
+    users = models.ManyToManyField("User", verbose_name=_("users"), related_name="user_roles")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _('Role')
+        verbose_name_plural = _('Roles')

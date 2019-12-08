@@ -25,6 +25,7 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True, required=True)
     user = serializers.SerializerMethodField(read_only=True)
     token = serializers.SerializerMethodField(read_only=True)
+    roles = serializers.SerializerMethodField(read_only=True)
 
     # in order to use serializer.save(user=user, token=token)
     def create(self, validated_data):
@@ -38,3 +39,6 @@ class LoginSerializer(serializers.Serializer):
         del data['is_active']
         del data['username']
         return data
+
+    def get_roles(self, obj):
+        return [_.name for _ in obj['user'].user_roles.all()]
