@@ -8,7 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        exclude = ('id', 'password')
+        exclude = ('password', )
 
     def get_organization(self, obj):
         return obj.organization.org_name if obj.organization else None
@@ -17,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
 class TokenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Token
-        exclude = ('id', 'user')
+        exclude = ('user', )
 
 
 class LoginSerializer(serializers.Serializer):
