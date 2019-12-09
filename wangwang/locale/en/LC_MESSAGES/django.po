@@ -1,0 +1,157 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-12-10 00:24+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: account/models.py:28
+msgid "username"
+msgstr ""
+
+#: account/models.py:31
+msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr ""
+
+#: account/models.py:34
+msgid "A user with that username already exists."
+msgstr ""
+
+#: account/models.py:38
+msgid "active"
+msgstr ""
+
+#: account/models.py:40
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+
+#: account/models.py:43
+msgid "date joined"
+msgstr ""
+
+#: account/models.py:44
+msgid "first name"
+msgstr ""
+
+#: account/models.py:45
+msgid "last name"
+msgstr ""
+
+#: account/models.py:46
+msgid "email address"
+msgstr ""
+
+#: account/models.py:47
+msgid "avater"
+msgstr ""
+
+#: account/models.py:49
+msgid "organization"
+msgstr ""
+
+#: account/models.py:54
+msgid "sex"
+msgstr ""
+
+#: account/models.py:75
+msgid "organization name"
+msgstr ""
+
+#: account/models.py:89
+msgid "User"
+msgstr ""
+
+#: account/models.py:94
+msgid "create time"
+msgstr ""
+
+#: account/models.py:95
+msgid "token expire time"
+msgstr ""
+
+#: account/models.py:96
+msgid "token"
+msgstr ""
+
+#: account/models.py:100
+msgid "Token"
+msgstr ""
+
+#: account/models.py:101
+msgid "Tokens"
+msgstr ""
+
+#: account/models.py:131
+msgid "name"
+msgstr ""
+
+#: account/models.py:132
+msgid "description"
+msgstr ""
+
+#: account/models.py:133
+msgid "users"
+msgstr ""
+
+#: account/models.py:139
+msgid "Role"
+msgstr ""
+
+#: account/models.py:140
+msgid "Roles"
+msgstr ""
+
+#: utils/message.py:5
+msgid "Unknown exception."
+msgstr ""
+
+#: utils/message.py:6
+msgid "Auth failed."
+msgstr ""
+
+#: utils/message.py:7
+msgid "Token is invalid or expired."
+msgstr ""
+
+#: utils/message.py:8
+msgid "Objectd does not exists."
+msgstr ""
+
+#: utils/message.py:9
+msgid "Usert does not exists."
+msgstr ""
+
+#: utils/message.py:10
+msgid "Password incorrect."
+msgstr ""
+
+#: utils/message.py:11
+msgid "Valid input."
+msgstr ""
+
+#: utils/message.py:12
+msgid "Role does not exists."
+msgstr ""
+
+#: utils/message.py:13
+msgid "Organization does not exists."
+msgstr ""
+
+#: utils/message.py:14
+msgid "User is not active."
+msgstr ""
