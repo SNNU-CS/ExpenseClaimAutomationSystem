@@ -92,17 +92,3 @@ def my_exception_handler(exc, context):
         return JsonResponse({'status': exc.status_code, 'msg': exc.detail})
     else:
         return None
-
-
-class DestroyModelMixin:
-    """
-    Destroy a model instance.
-    """
-    def destroy(self, request, *args, **kwargs):
-        instance = self.get_object()
-        data = self.get_serializer(instance).data
-        self.perform_destroy(instance)
-        return Response(data)
-
-    def perform_destroy(self, instance):
-        instance.delete()

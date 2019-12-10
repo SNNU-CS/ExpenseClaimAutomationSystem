@@ -1,8 +1,10 @@
-from rest_framework import generics, mixins, viewsets
+from rest_framework import generics, mixins, views, viewsets
 from rest_framework.response import Response
 
-from utils.exceptions import PasswordIncorrect, UsertDoesNotExist, ValidationError
-from wangwang.wangwang import DestroyModelMixin
+from utils.drf import destroy as _destroy
+from utils.drf import get_object as _get_object
+from utils.exceptions import (OrganizationDoesNotExist, PasswordIncorrect, RoleDoesNoeExist, UsertDoesNotExist,
+                              ValidationError)
 
 from .models import Organization, Role, Token, User
 from .serializers import LoginSerializer, OrganizationSerializer, RoleSerializer, UserSerializer
@@ -31,17 +33,41 @@ class AuthView(generics.GenericAPIView):
         return Response(serializer.data)
 
 
-class UserViewSet(viewsets.ReadOnlyModelViewSet, mixins.CreateModelMixin, mixins.UpdateModelMixin, DestroyModelMixin):
+class UserViewSet(viewsets.ModelViewSet):
+    http_method_names = ['get', 'post', 'put', 'delete', 'options']
     serializer_class = UserSerializer
     queryset = User.objects.all()
+    exc = UsertDoesNotExist
+
+    def get_object(self):
+        return _get_object(self)
+
+    def destroy(self, request, pk=None):
+        return _destroy(self, request)
 
 
-class RoleViewSet(viewsets.ReadOnlyModelViewSet, mixins.CreateModelMixin, mixins.UpdateModelMixin, DestroyModelMixin):
+class RoleViewSet(viewsets.ModelViewSet):
+    http_method_names = ['get', 'post', 'put', 'delete', 'options']
+
     serializer_class = RoleSerializer
     queryset = Role.objects.all()
+    exc = RoleDoesNoeExist
+
+    def get_object(self):
+        return _get_object(self)
+
+    def destroy(self, request, pk=None):
+        return _destroy(self, request)
 
 
-class OrganizationViewSet(viewsets.ReadOnlyModelViewSet, mixins.CreateModelMixin, mixins.UpdateModelMixin,
-                          DestroyModelMixin):
+class OrganizationViewSet(viewsets.ModelViewSet):
+    http_method_names = ['get', 'post', 'put', 'delete', 'options']
     serializer_class = OrganizationSerializer
     queryset = Organization.objects.all()
+    exc = OrganizationDoesNotExist
+
+    def get_object(self):
+        return _get_object(self)
+
+    def destroy(self, request, pk=None):
+        return _destroy(self, request)
