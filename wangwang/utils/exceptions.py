@@ -37,7 +37,7 @@ class InvalidToken(BaseException):
 
 class ObjectDoesNotExist(BaseException):
     status = 1003
-    msg = ErrorMsg.INVALID_TOKEN
+    msg = ErrorMsg.OBJECT_DOES_NOT_EXIST
 
 
 class UsertDoesNotExist(ObjectDoesNotExist):
@@ -52,3 +52,11 @@ class PasswordIncorrect(ObjectDoesNotExist):
 class ValidationError(BaseException):
     status = 1005
     msg = ErrorMsg.VALIDATION_ERROR
+
+
+class RoleDoesNoeExist(ObjectDoesNotExist):
+    msg = ErrorMsg.ROLE_DOES_NOE_EXIST
+
+
+class OrganizationDoesNotExist(ObjectDoesNotExist):
+    msg = ErrorMsg.ORGANIZATION_DOES_NOT_EXIST
