@@ -1,10 +1,11 @@
-from rest_framework import generics, mixins, views, viewsets
+from rest_framework import generics, viewsets
 from rest_framework.response import Response
 
 from utils.drf import destroy as _destroy
 from utils.drf import get_object as _get_object
-from utils.exceptions import (OrganizationDoesNotExist, PasswordIncorrect, RoleDoesNoeExist, UsertDoesNotExist,
-                              ValidationError)
+from utils.exceptions import (
+    OrganizationDoesNotExist, PasswordIncorrect, RoleDoesNoeExist, UsertDoesNotExist, ValidationError
+)
 
 from .models import Organization, Role, Token, User
 from .serializers import LoginSerializer, OrganizationSerializer, RoleSerializer, UserSerializer

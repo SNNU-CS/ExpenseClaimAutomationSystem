@@ -141,7 +141,8 @@ REST_FRAMEWORK = {
     'wangwang.wangwang.my_exception_handler',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         # 'rest_framework.authentication.BasicAuthentication',
-        'wangwang.wangwang.MyAuthentication', ),
+        'wangwang.wangwang.MyAuthentication',
+    ),
 }
 AUTH_CONFIG = {
     # 'AUTH_EXCLUDE_PATH': ['/api/account/login/'],
