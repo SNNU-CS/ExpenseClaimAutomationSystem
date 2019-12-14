@@ -37,20 +37,24 @@ class User(AbstractBaseUser):
     is_active = models.BooleanField(
         _('active'),
         default=True,
-        help_text=_('Designates whether this user should be treated as active. '
-                    'Unselect this instead of deleting accounts.'),
+        help_text=_(
+            'Designates whether this user should be treated as active. '
+            'Unselect this instead of deleting accounts.'
+        ),
     )
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=150, blank=True)
     email = models.EmailField(_('email address'), blank=True)
     avatar = models.ImageField(_('avater'), upload_to=user_avatar_path, blank=True)
-    organization = models.ForeignKey('Organization',
-                                     verbose_name=_('organization'),
-                                     on_delete=models.SET_NULL,
-                                     null=True,
-                                     related_name='organization_users',
-                                     blank=True)
+    organization = models.ForeignKey(
+        'Organization',
+        verbose_name=_('organization'),
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='organization_users',
+        blank=True
+    )
     sex = models.CharField(_('sex'), max_length=10, choices=[('M', '男'), ('F', '女')], blank=True)
 
     def get_full_name(self):
@@ -85,12 +89,9 @@ def _default_expire_time():
 class Token(models.Model):
     token_length = settings.AUTH_CONFIG.get('TOKEN_LENGTH')
     token_expire = settings.AUTH_CONFIG.get('AUTH_TOKEN_EXPIRE')
-    user = models.ForeignKey('User',
-                             verbose_name=_("User"),
-                             related_name='auth_token',
-                             on_delete=models.CASCADE,
-                             null=True,
-                             blank=False)
+    user = models.ForeignKey(
+        'User', verbose_name=_("User"), related_name='auth_token', on_delete=models.CASCADE, null=True, blank=False
+    )
     created = models.DateTimeField(_('create time'), auto_now_add=True)
     expired = models.DateTimeField(_('token expire time'), default=_default_expire_time)
     token = models.TextField(_('token'), blank=True)

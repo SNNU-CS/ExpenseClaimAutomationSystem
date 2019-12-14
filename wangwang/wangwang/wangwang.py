@@ -9,7 +9,6 @@ from django.utils.deprecation import MiddlewareMixin
 from rest_framework import exceptions
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.renderers import JSONRenderer
-from rest_framework.response import Response
 
 from account.models import Token
 from utils.exceptions import AuthenticationFailed, BaseException, InvalidToken, UnknownException
