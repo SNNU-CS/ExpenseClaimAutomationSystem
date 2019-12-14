@@ -20,9 +20,9 @@ api.interceptors.request.use((config) => {
 
 //返回状态判断
 api.interceptors.response.use(res => {
-    if (res.data.status === 1000) {
+    if (res.data.status != 200) { // can user a table{status:type} in the future
         Message({
-            message: '发生未知错误,请稍后再试!',
+            message: res.data.msg,
             type: 'error'
         })
     }
