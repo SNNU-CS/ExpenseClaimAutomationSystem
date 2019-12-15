@@ -6,6 +6,8 @@ from .models import Organization, Role, Token, User
 class UserSerializer(serializers.ModelSerializer):
     organization = serializers.SerializerMethodField(read_only=True)
     roles = serializers.SerializerMethodField(read_only=True)
+    full_name = serializers.SerializerMethodField(read_only=True)
+    sex = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = User
@@ -16,6 +18,12 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_roles(self, obj):
         return [_.name for _ in obj.user_roles.all()]
+
+    def get_full_name(self, obj):
+        return obj.get_full_name()
+
+    def get_sex(self, obj):
+        return obj.get_sex_display()
 
 
 class TokenSerializer(serializers.ModelSerializer):

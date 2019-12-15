@@ -60,14 +60,14 @@ export default {
         text: "测试登录"
       },
       {
-        to: "/main/test",
+        to: "/main/dashboard",
         icon: "mdi-view-dashboard",
         text: "测试主路由"
       },
       {
-        to: "/main/dashboard",
-        icon: "mdi-view-dashboard",
-        text: "Dashboard"
+        to: "/main/user-management",
+        icon: "mdi-account",
+        text: "用户管理"
       },
       {
         to: "/main/user-profile",
