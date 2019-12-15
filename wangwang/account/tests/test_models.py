@@ -6,7 +6,7 @@ class UserTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
         User.objects.create(username='test1', password='test1')
-        User.objects.create(username='test2', first_name='张', last_name='三')
+        User.objects.create(username='test2', first_name='三', last_name='张')
 
     def test_user_display(self):
         test_user = User.objects.get(username='test1')
