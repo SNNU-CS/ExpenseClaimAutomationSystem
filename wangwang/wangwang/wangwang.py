@@ -77,6 +77,7 @@ class MyJSONRenderer(JSONRenderer):
     def render(self, data, accepted_media_type=None, renderer_context=None):
         if isinstance(data, procese_type):
             data = {'result': data, 'status': 200}
+            renderer_context['response'].status_code = 200
             return super().render(data, accepted_media_type=accepted_media_type, renderer_context=renderer_context)
         else:
             return super().render(data, accepted_media_type=accepted_media_type, renderer_context=renderer_context)
