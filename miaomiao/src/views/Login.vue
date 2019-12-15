@@ -41,7 +41,6 @@
 </template>
 
 <script>
-import api from "../api/auth";
 import router from "../router";
 export default {
   name: "Login",
@@ -62,7 +61,7 @@ export default {
         password: this.password
       };
       if (this.$refs.form.validate()) {
-        api.Login(parms).then(function(response) {
+        this.$api.Login(parms).then(function(response) {
           if (response.status === 200) {
             let result = response.result;
             localStorage.Token = result.token;

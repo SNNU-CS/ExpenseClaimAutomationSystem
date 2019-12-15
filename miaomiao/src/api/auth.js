@@ -1,11 +1,9 @@
 import request from '@/utils/request'
 
-export default {
-    Login(params) {
-        return request({
-            url: 'account/login/',
-            method: 'post',
-            data: params
-        })
-    }
+export function Login(params) {
+    return request({
+        url: 'account/login/',
+        method: 'post',
+        data: params
+    })
 }
