@@ -132,6 +132,7 @@ STATIC_ROOT = os.path.join(STATIC_DIR, 'static')
 # AUTH_USER_MODEL = 'account.User'
 
 MEDIA_ROOT = 'uploads'
+MEDIA_URL = "/media/"
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': ('wangwang.wangwang.MyJSONRenderer', 'rest_framework.renderers.BrowsableAPIRenderer'),

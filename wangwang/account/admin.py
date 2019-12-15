@@ -41,7 +41,7 @@ class Tokendmin(admin.ModelAdmin):
         'expired',
         'token',
     )
-    ordering = ('id', )
+    ordering = ('-id', )
 
 
 @admin.register(Role)
