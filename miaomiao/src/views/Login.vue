@@ -62,20 +62,14 @@ export default {
       };
       if (this.$refs.form.validate()) {
         this.$api.Login(parms).then(function(response) {
-          if (response.status === 200) {
-            let result = response.result;
-            localStorage.Token = result.token;
-            localStorage.username = result.username;
-            let name = result.user.last_name + result.user.first_name;
-            self.$message.success(
-              "登录成功!欢迎回来," +
-                result.user.organization +
-                "的" +
-                name +
-                "!"
-            );
-            router.push("main");
-          }
+          let result = response.result;
+          localStorage.Token = result.token;
+          localStorage.username = result.user.username;
+          let name = result.user.full_name;
+          self.$message.success(
+            "登录成功!欢迎回来," + result.user.organization + "的" + name + "!"
+          );
+          router.push("main");
         });
       }
     }

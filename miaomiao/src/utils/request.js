@@ -25,8 +25,12 @@ api.interceptors.response.use(res => {
             message: res.data.msg,
             type: 'error'
         })
+        // return Promise.reject(res.data.msg);
+        return new Promise(() => { });
     }
-    return res.data;
+    else {
+        return res.data;
+    }
 }, error => {
     if (error.response.status === 401) {
         localStorage.clear();
@@ -45,8 +49,6 @@ api.interceptors.response.use(res => {
             type: 'error'
         })
     }
-    else {
-        return Promise.reject(error);
-    }
+    return Promise.reject(error);
 });
 export default api
