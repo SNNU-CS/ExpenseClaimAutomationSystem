@@ -4,26 +4,17 @@ from .models import Organization, Role, Token, User
 
 
 class UserSerializer(serializers.ModelSerializer):
-    organization = serializers.SerializerMethodField(read_only=True)
+    organization = serializers.StringRelatedField(read_only=True)
     roles = serializers.SerializerMethodField(read_only=True)
-    full_name = serializers.SerializerMethodField(read_only=True)
-    sex = serializers.SerializerMethodField(read_only=True)
+    full_name = serializers.CharField(source='get_full_name', read_only=True)
+    sex = serializers.CharField(source='get_sex_display', read_only=True)
 
     class Meta:
         model = User
         exclude = ('password', )
 
-    def get_organization(self, obj):
-        return obj.organization.org_name if obj.organization else None
-
     def get_roles(self, obj):
         return [_.name for _ in obj.user_roles.all()]
-
-    def get_full_name(self, obj):
-        return obj.get_full_name()
-
-    def get_sex(self, obj):
-        return obj.get_sex_display()
 
 
 class TokenSerializer(serializers.ModelSerializer):
@@ -33,23 +24,15 @@ class TokenSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializer(serializers.Serializer):
-    username = serializers.CharField(required=True)
+    username = serializers.CharField(write_only=True, required=True)
     password = serializers.CharField(write_only=True, required=True)
-    user = serializers.SerializerMethodField(read_only=True)
-    token = serializers.SerializerMethodField(read_only=True)
+    user = UserSerializer(read_only=True)
+    token = serializers.CharField(read_only=True)
 
-    # in order to use serializer.save(user=user, token=token)
     def create(self, validated_data):
-        return validated_data
-
-    def get_token(self, obj):
-        return obj['token'].token
-
-    def get_user(self, obj):
-        data = UserSerializer(obj['user']).data
-        del data['is_active']
-        del data['username']
-        return data
+        token = Token.objects.create(user=validated_data['user'])
+        validated_data['token'] = token.token
+        return token
 
 
 class RoleSerializer(serializers.ModelSerializer):

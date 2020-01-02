@@ -7,7 +7,7 @@ from utils.exceptions import (
     OrganizationDoesNotExist, PasswordIncorrect, RoleDoesNoeExist, UsertDoesNotExist, ValidationError
 )
 
-from .models import Organization, Role, Token, User
+from .models import Organization, Role, User
 from .serializers import LoginSerializer, OrganizationSerializer, RoleSerializer, UserSerializer
 from .signals import user_logged_in
 
@@ -28,8 +28,7 @@ class AuthView(generics.GenericAPIView):
         user = query.get()
         if not user.authenticate(password):
             raise PasswordIncorrect
-        token = Token.objects.create(user=user)
-        serializer.save(user=user, token=token)
+        serializer.save(user=user)
         user_logged_in.send(sender=user.__class__, user=user)
         return Response(serializer.data)
 
