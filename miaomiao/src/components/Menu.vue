@@ -65,7 +65,7 @@ export default {
         text: "测试主路由"
       },
       {
-        to: "/main/user-management",
+        to: "/main/user",
         icon: "mdi-account",
         text: "用户管理"
       },

@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Main from './views/Main'
 import Login from './views/Login'
 import DashBoard from './views/DashBoard'
-import UserManagement from "./views/userManagement/userManagement.vue"
+import User from "./views/account/User.vue"
 Vue.use(Router)
 
 export default new Router({
@@ -23,8 +23,8 @@ export default new Router({
           component: DashBoard
         },
         {
-          path: 'user-management',
-          component: UserManagement
+          path: 'user',
+          component: User
         }
       ]
     },
