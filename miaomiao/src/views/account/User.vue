@@ -20,7 +20,7 @@
           <v-icon color="red" small @click="deleteUser(item)">mdi-delete</v-icon>
         </template>
         <template v-slot:item.sex="{ item }">
-          <span>{{item.sex == 'M'?'男': item.sex==='F'?'--':'女'}}</span>
+          <span>{{item.sex == 'M'?'男': item.sex==='F'?'女':'--'}}</span>
         </template>
         <template v-slot:item.roles="{item}">
           <v-chip color="info" v-for="(value,index) in item.roles" v-bind:key="index">{{value.name}}</v-chip>
