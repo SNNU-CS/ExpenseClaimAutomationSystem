@@ -16,7 +16,6 @@
                 label="用户名"
               ></v-text-field>
               <v-text-field
-                dense
                 v-if="ifAdd"
                 placeholder="A-Z 0-9 a-z"
                 v-model="editedUser.password"
@@ -62,7 +61,7 @@
               ></v-autocomplete>
             </v-row>
             <v-row cols="12" sm="6" md="4">
-              <v-checkbox v-model="editedUser.is_active" label="是否禁用"></v-checkbox>
+              <v-checkbox v-model="editedUser.is_active" label="是否激活"></v-checkbox>
             </v-row>
           </v-col>
         </v-form>
