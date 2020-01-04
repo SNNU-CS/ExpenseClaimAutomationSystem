@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="myDialog" scrollable persistent max-width="50%" transition="dialog-transition">
+  <v-dialog v-model="myDialog" scrollable persistent max-width="40%" transition="dialog-transition">
     <v-card>
       <v-card-title>
         <span class="headline">{{formTitle}}</span>
@@ -7,11 +7,64 @@
 
       <v-card-text>
         <v-form ref="form" v-model="form">
-          <v-row>
-            <v-col cols="12" sm="6" md="4">
-              <v-text-field v-model="editedUser.username" label="用户名"></v-text-field>
-            </v-col>
-          </v-row>
+          <v-col>
+            <v-row cols="12" sm="6" md="4">
+              <v-text-field
+                placeholder="username"
+                :disabled="!ifAdd"
+                v-model="editedUser.username"
+                label="用户名"
+              ></v-text-field>
+              <v-text-field
+                dense
+                v-if="ifAdd"
+                placeholder="A-Z 0-9 a-z"
+                v-model="editedUser.password"
+                label="密码"
+                :append-icon="showPwd ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="showPwd ? 'text' : 'password'"
+                @click:append="showPwd = !showPwd"
+              ></v-text-field>
+            </v-row>
+            <v-row cols="12" sm="6" md="4">
+              <v-text-field v-model="editedUser.last_name" label="姓氏" placeholder="张"></v-text-field>
+              <v-text-field v-model="editedUser.first_name" label="名字" placeholder="三"></v-text-field>
+              <v-radio-group label="性别" v-model="editedUser.sex" row>
+                <v-radio
+                  v-for="item in sexChoices"
+                  :key="item.key"
+                  :label="item.value"
+                  :value="item.key"
+                ></v-radio>
+              </v-radio-group>
+            </v-row>
+            <v-row cols="12" sm="6" md="4">
+              <v-text-field v-model="editedUser.email" label="邮箱" placeholder="xxx@xx.com"></v-text-field>
+              <v-select
+                v-model="editedUser.organization"
+                item-text="org_name"
+                item-value="id"
+                :items="orgsList"
+                label="学院"
+                @focus="getOrgs()"
+              ></v-select>
+            </v-row>
+            <v-row cols="12" sm="6" md="4">
+              <v-autocomplete
+                v-model="editedUser.roles"
+                :items="rolesList"
+                chips
+                multiple
+                label="角色"
+                item-text="name"
+                item-value="id"
+                @focus="getRoles()"
+              ></v-autocomplete>
+            </v-row>
+            <v-row cols="12" sm="6" md="4">
+              <v-checkbox v-model="editedUser.is_active" label="是否禁用"></v-checkbox>
+            </v-row>
+          </v-col>
         </v-form>
       </v-card-text>
 
@@ -54,15 +107,26 @@ export default {
         username: "",
         first_name: "",
         last_name: "",
-        sex: "",
-        email: ""
+        sex: "M",
+        email: "",
+        roles: [],
+        organization: null,
+        password: ""
       },
       myDialog: this.dialog,
-      form: ""
+      form: "",
+      orgsList: [],
+      rolesList: [],
+      showPwd: false,
+      sexChoices: [{ key: "M", value: "男" }, { key: "F", value: "女" }]
     };
   },
   created() {
     this.editedUser = Object.assign({}, this.defaultUser);
+  },
+  mounted() {
+    this.getOrgs();
+    this.getRoles();
   },
   computed: {
     formTitle() {
@@ -80,32 +144,44 @@ export default {
   methods: {
     save() {
       let self = this;
-      let params = {
-        username: this.editedUser.username
-      };
       if (this.$refs.form.validate()) {
         if (!this.ifAdd) {
-          this.$api.EditUser(this.userId, params).then(function(response) {
-            self.$message.success(
-              "编辑用户'" + response.result.username + "'成功!"
-            );
-            self.$emit("listUser");
-          });
+          this.$api
+            .UpdateUser(this.userId, this.editedUser)
+            .then(function(response) {
+              self.$message.success(
+                "编辑用户'" + response.result.username + "'成功!"
+              );
+              self.$emit("listUser");
+              self.close();
+            });
         } else {
-          this.$api.AddUser(params).then(function(response) {
+          this.$api.CreateUser(this.editedUser).then(function(response) {
             self.$message.success(
               "新增用户'" + response.result.username + "'成功!"
             );
             self.$emit("listUser");
+            self.close();
           });
         }
-        this.close();
       }
     },
     close() {
       this.editedUser = Object.assign({}, this.defaultUser);
       this.myDialog = false;
       this.$emit("close");
+    },
+    getOrgs() {
+      let self = this;
+      this.$api.ListOrg().then(function(response) {
+        self.orgsList = response.result;
+      });
+    },
+    getRoles() {
+      let self = this;
+      this.$api.ListRole().then(function(response) {
+        self.rolesList = response.result;
+      });
     }
   }
 };

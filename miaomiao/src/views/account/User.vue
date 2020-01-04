@@ -16,11 +16,18 @@
           <span>{{item.username}}</span>
         </template>
         <template v-slot:item.action="{ item }">
-          <v-icon small @click="editUser(item)">mdi-pencil</v-icon>
-          <v-icon small @click="deleteUser(item)">mdi-delete</v-icon>
+          <v-icon small color="warning" @click="editUser(item)">mdi-pencil</v-icon>
+          <v-icon color="red" small @click="deleteUser(item)">mdi-delete</v-icon>
+        </template>
+        <template v-slot:item.sex="{ item }">
+          <span>{{item.sex == 'M'?'男': item.sex==='F'?'--':'女'}}</span>
         </template>
         <template v-slot:item.roles="{item}">
-          <v-chip color="info" v-for="(value,index) in item.roles" v-bind:key="index">{{value}}</v-chip>
+          <v-chip color="info" v-for="(value,index) in item.roles" v-bind:key="index">{{value.name}}</v-chip>
+        </template>
+        <template v-slot:item.is_active="{item}">
+          <v-icon color="success" v-if="item.is_active">mdi-check-circle-outline</v-icon>
+          <v-icon color="red" v-else>mdi-cancel</v-icon>
         </template>
       </v-data-table>
     </v-card-text>
@@ -47,10 +54,11 @@ export default {
         { text: "ID", sortable: true, value: "id" },
         { text: "用户名", value: "username" },
         { text: "姓名", value: "full_name" },
-        { text: "学院", value: "organization" },
+        { text: "学院", value: "organization.org_name" },
         { text: "角色", value: "roles" },
         { text: "邮箱", value: "email" },
         { text: "性别", value: "sex" },
+        { text: "是否禁用", value: "is_active" },
         { text: "加入日期", value: "date_joined" },
         { text: "上次登录日期", value: "last_login" },
         { text: "操作", value: "action", sortable: false }
@@ -77,6 +85,13 @@ export default {
       this.ifAdd = false;
       this.userId = item.id;
       this.user = Object.assign({}, item);
+      let roles_id = [];
+      for (let i = 0; i < this.user.roles.length; i++) {
+        roles_id.push(this.user.roles[i].id);
+      }
+      this.user.roles = roles_id;
+      this.user.organization =
+        this.user.organization === null ? null : this.user.organization.id;
       this.dialog = true;
     },
     deleteUser(item) {

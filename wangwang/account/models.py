@@ -46,7 +46,7 @@ class User(AbstractBaseUser):
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=150, blank=True)
     email = models.EmailField(_('email address'), blank=True)
-    avatar = models.ImageField(_('avater'), upload_to=user_avatar_path, blank=True)
+    avatar = models.ImageField(_('avater'), upload_to=user_avatar_path, blank=True, null=True)
     organization = models.ForeignKey(
         'Organization',
         verbose_name=_('organization'),
