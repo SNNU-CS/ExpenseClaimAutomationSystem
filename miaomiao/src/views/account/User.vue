@@ -58,7 +58,7 @@ export default {
         { text: "角色", value: "roles" },
         { text: "邮箱", value: "email" },
         { text: "性别", value: "sex" },
-        { text: "是否禁用", value: "is_active" },
+        { text: "是否激活", value: "is_active" },
         { text: "加入日期", value: "date_joined" },
         { text: "上次登录日期", value: "last_login" },
         { text: "操作", value: "action", sortable: false }
