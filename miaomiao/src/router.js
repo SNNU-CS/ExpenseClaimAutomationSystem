@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Main from './views/Main'
 import Login from './views/Login'
 import DashBoard from './views/DashBoard'
-import User from "./views/account/User.vue"
+import User from './views/account/User.vue'
 Vue.use(Router)
 
 export default new Router({

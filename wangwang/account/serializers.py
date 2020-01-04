@@ -4,17 +4,55 @@ from .models import Organization, Role, Token, User
 
 
 class UserSerializer(serializers.ModelSerializer):
-    organization = serializers.StringRelatedField(read_only=True)
+    organization = serializers.SerializerMethodField(read_only=True)
     roles = serializers.SerializerMethodField(read_only=True)
     full_name = serializers.CharField(source='get_full_name', read_only=True)
-    sex = serializers.CharField(source='get_sex_display', read_only=True)
 
     class Meta:
         model = User
         exclude = ('password', )
 
     def get_roles(self, obj):
-        return [_.name for _ in obj.user_roles.all()]
+        return [{'name': role.name, 'id': role.id} for role in obj.user_roles.all()]
+
+    def get_organization(self, obj):
+        organization = obj.organization
+        return {'org_name': organization.org_name, 'id': organization.id} if organization else None
+
+
+class CreateUserSerializer(serializers.ModelSerializer):
+    roles = serializers.ListField(child=serializers.IntegerField(), required=False)
+
+    def create(self, validated_data):
+        roles = validated_data.pop('roles')
+        user = User.objects.create(**validated_data)
+        user.user_roles.set(roles)
+        return user
+
+    def to_representation(self, obj):
+        return UserSerializer(obj).data
+
+    class Meta:
+        model = User
+        exclude = ('is_active', )
+        read_only_fields = ['date_joined', 'last_login']
+
+
+class UpdateUserSerializer(serializers.ModelSerializer):
+    roles = serializers.ListField(child=serializers.IntegerField(), required=False)
+
+    def update(self, instance, validated_data):
+        roles = validated_data.pop('roles')
+        instance.user_roles.set(roles)
+        return super().update(instance, validated_data)
+
+    def to_representation(self, obj):
+        return UserSerializer(obj).data
+
+    class Meta:
+        model = User
+        exclude = ('username', 'password')
+        read_only_fields = ['date_joined', 'last_login']
 
 
 class TokenSerializer(serializers.ModelSerializer):

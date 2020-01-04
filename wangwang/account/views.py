@@ -1,4 +1,5 @@
 from rest_framework import generics, viewsets
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from utils.drf import destroy as _destroy
@@ -8,8 +9,12 @@ from utils.exceptions import (
 )
 
 from .models import Organization, Role, User
-from .serializers import LoginSerializer, OrganizationSerializer, RoleSerializer, UserSerializer
 from .signals import user_logged_in
+
+from .serializers import (  # isort:skip
+    CreateUserSerializer, LoginSerializer, OrganizationSerializer, RoleSerializer, UpdateUserSerializer,
+    UserSerializer
+)
 
 
 class AuthView(generics.GenericAPIView):
@@ -39,11 +44,22 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     exc = UsertDoesNotExist
 
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return CreateUserSerializer
+        elif self.action == 'update':
+            return UpdateUserSerializer
+        return super().get_serializer_class()
+
     def get_object(self):
         return _get_object(self)
 
     def destroy(self, request, pk=None):
         return _destroy(self, request)
+
+    @action(detail=True, methods=['post'])
+    def set_password(self, request, pk=None):
+        pass
 
 
 class RoleViewSet(viewsets.ModelViewSet):
