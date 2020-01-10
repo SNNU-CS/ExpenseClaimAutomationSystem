@@ -1,6 +1,6 @@
 FROM node:lts-alpine as build-stage
 
-MAINTAINER Qi Zhao <zhaoqi99@outlook.com>
+LABEL maintainer="zhaoqi99@outlook.com"
 
 WORKDIR /app
 COPY package*.json ./
@@ -11,7 +11,7 @@ RUN cnpm run build
 
 FROM nginx:stable-alpine as production-stage
 
-MAINTAINER Qi Zhao <zhaoqi99@outlook.com>
+LABEL maintainer="zhaoqi99@outlook.com"
 
 RUN rm /etc/nginx/conf.d/default.conf
 RUN rm /etc/nginx/nginx.conf
