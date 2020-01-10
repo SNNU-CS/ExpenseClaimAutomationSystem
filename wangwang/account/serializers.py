@@ -1,3 +1,4 @@
+# from django.contrib.auth.tokens import default_token_generator
 from rest_framework import serializers
 
 from .models import Organization, Role, Token, User
@@ -17,7 +18,13 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_organization(self, obj):
         organization = obj.organization
-        return {'org_name': organization.org_name, 'id': organization.id} if organization else None
+        return {
+            'org_name': organization.org_name,
+            'id': organization.id
+        } if organization else {
+            'org_name': '',
+            'id': None
+        }
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
