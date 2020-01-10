@@ -60,3 +60,8 @@ class RoleDoesNoeExist(ObjectDoesNotExist):
 
 class OrganizationDoesNotExist(ObjectDoesNotExist):
     msg = ErrorMsg.ORGANIZATION_DOES_NOT_EXIST
+
+
+class UserIsNotActive(BaseException):
+    status = 1006
+    msg = ErrorMsg.USER_IS_NOT_ACTIVE

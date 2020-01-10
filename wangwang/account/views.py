@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from utils.drf import destroy as _destroy
 from utils.drf import get_object as _get_object
 from utils.exceptions import (
-    OrganizationDoesNotExist, PasswordIncorrect, RoleDoesNoeExist, UsertDoesNotExist, ValidationError
+    OrganizationDoesNotExist, PasswordIncorrect, RoleDoesNoeExist, UserIsNotActive, UsertDoesNotExist, ValidationError
 )
 
 from .models import Organization, Role, User
@@ -31,6 +31,8 @@ class AuthView(generics.GenericAPIView):
         if query.count() == 0:
             raise UsertDoesNotExist
         user = query.get()
+        if user.is_active is False:
+            raise UserIsNotActive
         if not user.authenticate(password):
             raise PasswordIncorrect
         serializer.save(user=user)
