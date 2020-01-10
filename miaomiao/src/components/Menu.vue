@@ -28,12 +28,7 @@
       <!-- Bug in Vuetify for first child of v-list not receiving proper border-radius -->
       <div />
 
-      <v-list-item
-        v-for="(link, i) in links"
-        :key="i"
-        :to="link.to"
-        active-class="primary white--text"
-      >
+      <v-list-item v-for="(link, i) in links" :key="i" :to="link.to" active-class="primary white--text">
         <v-list-item-action>
           <v-icon>{{ link.icon }}</v-icon>
         </v-list-item-action>
@@ -60,12 +55,12 @@ export default {
         text: "测试登录"
       },
       {
-        to: "/main/dashboard",
+        to: "/dashboard",
         icon: "mdi-view-dashboard",
-        text: "测试主路由"
+        text: "仪表盘"
       },
       {
-        to: "/main/user",
+        to: "/account/user",
         icon: "mdi-account",
         text: "用户管理"
       },

@@ -47,11 +47,8 @@ export default {
   data: () => ({
     username: "",
     password: "",
-    nameRules: [
-      v => !!v || "用户名是必填项",
-      v => (v && v.length <= 10) || "用户名长度不能超过10字符"
-    ],
-    passwordRules: [v => !!v || "密码是必填项"]
+    nameRules: [(v) => !!v || "用户名是必填项", (v) => (v && v.length <= 10) || "用户名长度不能超过10字符"],
+    passwordRules: [(v) => !!v || "密码是必填项"]
   }),
   methods: {
     login() {
@@ -66,10 +63,8 @@ export default {
           localStorage.Token = result.token;
           localStorage.username = result.user.username;
           let name = result.user.full_name;
-          self.$message.success(
-            "登录成功!欢迎回来," + result.user.organization.org_name + "的" + name + "!"
-          );
-          router.push("main");
+          self.$message.success("登录成功!欢迎回来," + result.user.organization.org_name + "的" + name + "!");
+          router.push("/");
         });
       }
     }
