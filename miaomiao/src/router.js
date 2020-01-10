@@ -11,19 +11,15 @@ export default new Router({
   routes: [
     {
       path: "/",
-      redirect: "/login"
-      // 以后前端加了登录校验,记得把这里改成main
-    },
-    {
-      path: "/main",
       component: Main,
+      redirect: "/dashboard",
       children: [
         {
           path: "dashboard",
           component: DashBoard
         },
         {
-          path: "user",
+          path: "account/user",
           component: User
         }
       ]
