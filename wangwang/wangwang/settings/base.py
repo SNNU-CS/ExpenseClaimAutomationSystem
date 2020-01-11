@@ -148,5 +148,5 @@ REST_FRAMEWORK = {
 AUTH_CONFIG = {
     # 'AUTH_EXCLUDE_PATH': ['/api/account/login/'],
     'AUTH_TOKEN_EXPIRE': timedelta(minutes=10),
-    'TOKEN_LENGTH': 20
+    'TOKEN_LENGTH': 40
 }

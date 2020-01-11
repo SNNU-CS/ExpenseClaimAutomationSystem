@@ -5,6 +5,7 @@ from django.core.exceptions import PermissionDenied
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 from django.http import Http404, JsonResponse
+from django.utils import timezone
 from django.utils.deprecation import MiddlewareMixin
 from rest_framework import exceptions
 from rest_framework.authentication import BaseAuthentication
@@ -23,7 +24,8 @@ class MyAuthentication(BaseAuthentication):
         token = Token.objects.filter(token=raw_token).first()
         if not (token and token.verify()):
             raise InvalidToken
-        # token.refresf_exp()
+        if token.expired - timezone.now() < Token.token_expire:  # token快要过期了
+            token.refresf_exp()
         request.user = token.user
         return token.user, token.token
 
