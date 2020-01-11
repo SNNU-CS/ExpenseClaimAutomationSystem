@@ -8,24 +8,24 @@
       <v-text-field v-model="search" append-icon="mdi-magnify" label="搜索" single-line hide-details></v-text-field>
     </v-card-title>
     <v-card-text>
-      <v-data-table :headers="headers" :items="users" sort-by="id" :search="search">
-        <template v-slot:item.username="{item}">
+      <v-data-table :headers="headers" :items="users" sort-by="id" :search="search" :loading="loading">
+        <template v-slot:item.username="{ item }">
           <v-avatar v-if="item.avatar" size="30px">
             <v-img :src="item.avatar"></v-img>
           </v-avatar>
-          <span>{{item.username}}</span>
+          <span>{{ item.username }}</span>
         </template>
         <template v-slot:item.action="{ item }">
           <v-icon small color="warning" @click="editUser(item)">mdi-pencil</v-icon>
           <v-icon color="red" small @click="deleteUser(item)">mdi-delete</v-icon>
         </template>
         <template v-slot:item.sex="{ item }">
-          <span>{{item.sex == 'M'?'男': item.sex==='F'?'女':'--'}}</span>
+          <span>{{ item.sex == "M" ? "男" : item.sex === "F" ? "女" : "--" }}</span>
         </template>
-        <template v-slot:item.roles="{item}">
-          <v-chip color="info" v-for="(value,index) in item.roles" v-bind:key="index">{{value.name}}</v-chip>
+        <template v-slot:item.roles="{ item }">
+          <v-chip color="info" v-for="(value, index) in item.roles" v-bind:key="index">{{ value.name }}</v-chip>
         </template>
-        <template v-slot:item.is_active="{item}">
+        <template v-slot:item.is_active="{ item }">
           <v-icon color="success" v-if="item.is_active">mdi-check-circle-outline</v-icon>
           <v-icon color="red" v-else>mdi-cancel</v-icon>
         </template>
@@ -68,7 +68,8 @@ export default {
       ifAdd: true,
       userId: -1,
       dialog: false,
-      user: {}
+      user: {},
+      loading: true
     };
   },
   created() {
@@ -77,7 +78,9 @@ export default {
   methods: {
     listUser() {
       let self = this;
+      self.loading = true;
       this.$api.ListUser().then(function(response) {
+        self.loading = false;
         self.users = response.result;
       });
     },
@@ -90,8 +93,7 @@ export default {
         roles_id.push(this.user.roles[i].id);
       }
       this.user.roles = roles_id;
-      this.user.organization =
-        this.user.organization === null ? null : this.user.organization.id;
+      this.user.organization = this.user.organization === null ? null : this.user.organization.id;
       this.dialog = true;
     },
     deleteUser(item) {
@@ -111,5 +113,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
