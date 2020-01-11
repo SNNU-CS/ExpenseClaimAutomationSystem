@@ -144,6 +144,8 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.BasicAuthentication',
         'wangwang.wangwang.MyAuthentication',
     ),
+    'DATETIME_FORMAT':
+    "%Y-%m-%d %H:%M:%S"
 }
 AUTH_CONFIG = {
     # 'AUTH_EXCLUDE_PATH': ['/api/account/login/'],
