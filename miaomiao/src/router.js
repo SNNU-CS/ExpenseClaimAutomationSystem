@@ -4,6 +4,7 @@ import Main from "./views/Main";
 import Login from "./views/Login";
 import DashBoard from "./views/DashBoard";
 import User from "./views/account/User.vue";
+import Role from "./views/account/Role.vue";
 Vue.use(Router);
 
 export default new Router({
@@ -21,6 +22,10 @@ export default new Router({
         {
           path: "account/user",
           component: User
+        },
+        {
+          path: "account/role",
+          component: Role
         }
       ]
     },
