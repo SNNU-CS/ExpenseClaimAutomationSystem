@@ -35,7 +35,9 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         roles = validated_data.pop('roles')
-        user = User.objects.create(**validated_data)
+        user = User(**validated_data)
+        user.set_password(validated_data['password'])
+        user.save()
         user.user_roles.set(roles)
         return user
 

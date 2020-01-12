@@ -67,10 +67,6 @@ class User(AbstractBaseUser):
     def authenticate(self, password):
         return self.check_password(password)
 
-    def save(self, *args, **kwargs):
-        self.set_password(self.password)
-        super().save(*args, **kwargs)
-
     def delete(self):
         self.is_active = False
         self.save(update_fields=['is_active'])
