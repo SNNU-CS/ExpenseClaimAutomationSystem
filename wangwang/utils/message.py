@@ -12,3 +12,4 @@ class ErrorMsg:
     ROLE_DOES_NOE_EXIST = _('Role does not exists.')
     ORGANIZATION_DOES_NOT_EXIST = _('Organization does not exists.')
     USER_IS_NOT_ACTIVE = _('User is not active.')
+    PASSWORD_MISMATCH = _('The two password fields didn\'t match.')
