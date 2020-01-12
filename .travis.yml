@@ -7,6 +7,9 @@ cache:
   - pip
   - yarn
   - npm
+before_script:
+  - COMMIT_ID=$(git rev-parse --short HEAD)
+  - echo $COMMIT_ID
 install:
   - pip install -r wangwang/requirements.txt
   - pip install -r wangwang/dev-requirements.txt
@@ -36,32 +39,28 @@ jobs:
       install: skip
       python: 3.6
       script:
-        - COMMIT_ID=$(git rev-parse --short HEAD)
-        - BRANCH_NAME=$(git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3)
         - cd wangwang
         - docker build -t wangwang .
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker images
         - docker tag wangwang $DOCKER_USERNAME/wangwang:$COMMIT_ID
         - docker push $DOCKER_USERNAME/wangwang:$COMMIT_ID
-        - if [[ ${BRANCH_NAME} == "master" ]]; then docker tag wangwang $DOCKER_USERNAME/wangwang:latest; fi;
-        - if [[ ${BRANCH_NAME} == "master" ]]; then docker push $DOCKER_USERNAME/wangwang:latest; fi;
+        - if [ "$TRAVIS_BRANCH" = "master" ]; then docker tag wangwang $DOCKER_USERNAME/wangwang:latest; fi;
+        - if [ "$TRAVIS_BRANCH" = "master" ]; then docker push $DOCKER_USERNAME/wangwang:latest; fi;
         - echo "Build backend image Success!"
         - docker run --name=wangwang  --net=host --restart=always -d $DOCKER_USERNAME/wangwang:latest
     - stage: build
       name: "Build frontend image"
       install: skip
       script:
-        - COMMIT_ID=$(git rev-parse --short HEAD)
-        - BRANCH_NAME=$(git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3)
         - cd miaomiao
         - docker build -t miaomiao .
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker images
         - docker tag miaomiao $DOCKER_USERNAME/miaomiao:$COMMIT_ID
         - docker push $DOCKER_USERNAME/miaomiao:$COMMIT_ID
-        - if [[ ${BRANCH_NAME} == "master" ]]; then docker tag miaomiao $DOCKER_USERNAME/miaomiao:latest; fi;
-        - if [[ ${BRANCH_NAME} == "master" ]]; then docker push $DOCKER_USERNAME/miaomiao:latest; fi;
+        - if [ "$TRAVIS_BRANCH" = "master" ]; then docker tag miaomiao $DOCKER_USERNAME/miaomiao:latest; fi;
+        - if [ "$TRAVIS_BRANCH" = "master" ]; then docker push $DOCKER_USERNAME/miaomiao:latest; fi;
         - echo "Build frontend image Success!"
         - docker run --name=miaomiao  --net=host --restart=always -d $DOCKER_USERNAME/miaomiao:latest
     - stage: deploy
