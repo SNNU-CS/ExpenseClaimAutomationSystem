@@ -1,6 +1,9 @@
 # from django.contrib.auth.tokens import default_token_generator
 from rest_framework import serializers
 
+from utils.exceptions import ValidationError
+from utils.message import ErrorMsg
+
 from .models import Organization, Role, Token, User
 
 
@@ -60,6 +63,16 @@ class UpdateUserSerializer(serializers.ModelSerializer):
         model = User
         exclude = ('username', 'password')
         read_only_fields = ['date_joined', 'last_login']
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    password = serializers.CharField(write_only=True, required=True)
+    password2 = serializers.CharField(write_only=True, required=True)
+
+    def validate(self, data):
+        if data['password'] != data['password2']:
+            raise ValidationError(ErrorMsg.PASSWORD_MISMATCH)
+        return data
 
 
 class TokenSerializer(serializers.ModelSerializer):

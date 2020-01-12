@@ -9,12 +9,11 @@ from utils.exceptions import (
 )
 
 from .models import Organization, Role, User
-from .signals import user_logged_in
-
-from .serializers import (  # isort:skip
-    CreateUserSerializer, LoginSerializer, OrganizationSerializer, RoleSerializer, UpdateUserSerializer,
-    UserSerializer
+from .serializers import (
+    ChangePasswordSerializer, CreateUserSerializer, LoginSerializer, OrganizationSerializer, RoleSerializer,
+    UpdateUserSerializer, UserSerializer
 )
+from .signals import user_logged_in
 
 
 class AuthView(generics.GenericAPIView):
@@ -51,6 +50,8 @@ class UserViewSet(viewsets.ModelViewSet):
             return CreateUserSerializer
         elif self.action == 'update':
             return UpdateUserSerializer
+        elif self.action == 'set_password':
+            return ChangePasswordSerializer
         return super().get_serializer_class()
 
     def get_object(self):
@@ -59,9 +60,16 @@ class UserViewSet(viewsets.ModelViewSet):
     def destroy(self, request, pk=None):
         return _destroy(self, request)
 
-    @action(detail=True, methods=['post'])
+    @action(detail=True, methods=['post'], url_path="password")
     def set_password(self, request, pk=None):
-        pass
+        user = self.get_object()
+        serializer = ChangePasswordSerializer(data=request.data)
+        if serializer.is_valid():
+            user.set_password(serializer.validated_data['password'])
+            user.save()
+            return Response('password set success')
+        else:
+            return Response(serializer.errors)
 
 
 class RoleViewSet(viewsets.ModelViewSet):
