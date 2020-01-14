@@ -1,36 +1,26 @@
 <template>
-  <v-footer
-    color="primary lighten-1"
-    padless
-  >
-    <v-row
-      justify="center"
-      no-gutters
-    >
-      <v-btn
-        v-for="link in links"
-        :key="link"
-        color="black"
-        text
-        rounded
-        class="my-2"
-      >
-        {{ link }}
-      </v-btn>
-    <v-btn icon="mdi-github-circle" href="https://github.com/snnucs/ExpenseClaimAutomationSystem">
-      <v-icon size="26px">mdi-github-circle</v-icon>
-    </v-btn>
-    </v-row>
+  <v-footer padless>
+    <v-card flat tile class="flex" color="primary">
+      <v-card-text class="py-1 text-center">
+        <v-btn v-for="(link, index) in links" :key="link" text class="white--text" :href="handles[index]">
+          {{ link }}
+        </v-btn>
+        <v-btn icon class="my-1 white--text" href="https://github.com/snnucs/ExpenseClaimAutomationSystem">
+          <v-icon class="fa-2x">mdi-github-circle</v-icon>
+        </v-btn>
+        <v-divider></v-divider>
+        <v-col class="primary text-center white--text py-1">
+          Copyright © {{ new Date().getFullYear() }} - <strong>陕西师范大学</strong>
+        </v-col>
+      </v-card-text>
+    </v-card>
   </v-footer>
 </template>
 <script>
-  export default {
-    data: () => ({
-      links: [
-        '用户帮助|',
-        '意见反馈|',
-        '联系我们|',
-      ],
-    }),
-  }
+export default {
+  data: () => ({
+    links: ["用户帮助", "意见反馈", "联系我们"],
+    handles: ["", "", "mailto:zhaoqi99@outlook.com"]
+  })
+};
 </script>

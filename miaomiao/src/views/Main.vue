@@ -9,8 +9,7 @@
         </transition>
       </v-container>
     </v-content>
-    <Footer app>
-    </Footer>
+    <Footer></Footer>
   </v-app>
 </template>
 
