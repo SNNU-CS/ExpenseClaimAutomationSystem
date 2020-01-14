@@ -9,15 +9,14 @@
         </transition>
       </v-container>
     </v-content>
-    <v-footer app>
-      <!-- -->
-    </v-footer>
+    <Footer></Footer>
   </v-app>
 </template>
 
 <script>
 import Menu from "../components/Menu";
 import ToolBar from "../components/ToolBar";
+import Footer from "../components/Footer";
 export default {
   name: "main",
   data() {
@@ -25,7 +24,8 @@ export default {
   },
   components: {
     Menu,
-    ToolBar
+    ToolBar,
+    Footer
   }
 };
 </script>
