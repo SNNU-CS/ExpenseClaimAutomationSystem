@@ -5,16 +5,15 @@ from rest_framework.response import Response
 from utils.drf import destroy as _destroy
 from utils.drf import get_object as _get_object
 from utils.exceptions import (
-    OrganizationDoesNotExist, PasswordIncorrect, RoleDoesNoeExist, UsertDoesNotExist, ValidationError
+    OrganizationDoesNotExist, PasswordIncorrect, RoleDoesNoeExist, UserIsNotActive, UsertDoesNotExist, ValidationError
 )
 
 from .models import Organization, Role, User
-from .signals import user_logged_in
-
-from .serializers import (  # isort:skip
-    CreateUserSerializer, LoginSerializer, OrganizationSerializer, RoleSerializer, UpdateUserSerializer,
-    UserSerializer
+from .serializers import (
+    ChangePasswordSerializer, CreateUserSerializer, LoginSerializer, OrganizationSerializer, RoleSerializer,
+    UpdateUserSerializer, UserSerializer
 )
+from .signals import user_logged_in
 
 
 class AuthView(generics.GenericAPIView):
@@ -31,6 +30,8 @@ class AuthView(generics.GenericAPIView):
         if query.count() == 0:
             raise UsertDoesNotExist
         user = query.get()
+        if user.is_active is False:
+            raise UserIsNotActive
         if not user.authenticate(password):
             raise PasswordIncorrect
         serializer.save(user=user)
@@ -49,6 +50,8 @@ class UserViewSet(viewsets.ModelViewSet):
             return CreateUserSerializer
         elif self.action == 'update':
             return UpdateUserSerializer
+        elif self.action == 'set_password':
+            return ChangePasswordSerializer
         return super().get_serializer_class()
 
     def get_object(self):
@@ -57,9 +60,16 @@ class UserViewSet(viewsets.ModelViewSet):
     def destroy(self, request, pk=None):
         return _destroy(self, request)
 
-    @action(detail=True, methods=['post'])
+    @action(detail=True, methods=['post'], url_path="password")
     def set_password(self, request, pk=None):
-        pass
+        user = self.get_object()
+        serializer = ChangePasswordSerializer(data=request.data)
+        if serializer.is_valid():
+            user.set_password(serializer.validated_data['password'])
+            user.save()
+            return Response('password set success')
+        else:
+            return Response(serializer.errors)
 
 
 class RoleViewSet(viewsets.ModelViewSet):

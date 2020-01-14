@@ -1,5 +1,5 @@
 FROM python:3.6
-MAINTAINER Qi Zhao <zhaoqi99@outlook.com>
+LABEL maintainer="zhaoqi99@outlook.com"
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

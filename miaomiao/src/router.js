@@ -1,36 +1,37 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Main from './views/Main'
-import Login from './views/Login'
-import DashBoard from './views/DashBoard'
-import User from './views/account/User.vue'
-Vue.use(Router)
+import Vue from "vue";
+import Router from "vue-router";
+import Main from "./views/Main";
+import Login from "./views/Login";
+import DashBoard from "./views/DashBoard";
+import User from "./views/account/User.vue";
+import Role from "./views/account/Role.vue";
+Vue.use(Router);
 
 export default new Router({
-  mode: 'history',
+  mode: "history",
   routes: [
     {
-      path: '/',
-      redirect: '/login'
-      // 以后前端加了登录校验,记得把这里改成main
-    },
-    {
-      path: '/main',
+      path: "/",
       component: Main,
+      redirect: "/dashboard",
       children: [
         {
-          path: 'dashboard',
+          path: "dashboard",
           component: DashBoard
         },
         {
-          path: 'user',
+          path: "account/user",
           component: User
+        },
+        {
+          path: "account/role",
+          component: Role
         }
       ]
     },
     {
-      path: '/login',
+      path: "/login",
       component: Login
     }
   ]
-})
+});

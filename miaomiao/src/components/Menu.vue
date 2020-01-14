@@ -60,19 +60,19 @@ export default {
         text: "测试登录"
       },
       {
-        to: "/main/dashboard",
+        to: "/dashboard",
         icon: "mdi-view-dashboard",
-        text: "测试主路由"
+        text: "仪表盘"
       },
       {
-        to: "/main/user",
+        to: "/account/user",
         icon: "mdi-account",
         text: "用户管理"
       },
       {
-        to: "/main/user-profile",
-        icon: "mdi-account",
-        text: "User Profile"
+        to: "/account/role",
+        icon: "mdi-account-multiple",
+        text: "角色管理"
       },
       {
         to: "/main/table-list",
