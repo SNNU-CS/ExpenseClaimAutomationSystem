@@ -5,6 +5,7 @@ import Login from "./views/Login";
 import DashBoard from "./views/DashBoard";
 import User from "./views/account/User.vue";
 import Role from "./views/account/Role.vue";
+import error from "./views/error/404.vue";
 Vue.use(Router);
 
 export default new Router({
@@ -32,6 +33,10 @@ export default new Router({
     {
       path: "/login",
       component: Login
+    },
+    {
+      path:"/error/404",
+      component: error
     }
   ]
 });
