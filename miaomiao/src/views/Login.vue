@@ -62,6 +62,7 @@ export default {
           let result = response.result;
           localStorage.Token = result.token;
           localStorage.username = result.user.username;
+          localStorage.avatar = result.user.avatar;
           let name = result.user.full_name;
           self.$message.success("登录成功!欢迎回来," + result.user.organization.org_name + "的" + name + "!");
           let redirect = decodeURIComponent(self.$router.currentRoute.query.redirect || "/");

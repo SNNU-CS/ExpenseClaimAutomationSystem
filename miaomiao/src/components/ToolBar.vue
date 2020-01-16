@@ -18,8 +18,11 @@
     <v-menu offset-y origin="center center" :nudge-bottom="10" transition="scale-transition">
       <template v-slot:activator="{ on }">
         <v-btn icon v-on="on">
-          <v-avatar size="40px">
+          <v-avatar v-if="avatar" size="40px">
             <v-img :src="avatar"></v-img>
+          </v-avatar>
+          <v-avatar v-else color="red" size="40px">
+            <span class="white--text headline">{{ username }}</span>
           </v-avatar>
         </v-btn>
       </template>
@@ -43,7 +46,6 @@ export default {
   name: "Toolbar",
   data() {
     return {
-      avatar: "https://cdn.vuetifyjs.com/images/john.jpg",
       notificationsCount: 1, // change to 0 in the future
       items: [
         {
@@ -74,6 +76,18 @@ export default {
     handleProfile() {},
     changeDrawer() {
       this.$emit("changeDrawer");
+    }
+  },
+  computed: {
+    avatar() {
+      if (localStorage.avatar === undefined || localStorage.avatar === "null") {
+        return undefined;
+      } else {
+        return localStorage.avatar;
+      }
+    },
+    username() {
+      return (localStorage.username || "??").slice(0, 2);
     }
   }
 };
