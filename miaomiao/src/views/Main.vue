@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <ToolBar></ToolBar>
-    <Menu></Menu>
+    <ToolBar @changeDrawer="drawer = !drawer"></ToolBar>
+    <Menu :drawer="drawer"></Menu>
     <v-content>
       <v-container fluid>
         <transition name="move" mode="out-in">
@@ -20,7 +20,9 @@ import Footer from "../components/Footer";
 export default {
   name: "main",
   data() {
-    return {};
+    return {
+      drawer: false
+    };
   },
   components: {
     Menu,

@@ -46,44 +46,53 @@ export default {
     opened: {
       type: Boolean,
       default: false
+    },
+    drawer: {
+      type: Boolean,
+      default: false
     }
   },
-  data: () => ({
-    expandOnHover: false,
-    header: "ECAS",
-    links: [
-      {
-        to: "/login",
-        icon: "mdi-view-dashboard",
-        text: "测试登录"
-      },
-      {
-        to: "/dashboard",
-        icon: "mdi-view-dashboard",
-        text: "仪表盘"
-      },
-      {
-        icon: "mdi-settings",
-        text: "系统管理",
-        children: [
-          {
-            to: "/account/user",
-            icon: "mdi-account",
-            text: "用户管理"
-          },
-          {
-            to: "/account/role",
-            icon: "mdi-account-multiple",
-            text: "角色管理"
-          }
-        ]
-      }
-    ],
-    inputValue: "/"
-  }),
-
+  data() {
+    return {
+      expandOnHover: this.drawer,
+      header: "ECAS",
+      links: [
+        {
+          to: "/login",
+          icon: "mdi-view-dashboard",
+          text: "测试登录"
+        },
+        {
+          to: "/dashboard",
+          icon: "mdi-view-dashboard",
+          text: "仪表盘"
+        },
+        {
+          icon: "mdi-settings",
+          text: "系统管理",
+          children: [
+            {
+              to: "/account/user",
+              icon: "mdi-account",
+              text: "用户管理"
+            },
+            {
+              to: "/account/role",
+              icon: "mdi-account-multiple",
+              text: "角色管理"
+            }
+          ]
+        }
+      ],
+      inputValue: "/"
+    };
+  },
   computed: {},
-
-  methods: {}
+  methods: {},
+  watch: {
+    drawer(val) {
+      this.expandOnHover = val;
+    }
+  }
 };
 </script>
