@@ -64,7 +64,8 @@ export default {
           localStorage.username = result.user.username;
           let name = result.user.full_name;
           self.$message.success("登录成功!欢迎回来," + result.user.organization.org_name + "的" + name + "!");
-          router.push("/");
+          let redirect = decodeURIComponent(self.$router.currentRoute.query.redirect || "/");
+          router.push(redirect);
         });
       }
     }
