@@ -1,6 +1,6 @@
 import axios from "axios";
 import router from "../router";
-import { Message } from "element-ui";
+import { Message, MessageBox } from "element-ui";
 const api = axios.create({
   baseURL: "/api",
   timeout: 3000,
@@ -24,7 +24,19 @@ api.interceptors.request.use(
 //返回状态判断
 api.interceptors.response.use(
   (res) => {
-    if (res.data.status !== 200) {
+    if (res.data.status === 200) {
+      return res.data;
+    } else if (res.data.status === 1002 || res.data.status === 1001) {
+      if (localStorage.isActive === true || localStorage.isActive === undefined)
+        MessageBox.alert("由于用户长时间未操作,请重新登录!", "错误提示", { type: "warning" }).then(() => {
+          router.replace({
+            path: "/login",
+            query: { redirect: router.currentRoute.fullPath }
+          });
+        });
+      localStorage.isActive = false;
+      return new Promise(() => {});
+    } else {
       // can user a table{status:type} in the future
       Message({
         message: res.data.msg,
@@ -32,22 +44,10 @@ api.interceptors.response.use(
       });
       // return Promise.reject(res.data.msg);
       return new Promise(() => {});
-    } else {
-      return res.data;
     }
   },
   (error) => {
-    if (error.response.status === 401) {
-      localStorage.clear();
-      Message({
-        message: "当前用户没有登录!",
-        type: "error"
-      });
-      // router.replace({
-      //     path: 'login',
-      //     query: { redirect: router.currentRoute.fullPath }
-      // });
-    } else if (error.response.status === 500) {
+    if (error.response.status === 500) {
       Message({
         message: "服务器内部错误!",
         type: "error"
