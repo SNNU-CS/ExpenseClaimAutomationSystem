@@ -1,6 +1,6 @@
 <template>
   <v-app-bar app dark color="primary">
-    <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
+    <v-app-bar-nav-icon @click="changeDrawer()"></v-app-bar-nav-icon>
 
     <v-spacer></v-spacer>
     <v-btn text href="mailto:zhaoqi99@outlook.com">联系作者</v-btn>
@@ -10,7 +10,7 @@
     <v-btn icon text>
       <v-badge color="red" overlap>
         <template v-slot:badge>
-          <span v-if="notificationsCount">{{notificationsCount}}</span>
+          <span v-if="notificationsCount">{{ notificationsCount }}</span>
         </template>
         <v-icon>mdi-bell</v-icon>
       </v-badge>
@@ -66,11 +66,15 @@ export default {
   },
   methods: {
     handleLogut() {
-      this.$message.info("用户"+localStorage.username + "退出登录!");
+      this.$message.info("用户" + localStorage.username + "退出登录!");
+      localStorage.clear();
       this.$router.push("/login");
     },
     handleSetting() {},
-    handleProfile() {}
+    handleProfile() {},
+    changeDrawer() {
+      this.$emit("changeDrawer");
+    }
   }
 };
 </script>
