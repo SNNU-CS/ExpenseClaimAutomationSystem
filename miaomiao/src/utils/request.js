@@ -27,13 +27,15 @@ api.interceptors.response.use(
     if (res.data.status === 200) {
       return res.data;
     } else if (res.data.status === 1002 || res.data.status === 1001) {
-      if (localStorage.isActive === true || localStorage.isActive === undefined)
+      if (localStorage.isActive === true || localStorage.isActive === undefined) {
         MessageBox.alert("由于用户长时间未操作,请重新登录!", "错误提示", { type: "warning" }).then(() => {
           router.replace({
             path: "/login",
             query: { redirect: router.currentRoute.fullPath }
           });
+          localStorage.clear();
         });
+      }
       localStorage.isActive = false;
       return new Promise(() => {});
     } else {
