@@ -6,6 +6,7 @@ import DashBoard from "@/views/DashBoard";
 
 import account from "./account";
 import error from "./error";
+import PasswordEdit from "../components/PasswordEdit";
 Vue.use(Router);
 
 export default new Router({
@@ -22,6 +23,10 @@ export default new Router({
         },
         ...account
       ]
+    },
+    {
+      path: "/changepassword",
+      component: PasswordEdit
     },
     {
       path: "/login",
