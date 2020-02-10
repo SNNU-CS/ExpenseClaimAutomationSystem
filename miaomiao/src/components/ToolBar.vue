@@ -54,6 +54,11 @@ export default {
           click: this.handleProfile
         },
         {
+          icon: "mdi-account-edit",
+          title: "修改密码",
+          click: this.changePassword
+        },
+        {
           icon: "mdi-settings",
           title: "设置",
           click: this.handleSetting
@@ -74,6 +79,9 @@ export default {
     },
     handleSetting() {},
     handleProfile() {},
+    changePassword() {
+      this.$router.push("/changepassword");
+    },
     changeDrawer() {
       this.$emit("changeDrawer");
     }
