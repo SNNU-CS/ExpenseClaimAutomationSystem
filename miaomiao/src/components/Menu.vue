@@ -108,6 +108,32 @@ export default {
               text: "自定义字段配置"
             }
           ]
+        },
+        {
+          icon: "mdi-settings",
+          text: "流程管理",
+          children: [
+            {
+              to: "/ticket/new",
+              icon: "mdi-new",
+              text: "新建流程"
+            },
+            {
+              to: "/ticket/my",
+              icon: "mdi-account-multiple",
+              text: "我创建的"
+            },
+            {
+              to: "/ticket/working",
+              icon: "mdi-comment-add-outline",
+              text: "我待办的"
+            },
+            {
+              to: "/ticket/finish",
+              icon: "mdi-account-multiple",
+              text: "已完成的"
+            }
+          ]
         }
       ],
       inputValue: "/"

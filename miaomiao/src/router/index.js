@@ -6,6 +6,7 @@ import DashBoard from "@/views/DashBoard";
 
 import account from "./account";
 import workflow from "./workflow";
+import ticket from "./ticket";
 
 import error from "./error";
 import PasswordEdit from "../components/PasswordEdit";
@@ -28,7 +29,8 @@ export default new Router({
           component: PasswordEdit
         },
         ...account,
-        ...workflow
+        ...workflow,
+        ...ticket
       ]
     },
     {
