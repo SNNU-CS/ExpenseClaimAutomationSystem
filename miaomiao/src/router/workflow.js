@@ -1,8 +1,8 @@
-// import User from "@/views/account/User.vue";
+ import Manage from "@/views/workflow/Manage.vue";
 
 export default [
   {
-    path: "workflow/manage"
-    // component: User
+    path: "workflow/manage",
+    component: Manage
   }
 ];
