@@ -27,6 +27,7 @@ class MyAuthentication(BaseAuthentication):
         if token.expired - timezone.now() < Token.token_expire:  # token快要过期了
             token.refresf_exp()
         request.user = token.user
+        request.token = token
         return token.user, token.token
 
     def get_raw_token(self, header):

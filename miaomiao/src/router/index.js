@@ -21,12 +21,12 @@ export default new Router({
           path: "dashboard",
           component: DashBoard
         },
+        {
+          path: "/changepassword",
+          component: PasswordEdit
+        },
         ...account
       ]
-    },
-    {
-      path: "/changepassword",
-      component: PasswordEdit
     },
     {
       path: "/login",
