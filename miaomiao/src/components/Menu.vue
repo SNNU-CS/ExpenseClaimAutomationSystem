@@ -82,6 +82,32 @@ export default {
               text: "角色管理"
             }
           ]
+        },
+        {
+          icon: "mdi-settings",
+          text: "工作流管理",
+          children: [
+            {
+              to: "/workflow/manage",
+              icon: "mdi-network",
+              text: "工作流配置"
+            },
+            {
+              to: "/workflow/config",
+              icon: "mdi-account-multiple",
+              text: "状态配置"
+            },
+            {
+              to: "/workflow/config",
+              icon: "mdi-account-multiple",
+              text: "流转配置"
+            },
+            {
+              to: "/workflow/config",
+              icon: "mdi-account-multiple",
+              text: "自定义字段配置"
+            }
+          ]
         }
       ],
       inputValue: "/"
