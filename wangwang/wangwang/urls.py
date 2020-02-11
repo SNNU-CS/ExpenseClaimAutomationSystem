@@ -26,5 +26,7 @@ urlpatterns = [
     path('api/account/', include('account.urls')),
     path('api/', include('rest_framework.urls')),
     path('docs/', include_docs_urls(title='Wangwang REST API 文档', authentication_classes=())),
-    re_path(r'^media/(?P<path>.*)$', static.serve, {'document_root': settings.MEDIA_ROOT}, name='media')
+    re_path(r'^media/(?P<path>.*)$', static.serve, {'document_root': settings.MEDIA_ROOT}, name='media'),
+    path('api/workflow/', include('workflow.urls')),
+    path('api/workflow/', include('ticket.urls')),
 ]

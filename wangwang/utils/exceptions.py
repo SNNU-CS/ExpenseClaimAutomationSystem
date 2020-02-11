@@ -70,3 +70,8 @@ class UserIsNotActive(BaseException):
 class OCRServiceUnavailable(BaseException):
     status = 1007
     msg = ErrorMsg.OCR_SERVICE_UNAVAILABLE
+
+
+class InitStateNotConfig(BaseException):
+    status = 1008
+    msg = ErrorMsg.INIT_STATE_NOT_CONFIG
