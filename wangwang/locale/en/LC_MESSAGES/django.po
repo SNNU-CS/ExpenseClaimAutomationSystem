@@ -20,19 +20,19 @@ msgstr ""
 
 #: account/models.py:28
 msgid "username"
-msgstr ""
+msgstr "username"
 
 #: account/models.py:31
 msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
-msgstr ""
+msgstr "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
 
 #: account/models.py:34
 msgid "A user with that username already exists."
-msgstr ""
+msgstr "A user with that username already exists."
 
 #: account/models.py:38
 msgid "active"
-msgstr ""
+msgstr "active"
 
 #: account/models.py:40
 msgid ""
@@ -42,116 +42,116 @@ msgstr ""
 
 #: account/models.py:43
 msgid "date joined"
-msgstr ""
+msgstr "date joined"
 
 #: account/models.py:44
 msgid "first name"
-msgstr ""
+msgstr "first name"
 
 #: account/models.py:45
 msgid "last name"
-msgstr ""
+msgstr "last name"
 
 #: account/models.py:46
 msgid "email address"
-msgstr ""
+msgstr "email address"
 
 #: account/models.py:47
 msgid "avater"
-msgstr ""
+msgstr "avater"
 
 #: account/models.py:49
 msgid "organization"
-msgstr ""
+msgstr "organization"
 
 #: account/models.py:54
 msgid "sex"
-msgstr ""
+msgstr "sex"
 
 #: account/models.py:75
 msgid "organization name"
-msgstr ""
+msgstr "organization name"
 
 #: account/models.py:89
 msgid "User"
-msgstr ""
+msgstr "User"
 
 #: account/models.py:94
 msgid "create time"
-msgstr ""
+msgstr "create time"
 
 #: account/models.py:95
 msgid "token expire time"
-msgstr ""
+msgstr "token expire time"
 
 #: account/models.py:96
 msgid "token"
-msgstr ""
+msgstr "token"
 
 #: account/models.py:100
 msgid "Token"
-msgstr ""
+msgstr "Token"
 
 #: account/models.py:101
 msgid "Tokens"
-msgstr ""
+msgstr "Tokens"
 
 #: account/models.py:131
 msgid "name"
-msgstr ""
+msgstr "name"
 
 #: account/models.py:132
 msgid "description"
-msgstr ""
+msgstr "description"
 
 #: account/models.py:133
 msgid "users"
-msgstr ""
+msgstr "users"
 
 #: account/models.py:139
 msgid "Role"
-msgstr ""
+msgstr "Role"
 
 #: account/models.py:140
 msgid "Roles"
-msgstr ""
+msgstr "Roles"
 
 #: utils/message.py:5
 msgid "Unknown exception."
-msgstr ""
+msgstr "Unknown exception"
 
 #: utils/message.py:6
 msgid "Auth failed."
-msgstr ""
+msgstr "Auth failed"
 
 #: utils/message.py:7
 msgid "Token is invalid or expired."
-msgstr ""
+msgstr "Token is invalid or expired"
 
 #: utils/message.py:8
 msgid "Objectd does not exists."
-msgstr ""
+msgstr "Objectd does not exists"
 
 #: utils/message.py:9
 msgid "Usert does not exists."
-msgstr ""
+msgstr "Usert does not exists"
 
 #: utils/message.py:10
 msgid "Password incorrect."
-msgstr ""
+msgstr "Password incorrect"
 
 #: utils/message.py:11
 msgid "Valid input."
-msgstr ""
+msgstr "Valid input"
 
 #: utils/message.py:12
 msgid "Role does not exists."
-msgstr ""
+msgstr "Role does not exists"
 
 #: utils/message.py:13
 msgid "Organization does not exists."
-msgstr ""
+msgstr "Organization does not exists"
 
 #: utils/message.py:14
 msgid "User is not active."
-msgstr ""
+msgstr "User is not active"

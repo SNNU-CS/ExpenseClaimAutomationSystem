@@ -20,25 +20,25 @@ msgstr ""
 
 #: account/models.py:28
 msgid "username"
-msgstr ""
+msgstr "用户名"
 
 #: account/models.py:31
 msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
-msgstr ""
+msgstr "要求：不超过150个字符，包含字母、数字或@/./+/-/_"
 
 #: account/models.py:34
 msgid "A user with that username already exists."
-msgstr ""
+msgstr "用户名已存在"
 
 #: account/models.py:38
 msgid "active"
-msgstr ""
+msgstr "激活"
 
 #: account/models.py:40
 msgid ""
 "Designates whether this user should be treated as active. Unselect this "
 "instead of deleting accounts."
-msgstr ""
+msgstr "指定该用户是否处于活动状态。取消选择"
 
 #: account/models.py:43
 msgid "date joined"
@@ -46,35 +46,35 @@ msgstr ""
 
 #: account/models.py:44
 msgid "first name"
-msgstr ""
+msgstr "姓"
 
 #: account/models.py:45
 msgid "last name"
-msgstr ""
+msgstr "名"
 
 #: account/models.py:46
 msgid "email address"
-msgstr ""
+msgstr "邮箱地址"
 
 #: account/models.py:47
 msgid "avater"
-msgstr ""
+msgstr "头像"
 
 #: account/models.py:49
 msgid "organization"
-msgstr ""
+msgstr "组织"
 
 #: account/models.py:54
 msgid "sex"
-msgstr ""
+msgstr "性别"
 
 #: account/models.py:75
 msgid "organization name"
-msgstr ""
+msgstr "组织名称"
 
 #: account/models.py:89
 msgid "User"
-msgstr ""
+msgstr "用户"
 
 #: account/models.py:94
 msgid "create time"
@@ -82,76 +82,76 @@ msgstr ""
 
 #: account/models.py:95
 msgid "token expire time"
-msgstr ""
+msgstr "令牌时间超时失效"
 
 #: account/models.py:96
 msgid "token"
-msgstr ""
+msgstr "令牌"
 
 #: account/models.py:100
 msgid "Token"
-msgstr ""
+msgstr "令牌"
 
 #: account/models.py:101
 msgid "Tokens"
-msgstr ""
+msgstr "令牌"
 
 #: account/models.py:131
 msgid "name"
-msgstr ""
+msgstr "姓名"
 
 #: account/models.py:132
 msgid "description"
-msgstr ""
+msgstr "描述"
 
 #: account/models.py:133
 msgid "users"
-msgstr ""
+msgstr "用户"
 
 #: account/models.py:139
 msgid "Role"
-msgstr ""
+msgstr "角色"
 
 #: account/models.py:140
 msgid "Roles"
-msgstr ""
+msgstr "角色"
 
 #: utils/message.py:5
 msgid "Unknown exception."
-msgstr ""
+msgstr "未知异常"
 
 #: utils/message.py:6
 msgid "Auth failed."
-msgstr ""
+msgstr "认证失败"
 
 #: utils/message.py:7
 msgid "Token is invalid or expired."
-msgstr ""
+msgstr "令牌无效或已失效"
 
 #: utils/message.py:8
 msgid "Objectd does not exists."
-msgstr ""
+msgstr "对象不存在"
 
 #: utils/message.py:9
 msgid "Usert does not exists."
-msgstr ""
+msgstr "用户不存在"
 
 #: utils/message.py:10
 msgid "Password incorrect."
-msgstr ""
+msgstr "密码错误"
 
 #: utils/message.py:11
 msgid "Valid input."
-msgstr ""
+msgstr "输入有效"
 
 #: utils/message.py:12
 msgid "Role does not exists."
-msgstr ""
+msgstr "角色不存在"
 
 #: utils/message.py:13
 msgid "Organization does not exists."
-msgstr ""
+msgstr "组织不存在"
 
 #: utils/message.py:14
 msgid "User is not active."
-msgstr ""
+msgstr "用户不存在"
