@@ -65,3 +65,8 @@ class OrganizationDoesNotExist(ObjectDoesNotExist):
 class UserIsNotActive(BaseException):
     status = 1006
     msg = ErrorMsg.USER_IS_NOT_ACTIVE
+
+
+class OCRServiceUnavailable(BaseException):
+    status = 1007
+    msg = ErrorMsg.OCR_SERVICE_UNAVAILABLE
