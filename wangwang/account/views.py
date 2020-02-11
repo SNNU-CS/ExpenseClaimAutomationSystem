@@ -1,4 +1,4 @@
-from rest_framework import generics, viewsets
+from rest_framework import generics, views, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -14,6 +14,14 @@ from .serializers import (
     UpdateUserSerializer, UserSerializer
 )
 from .signals import user_logged_in
+
+
+class UserSelfView(views.APIView):
+    def get_serializer(self):
+        return UserSerializer
+
+    def get(self, request):
+        return Response(UserSerializer(request.user).data)
 
 
 class AuthView(generics.GenericAPIView):
