@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'account.apps.AccountConfig',
+    'workflow.apps.WorkflowConfig',
+    'ticket.apps.TicketConfig',
 ]
 
 MIDDLEWARE = [

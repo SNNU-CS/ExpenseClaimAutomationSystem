@@ -14,3 +14,4 @@ class ErrorMsg:
     USER_IS_NOT_ACTIVE = _('User is not active.')
     PASSWORD_MISMATCH = _('The two password fields didn\'t match.')
     OCR_SERVICE_UNAVAILABLE = _('OCR service unavailable.')
+    INIT_STATE_NOT_CONFIG = _('该工作流尚未配置初始状态')
