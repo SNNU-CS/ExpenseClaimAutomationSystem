@@ -15,3 +15,4 @@ class ErrorMsg:
     PASSWORD_MISMATCH = _('The two password fields didn\'t match.')
     OCR_SERVICE_UNAVAILABLE = _('OCR service unavailable.')
     INIT_STATE_NOT_CONFIG = _('该工作流尚未配置初始状态')
+    WORKFLOW_DOES_NOT_EXIST = _('Workflow does not exists.')

@@ -12,3 +12,9 @@ export function DeleteWorkflow(id) {
     method: "delete"
   });
 }
+export function GetInitState(workflowId) {
+  return request({
+    url: "workflow/workflows/" + workflowId + "/init_state/",
+    method: "get"
+  });
+}

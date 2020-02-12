@@ -2,6 +2,7 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from utils.base import BaseModel
+from utils.service import CONSTANT_SERVICE
 
 
 class Workflow(BaseModel):
@@ -36,6 +37,9 @@ class Workflow(BaseModel):
     # blank=True, help_text='表单创建及结束时会发送相应通知信息')
     def __str__(self):
         return self.name
+
+    def get_init_state(self):
+        return self.workflow_states.filter(is_deleted=False, state_type=CONSTANT_SERVICE.STATE_TYPE_START).first()
 
     class Meta:
         verbose_name = '工作流'
@@ -111,7 +115,9 @@ class Transition(BaseModel):
     TRANSITION_TYPE = [(0, '常规流转'), (1, '定时器流转')]
     ATTRIBUTE_TYPE = [(0, '同意'), (1, '拒绝'), (2, '其他')]
     name = models.CharField('操作', max_length=50)
-    workflow = models.ForeignKey('Workflow', verbose_name='工作流id', on_delete=models.SET_NULL, null=True)
+    workflow = models.ForeignKey(
+        'Workflow', verbose_name='工作流id', on_delete=models.SET_NULL, null=True, related_name='workflow_transitions'
+    )
     transition_type = models.IntegerField(
         '流转类型', choices=TRANSITION_TYPE, default=0, help_text='0.常规流转，1.定时器流转,需要设置定时器时间'
     )
@@ -147,7 +153,9 @@ class CustomField(BaseModel):
 
     FIELD_TYPE = [(0, '字符串'), (1, '整形'), (2, '浮点型'), (3, '布尔'), (4, '时间'), (5, '日期时间'), (6, '单选框'), (7, '多选框'),
                   (8, '下拉列表'), (9, '多选下拉列表'), (10, '文本域'), (11, '附件')]
-    workflow = models.ForeignKey('Workflow', on_delete=models.CASCADE, verbose_name='工作流')
+    workflow = models.ForeignKey(
+        'Workflow', on_delete=models.CASCADE, verbose_name='工作流', related_name='workflow_fields'
+    )
     field_type = models.IntegerField(
         '类型',
         choices=FIELD_TYPE,

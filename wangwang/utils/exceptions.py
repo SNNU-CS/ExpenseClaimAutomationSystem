@@ -75,3 +75,7 @@ class OCRServiceUnavailable(BaseException):
 class InitStateNotConfig(BaseException):
     status = 1008
     msg = ErrorMsg.INIT_STATE_NOT_CONFIG
+
+
+class WorkflowDoesNoeExist(ObjectDoesNotExist):
+    msg = ErrorMsg.WORKFLOW_DOES_NOT_EXIST
