@@ -24,7 +24,7 @@ api.interceptors.request.use(
 //返回状态判断
 api.interceptors.response.use(
   (res) => {
-    if (res.data.status === 200) {
+    if (res.data.status === 200 || res.status === 204) {
       return res.data;
     } else if (res.data.status === 1002 || res.data.status === 1001) {
       if (localStorage.isActive === true || localStorage.isActive === undefined) {
