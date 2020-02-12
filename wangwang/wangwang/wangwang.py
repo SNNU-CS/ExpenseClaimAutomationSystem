@@ -8,7 +8,6 @@ from django.http import Http404, JsonResponse
 from django.utils import timezone
 from django.utils.deprecation import MiddlewareMixin
 from rest_framework import exceptions
-from rest_framework.authentication import BaseAuthentication
 from rest_framework.renderers import JSONRenderer
 
 from account.models import Token
@@ -17,7 +16,7 @@ from utils.exceptions import AuthenticationFailed, BaseException, InvalidToken, 
 procese_type = (list, tuple, dict, str, int, models.Model)
 
 
-class MyAuthentication(BaseAuthentication):
+class MyAuthentication:
     def authenticate(self, request):
         header = self.authenticate_header(request)
         raw_token = self.get_raw_token(header)
@@ -26,8 +25,6 @@ class MyAuthentication(BaseAuthentication):
             raise InvalidToken
         if token.expired - timezone.now() < Token.token_expire:  # token快要过期了
             token.refresf_exp()
-        request.user = token.user
-        request.token = token
         return token.user, token.token
 
     def get_raw_token(self, header):
@@ -44,18 +41,31 @@ class MyAuthentication(BaseAuthentication):
         return header
 
 
-class MyMiddleware(MiddlewareMixin):
+class MyMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+
+        response = self.get_response(request)
+
+        ret = {'result': response, 'status': 200}
+        if isinstance(response, procese_type):
+            return JsonResponse(ret, encoder=DjangoJSONEncoder)
+        return response
+
     def process_view(self, request, view_func, view_args, view_kwargs):
         # Todo auth role
-        # user = request.user
-        # if not user.is_anonymous and user.is_authenticated:
-        #     return None
-        # if request.path.split('/')[1] != 'api' or settings.AUTH_CONFIG.get('AUTH_EXCLUDE_PATH'):
-        #     return None
-        # try:
-        #     MyAuthentication().authenticate(request)
-        # except Exception as e:
-        #     return self.process_exception(request, e)
+        if request.path.startswith('/admin') or request.path == '/api/account/login/':
+            return None
+        if settings.DEBUG is True:
+            return None
+        try:
+            user, token = MyAuthentication().authenticate(request)
+            request._user = user
+            request.token = token
+        except Exception as e:
+            return self.process_exception(request, e)
         return None
 
     def process_exception(self, request, exception):
@@ -65,15 +75,6 @@ class MyMiddleware(MiddlewareMixin):
             return JsonResponse(UnknownException().as_dict(), status=UnknownException().get_http_code())
         else:
             return JsonResponse(exception.as_dict(), status=exception.get_http_code())
-
-    def process_response(self, request, response):
-        # if isinstance(response, models.Model):
-        # response = str(response)
-        ret = {'result': response, 'status': 200}
-        if isinstance(response, procese_type):
-            return JsonResponse(ret, encoder=DjangoJSONEncoder)
-        else:
-            return response
 
 
 class MyJSONRenderer(JSONRenderer):

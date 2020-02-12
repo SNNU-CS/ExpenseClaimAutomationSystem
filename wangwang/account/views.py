@@ -25,7 +25,6 @@ class UserSelfView(views.APIView):
 
 
 class AuthView(generics.GenericAPIView):
-    authentication_classes = []
     serializer_class = LoginSerializer
 
     def post(self, request):
