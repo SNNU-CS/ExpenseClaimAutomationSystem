@@ -93,7 +93,7 @@ export default {
               text: "工作流配置"
             },
             {
-              to: "/workflow/config",
+              to: "/workflow/StateSet",
               icon: "mdi-account-multiple",
               text: "状态配置"
             },
