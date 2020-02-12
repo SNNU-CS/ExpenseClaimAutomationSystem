@@ -18,3 +18,10 @@ export function GetInitState(workflowId) {
     method: "get"
   });
 }
+export function ListState() {
+  return request({
+    url: "workflow/states/" ,
+    method: "get"
+  });
+}
+
