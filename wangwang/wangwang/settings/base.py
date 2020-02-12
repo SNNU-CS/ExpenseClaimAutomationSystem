@@ -148,7 +148,7 @@ REST_FRAMEWORK = {
     'wangwang.wangwang.my_exception_handler',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         # 'rest_framework.authentication.BasicAuthentication',
-        'wangwang.wangwang.MyAuthentication',
+        # 'wangwang.wangwang.MyAuthentication',
     ),
     'DATETIME_FORMAT':
     "%Y-%m-%d %H:%M:%S"
