@@ -10,7 +10,7 @@ from django.utils.deprecation import MiddlewareMixin
 from rest_framework import exceptions
 from rest_framework.renderers import JSONRenderer
 
-from account.models import Token
+from account.models import Token, User
 from utils.exceptions import AuthenticationFailed, BaseException, InvalidToken, UnknownException
 
 procese_type = (list, tuple, dict, str, int, models.Model)
@@ -58,7 +58,7 @@ class MyMiddleware:
         # Todo auth role
         if request.path.startswith('/admin') or request.path == '/api/account/login/':
             return None
-        if settings.DEBUG is True:
+        if settings.DEBUG is True and not request.path.startswith('/api/workflow/'):
             return None
         try:
             user, token = MyAuthentication().authenticate(request)

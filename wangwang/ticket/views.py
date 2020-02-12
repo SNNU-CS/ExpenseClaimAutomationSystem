@@ -7,18 +7,38 @@ from workflow.models import Transition
 from workflow.serializers import StateSerializer, TransitionSerializer
 
 from .models import TicketFlowLog, TicketRecord
-from .serializers import DealTicketSerializer, TicketFlowLogSerializer, TicketRecordSerializer
+from .serializers import DealTicketSerializer, TicketFlowLogSerializer, TicketRecordSerializer, CreateTicketRecordSerializer
 
 
 class TicketView(viewsets.ModelViewSet):
-    http_method_names = ['get', 'post', 'put', 'delete', 'options']
+    http_method_names = ['get', 'post', 'delete', 'options']
     queryset = TicketRecord.objects.filter(is_deleted=False)
     serializer_class = TicketRecordSerializer
 
     def get_serializer_class(self):
         if self.action == 'deal_ticket':
             return DealTicketSerializer
+        elif self.action == 'create':
+            return CreateTicketRecordSerializer
         return super().get_serializer_class()
+
+    def create(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.validated_data['creator'] = request.user
+        username = request.user.username
+        ticket_data = serializer.validated_data.pop('ticket_data')
+        serializer.validated_data['participant'] = serializer.validated_data.get('participant', username)
+        obj = serializer.save()
+        TicketFlowLog.objects.create(
+            ticket=obj,
+            participant_type=obj.participant_type,
+            participant=obj.participant,
+            state=obj.state,
+            ticket_data=ticket_data,
+            creator=request.user
+        )
+        return Response(serializer.data)
 
     @action(detail=True, methods=['get'], url_path="transitions")
     def get_transitions(self, request, pk=None):

@@ -27,16 +27,13 @@ api.interceptors.response.use(
     if (res.data.status === 200 || res.status === 204) {
       return res.data;
     } else if (res.data.status === 1002 || res.data.status === 1001) {
-      if (localStorage.isActive === true || localStorage.isActive === undefined) {
-        MessageBox.alert("由于用户长时间未操作,请重新登录!", "错误提示", { type: "warning" }).then(() => {
-          router.replace({
-            path: "/login",
-            query: { redirect: router.currentRoute.fullPath }
-          });
-          localStorage.clear();
+      MessageBox.alert("由于用户长时间未操作,请重新登录!", "错误提示", { type: "warning" }).then(() => {
+        router.replace({
+          path: "/login",
+          query: { redirect: router.currentRoute.fullPath }
         });
-      }
-      localStorage.isActive = false;
+        localStorage.clear();
+      });
       return new Promise(() => {});
     } else {
       // can user a table{status:type} in the future
@@ -44,8 +41,8 @@ api.interceptors.response.use(
         message: res.data.msg,
         type: "error"
       });
-      // return Promise.reject(res.data.msg);
-      return new Promise(() => {});
+      return Promise.reject(res.data.msg);
+      // return new Promise(() => {});
     }
   },
   (error) => {
