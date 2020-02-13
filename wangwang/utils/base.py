@@ -15,7 +15,6 @@ class BaseModel(models.Model):
     )
     created = models.DateTimeField('创建时间', auto_now_add=True)
     modified = models.DateTimeField('更新时间', auto_now=True)
-    is_deleted = models.BooleanField('已删除', default=False)
 
     def get_dict(self):
         fields = []

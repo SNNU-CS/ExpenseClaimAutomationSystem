@@ -4,6 +4,7 @@ from django.utils import timezone
 
 from utils.base import BaseModel
 from workflow.models import State, Transition, Workflow
+from account.models import User
 
 
 def default_sn():
@@ -53,6 +54,7 @@ class TicketRecord(BaseModel):
         blank=True,
         help_text='可以为空(无处理人的情况，如结束状态)、username、多个username(以,隔开)、部门id、角色id、脚本文件名等'
     )
+    ticket_data = JSONField('工单数据', default=dict, blank=True, help_text='可以用于记录当前表单数据，json格式')
     is_end = models.BooleanField('已结束', default=False, help_text='工单是否已处于结束状态')
 
     def __str__(self):
@@ -63,25 +65,19 @@ class TicketRecord(BaseModel):
         verbose_name_plural = '工单记录'
 
 
-class TicketFlowLog(BaseModel):
+class TicketFlowLog(models.Model):
     """
     工单流转日志
     """
+    created = models.DateTimeField('创建时间', auto_now_add=True)
     ticket = models.ForeignKey(TicketRecord, on_delete=models.SET_NULL, null=True)
-    transition = models.ForeignKey(
-        Transition,
-        on_delete=models.SET_NULL,
-        verbose_name='流转',
-        help_text='与worklow.Transition关联， 为0时表示认为干预的操作',
-        null=True
-    )
+    transition = models.ForeignKey(Transition, on_delete=models.SET_NULL, verbose_name='流转', null=True)
     suggestion = models.CharField('处理意见', max_length=1000, default='', blank=True)
-
     participant_type = models.IntegerField(
         '处理人类型', choices=State.PARTICIPANT_TYPE, help_text='constant_service中定义', default=0
     )
     participant = models.CharField('处理人', max_length=50, default='', blank=True)
-    state = models.ForeignKey(State, verbose_name='当前状态id', null=True, blank=True, on_delete=models.SET_NULL)
+    state = models.ForeignKey(State, verbose_name='当前状态', null=True, blank=True, on_delete=models.SET_NULL)
     ticket_data = JSONField('工单数据', default=dict, blank=True, help_text='可以用于记录当前表单数据，json格式')
 
     def save(self, *args, **kwargs):
@@ -92,6 +88,20 @@ class TicketFlowLog(BaseModel):
     class Meta:
         verbose_name = '工单流转日志'
         verbose_name_plural = '工单流转日志'
+
+
+def file_upload_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/files/<id>/<20200213>/<file_name>
+    now = timezone.localtime(timezone.now())
+    date = now.strftime("%Y%m%d")
+    print(instance)
+    return 'files/{0}/{1}/{2}'.format(instance.creator.id, date, filename)
+
+
+class TicketFile(models.Model):
+    file = models.FileField(upload_to=file_upload_path, null=True)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, help_text='创建人')
+    created = models.DateTimeField('创建时间', auto_now_add=True)
 
 
 # class TicketCustomField(BaseModel):

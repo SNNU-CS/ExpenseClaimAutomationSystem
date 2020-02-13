@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, views
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -7,12 +7,12 @@ from workflow.models import Transition
 from workflow.serializers import StateSerializer, TransitionSerializer
 
 from .models import TicketFlowLog, TicketRecord
-from .serializers import DealTicketSerializer, TicketFlowLogSerializer, TicketRecordSerializer, CreateTicketRecordSerializer
+from .serializers import DealTicketSerializer, TicketFlowLogSerializer, TicketRecordSerializer, CreateTicketRecordSerializer, FileUploadSerializer
 
 
 class TicketView(viewsets.ModelViewSet):
     http_method_names = ['get', 'post', 'delete', 'options']
-    queryset = TicketRecord.objects.filter(is_deleted=False)
+    queryset = TicketRecord.objects.all()
     serializer_class = TicketRecordSerializer
 
     def get_serializer_class(self):
@@ -20,6 +20,8 @@ class TicketView(viewsets.ModelViewSet):
             return DealTicketSerializer
         elif self.action == 'create':
             return CreateTicketRecordSerializer
+        elif self.action == 'upload_file':
+            return FileUploadSerializer
         return super().get_serializer_class()
 
     def create(self, request):
@@ -27,7 +29,7 @@ class TicketView(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.validated_data['creator'] = request.user
         username = request.user.username
-        ticket_data = serializer.validated_data.pop('ticket_data')
+        ticket_data = serializer.validated_data['ticket_data']
         serializer.validated_data['participant'] = serializer.validated_data.get('participant', username)
         obj = serializer.save()
         TicketFlowLog.objects.create(
@@ -36,14 +38,13 @@ class TicketView(viewsets.ModelViewSet):
             participant=obj.participant,
             state=obj.state,
             ticket_data=ticket_data,
-            creator=request.user
         )
         return Response(serializer.data)
 
     @action(detail=True, methods=['get'], url_path="transitions")
     def get_transitions(self, request, pk=None):
         ticket = self.get_object()
-        queryset = Transition.objects.filter(source_state=ticket.state, is_deleted=False)
+        queryset = Transition.objects.filter(source_state=ticket.state)
         ret = TransitionSerializer(queryset, many=True).data
         return Response(ret)
 
@@ -73,7 +74,7 @@ class TicketView(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'], url_path="flowlogs")
     def get_flowlogs(self, request, pk=None):
         ticket = self.get_object()
-        queryset = TicketFlowLog.objects.filter(ticket=ticket, is_deleted=False).order_by('-id')
+        queryset = TicketFlowLog.objects.filter(ticket=ticket).order_by('-id')
         ret = TicketFlowLogSerializer(queryset, many=True).data
         return Response(ret)
 
@@ -82,3 +83,11 @@ class TicketView(viewsets.ModelViewSet):
         ticket = self.get_object()
         ret = StateSerializer(ticket.state).data
         return Response(ret)
+
+    @action(detail=False, methods=['post'], url_path="upload")
+    def upload_file(self, request):
+        serializer = FileUploadSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.validated_data['creator'] = request.user
+        serializer.save()
+        return Response(serializer.data)

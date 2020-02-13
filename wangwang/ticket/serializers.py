@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from workflow.serializers import StateSerializer, TransitionSerializer, WorkflowSerializer
 
-from .models import TicketFlowLog, TicketRecord
+from .models import TicketFlowLog, TicketRecord, TicketFile
 from workflow.models import Workflow, State
 from utils.service import CONSTANT_SERVICE
 from utils.exceptions import WorkflowDoesNoeExist, UsertDoesNotExist
@@ -32,7 +32,7 @@ class CreateTicketRecordSerializer(serializers.ModelSerializer):
     ticket_data = serializers.JSONField(required=True, help_text='表单数据')
 
     def validate_workflow(self, value):
-        workflow = Workflow.objects.filter(is_deleted=False, pk=value).first()
+        workflow = Workflow.objects.filter(pk=value).first()
         if not workflow:
             raise WorkflowDoesNoeExist
         return workflow
@@ -49,7 +49,7 @@ class CreateTicketRecordSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TicketRecord
-        exclude = ('is_deleted', 'sn', 'is_end', 'state')
+        exclude = ('sn', 'is_end', 'state')
 
 
 class TicketFlowLogSerializer(serializers.ModelSerializer):
@@ -67,3 +67,11 @@ class DealTicketSerializer(serializers.Serializer):
 
     def to_representation(self, obj):
         return TicketRecord(obj).data
+
+
+class FileUploadSerializer(serializers.ModelSerializer):
+    file = serializers.FileField(required=True)
+
+    class Meta:
+        model = TicketFile
+        fields = '__all__'

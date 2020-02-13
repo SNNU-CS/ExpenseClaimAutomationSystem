@@ -23,7 +23,7 @@ class CreateWorkflowSerializer(serializers.ModelSerializer):
 class AddWorkflowStateSerializer(serializers.ModelSerializer):
     class Meta:
         model = State
-        exclude = ('is_deleted', 'workflow', 'creator')
+        exclude = ('workflow', 'creator')
 
     def to_representation(self, obj):
         return StateSerializer(obj).data
@@ -45,8 +45,6 @@ class StateSerializer(serializers.ModelSerializer):
 
 
 class CustomFieldSerializer(serializers.ModelSerializer):
-    field_type = serializers.CharField(read_only=True, source='get_field_type_display')
-
     class Meta:
         model = CustomField
         fields = '__all__'

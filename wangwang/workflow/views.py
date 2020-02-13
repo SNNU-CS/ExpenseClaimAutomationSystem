@@ -15,7 +15,7 @@ from .serializers import (
 class WorkflowView(viewsets.ModelViewSet):
     http_method_names = ['get', 'post', 'delete', 'options']
     serializer_class = WorkflowSerializer
-    queryset = Workflow.objects.filter(is_deleted=False).order_by('id')
+    queryset = Workflow.objects.order_by('id')
 
     def get_serializer_class(self):
         if self.action == 'create':
@@ -30,16 +30,16 @@ class WorkflowView(viewsets.ModelViewSet):
         init_state = workflow.get_init_state()
         if not init_state:
             raise InitStateNotConfig
-        custom_field_queryset = workflow.workflow_fields.filter(is_deleted=False).order_by('order')
+        custom_field_queryset = workflow.workflow_fields.order_by('order')
         field_list = CustomFieldSerializer(custom_field_queryset, many=True).data
         ret = StateSerializer(init_state).data
-        ret.update(field_list=field_list)
+        ret.update(fields=field_list)
         return Response(ret)
 
     @action(detail=True, methods=['get'], url_path="states")
     def get_states(self, request, pk=None):
         workflow = self.get_object()
-        states_queryset = workflow.workflow_states.filter(is_deleted=False)
+        states_queryset = workflow.workflow_states
         ret = StateSerializer(states_queryset, many=True).data
         return Response(ret)
 
@@ -56,14 +56,14 @@ class WorkflowView(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'], url_path="transitions")
     def get_transitions(self, request, pk=None):
         workflow = self.get_object()
-        queryset = workflow.workflow_transitions.filter(is_deleted=False)
+        queryset = workflow.workflow_transitions
         ret = TransitionSerializer(queryset, many=True).data
         return Response(ret)
 
     @action(detail=True, methods=['get'], url_path="custom_fields")
     def get_custom_fields(self, request, pk=None):
         workflow = self.get_object()
-        queryset = workflow.workflow_fields.filter(is_deleted=False)
+        queryset = workflow.workflow_fields
         ret = CustomFieldSerializer(queryset, many=True).data
         return Response(ret)
 
@@ -71,7 +71,7 @@ class WorkflowView(viewsets.ModelViewSet):
 class StateView(viewsets.ModelViewSet):
     http_method_names = ['get', 'post', 'put', 'delete', 'options']
     serializer_class = StateSerializer
-    queryset = State.objects.filter(is_deleted=False).order_by('id')
+    queryset = State.objects.order_by('id')
 
     def get_serializer_class(self):
         return super().get_serializer_class()
@@ -80,7 +80,7 @@ class StateView(viewsets.ModelViewSet):
 class TransitionView(viewsets.ModelViewSet):
     http_method_names = ['get', 'post', 'put', 'delete', 'options']
     serializer_class = TransitionSerializer
-    queryset = Transition.objects.filter(is_deleted=False).order_by('id')
+    queryset = Transition.objects.order_by('id')
 
     def get_serializer_class(self):
         return super().get_serializer_class()
@@ -89,7 +89,7 @@ class TransitionView(viewsets.ModelViewSet):
 class CustomFieldView(viewsets.ModelViewSet):
     http_method_names = ['get', 'post', 'put', 'delete', 'options']
     serializer_class = CustomFieldSerializer
-    queryset = CustomField.objects.filter(is_deleted=False).order_by('id')
+    queryset = CustomField.objects.order_by('id')
 
     def get_serializer_class(self):
         return super().get_serializer_class()

@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from .models import CustomField, State, Transition, Workflow
 
-base_list_display = ('creator', 'is_deleted', 'created', 'modified')
+base_list_display = ('creator', 'created', 'modified')
 
 
 class WorkflowAdmin(admin.ModelAdmin):
@@ -19,7 +19,6 @@ class StateAdmin(admin.ModelAdmin):
         'state_type',
         'workflow',
         'sub_workflow',
-        'distribute_type',
     ) + base_list_display
 
 
@@ -37,7 +36,7 @@ class TransitionAdmin(admin.ModelAdmin):
 
 class CustomFieldAdmin(admin.ModelAdmin):
     search_fields = ('workflow_id', )
-    list_display = ('id', 'workflow', 'field_type', 'field_key', 'field_name', 'order') + base_list_display
+    list_display = ('id', 'workflow', 'field_type', 'field_key', 'field_name', 'order', 'required') + base_list_display
 
 
 # class WorkflowScriptAdmin(admin.ModelAdmin):

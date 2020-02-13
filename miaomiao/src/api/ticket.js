@@ -7,3 +7,10 @@ export function CreateTicket(params) {
     data: params
   });
 }
+export function UploadTicketFile(files) {
+  return request({
+    url: "workflow/tickets/upload/",
+    method: "post",
+    data: files
+  });
+}
