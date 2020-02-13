@@ -3,12 +3,11 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from utils.exceptions import InitStateNotConfig
-from utils.service import CONSTANT_SERVICE
 
 from .models import CustomField, State, Transition, Workflow
 from .serializers import (
-    CreateWorkflowSerializer, CustomFieldSerializer, StateSerializer, TransitionSerializer, WorkflowSerializer,
-    AddWorkflowStateSerializer
+    AddWorkflowStateSerializer, CreateWorkflowSerializer, CustomFieldSerializer, StateSerializer, TransitionSerializer,
+    WorkflowSerializer
 )
 
 

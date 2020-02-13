@@ -1,12 +1,11 @@
 from rest_framework import serializers
 
+from utils.exceptions import WorkflowDoesNoeExist
+from utils.service import CONSTANT_SERVICE
+from workflow.models import State, Workflow
 from workflow.serializers import StateSerializer, TransitionSerializer, WorkflowSerializer
 
-from .models import TicketFlowLog, TicketRecord, TicketFile
-from workflow.models import Workflow, State
-from utils.service import CONSTANT_SERVICE
-from utils.exceptions import WorkflowDoesNoeExist, UsertDoesNotExist
-from account.models import User
+from .models import TicketFile, TicketFlowLog, TicketRecord
 
 
 class TicketRecordSerializer(serializers.ModelSerializer):

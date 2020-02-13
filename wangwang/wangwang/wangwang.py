@@ -6,11 +6,10 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 from django.http import Http404, JsonResponse
 from django.utils import timezone
-from django.utils.deprecation import MiddlewareMixin
 from rest_framework import exceptions
 from rest_framework.renderers import JSONRenderer
 
-from account.models import Token, User
+from account.models import Token
 from utils.exceptions import AuthenticationFailed, BaseException, InvalidToken, UnknownException
 
 procese_type = (list, tuple, dict, str, int, models.Model)

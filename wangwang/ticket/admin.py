@@ -8,7 +8,14 @@ base_list_display = ('creator', 'created', 'modified')
 class TicketRecordAdmin(admin.ModelAdmin):
     search_fields = ('sn', 'title')
     list_display = (
-        'id', 'sn', 'title', 'workflow', 'state', 'parent_ticket', 'participant_type', 'participant',
+        'id',
+        'sn',
+        'title',
+        'workflow',
+        'state',
+        'parent_ticket',
+        'participant_type',
+        'participant',
     ) + base_list_display
 
 

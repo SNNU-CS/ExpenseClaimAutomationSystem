@@ -1,4 +1,4 @@
-from rest_framework import viewsets, views
+from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -7,7 +7,10 @@ from workflow.models import Transition
 from workflow.serializers import StateSerializer, TransitionSerializer
 
 from .models import TicketFlowLog, TicketRecord
-from .serializers import DealTicketSerializer, TicketFlowLogSerializer, TicketRecordSerializer, CreateTicketRecordSerializer, FileUploadSerializer
+from .serializers import (
+    CreateTicketRecordSerializer, DealTicketSerializer, FileUploadSerializer, TicketFlowLogSerializer,
+    TicketRecordSerializer
+)
 
 
 class TicketView(viewsets.ModelViewSet):
