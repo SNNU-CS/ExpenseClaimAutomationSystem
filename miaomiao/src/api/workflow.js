@@ -20,8 +20,13 @@ export function GetInitState(workflowId) {
 }
 export function ListState() {
   return request({
-    url: "workflow/states/" ,
+    url: "workflow/states/",
     method: "get"
   });
 }
-
+export function DeleteState(id) {
+  return request({
+    url: "workflow/states/" + id + "/",
+    method: "delete"
+  });
+}
