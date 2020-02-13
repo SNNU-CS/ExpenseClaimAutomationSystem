@@ -16,5 +16,9 @@ export default [
   {
     path: "ticket/finish",
     component: MyTicket
+  },
+  {
+    path: "ticket/detail/:id",
+    component: MyTicket
   }
 ];
