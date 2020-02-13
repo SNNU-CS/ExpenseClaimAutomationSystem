@@ -14,3 +14,15 @@ export function UploadTicketFile(files) {
     data: files
   });
 }
+export function ListTicket() {
+  return request({
+    url: "workflow/tickets/",
+    method: "get"
+  });
+}
+export function DeleteTicket(id) {
+  return request({
+    url: "workflow/tickets/" + id + "/",
+    method: "delete"
+  });
+}

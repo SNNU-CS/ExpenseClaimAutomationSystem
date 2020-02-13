@@ -114,7 +114,7 @@
                     :label="item.field_name"
                   >
                     <template v-slot:append>
-                      <v-btn text @click="upload(item)" :loading="loading" :disabled="loading" color="primary"
+                      <v-btn @click="upload(item)" :loading="loading" :disabled="loading" color="primary"
                         >上传<v-icon right dark>mdi-cloud-upload</v-icon>
                       </v-btn>
                     </template>

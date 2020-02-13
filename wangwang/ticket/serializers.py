@@ -11,6 +11,11 @@ from .models import TicketFile, TicketFlowLog, TicketRecord
 class TicketRecordSerializer(serializers.ModelSerializer):
     workflow = WorkflowSerializer()
     state = StateSerializer()
+    creator = serializers.SerializerMethodField()
+    participant_type = serializers.CharField(source='get_participant_type_display')
+
+    def get_creator(self, obj):
+        return obj.creator.username
 
     class Meta:
         model = TicketRecord
