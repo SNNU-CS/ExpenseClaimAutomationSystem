@@ -142,16 +142,13 @@ MEDIA_URL = "/media/"
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': ('wangwang.wangwang.MyJSONRenderer', 'rest_framework.renderers.BrowsableAPIRenderer'),
-    'DEFAULT_SCHEMA_CLASS':
-    'rest_framework.schemas.AutoSchema',
-    'EXCEPTION_HANDLER':
-    'wangwang.wangwang.my_exception_handler',
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.AutoSchema',
+    'EXCEPTION_HANDLER': 'wangwang.wangwang.my_exception_handler',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         # 'rest_framework.authentication.BasicAuthentication',
         # 'wangwang.wangwang.MyAuthentication',
     ),
-    'DATETIME_FORMAT':
-    "%Y-%m-%d %H:%M:%S"
+    'DATETIME_FORMAT': "%Y-%m-%d %H:%M:%S"
 }
 AUTH_CONFIG = {
     # 'AUTH_EXCLUDE_PATH': ['/api/account/login/'],

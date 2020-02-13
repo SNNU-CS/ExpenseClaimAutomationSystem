@@ -2,9 +2,9 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils import timezone
 
+from account.models import User
 from utils.base import BaseModel
 from workflow.models import State, Transition, Workflow
-from account.models import User
 
 
 def default_sn():
