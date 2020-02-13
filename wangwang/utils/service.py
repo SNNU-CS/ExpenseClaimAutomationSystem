@@ -27,20 +27,17 @@ class ConstantService:
 
         self.FIELD_TYPE_STR = 0  # 字符串类型
         self.FIELD_TYPE_INT = 1  # 整形类型
-        self.FIELD_TYPE_FLOAT = 2  # 浮点类型
-        self.FIELD_TYPE_BOOL = 3  # 布尔类型
-        self.FIELD_TYPE_DATE = 4  # 日期类型
-        self.FIELD_TYPE_DATETIME = 5  # 日期时间类型
-        self.FIELD_TYPE_RADIO = 6  # 单选框
-        self.FIELD_TYPE_CHECKBOX = 7  # 多选框
-        self.FIELD_TYPE_SELECT = 8  # 下拉列表
-        self.FIELD_TYPE_MULTI_SELECT = 9  # 多选下拉列表
-        self.FIELD_TYPE_TEXT = 10  # 文本域
-        self.FIELD_TYPE_ATTACHMENT = 11  # 附件，多个附件使用逗号隔开。调用方自己实现上传功能
-
-        # ???
-        self.FIELD_TYPE_USERNAME = 60  # 用户名，前端展现时需要调用方系统获取用户列表
-        self.FIELD_TYPE_MULTI_USERNAME = 70  # 多选用户名,多人情况逗号隔开，前端展现时需要调用方系统获取用户列表。loonflow只保存用户名
+        self.FIELD_TYPE_BOOL = 2  # 布尔类型
+        self.FIELD_TYPE_DATE = 3  # 日期类型
+        self.FIELD_TYPE_DATETIME = 4  # 日期时间类型
+        self.FIELD_TYPE_RADIO = 5  # 单选框
+        self.FIELD_TYPE_CHECKBOX = 6  # 多选框
+        self.FIELD_TYPE_SELECT = 7  # 下拉列表
+        self.FIELD_TYPE_MULTI_SELECT = 8  # 多选下拉列表
+        self.FIELD_TYPE_TEXT = 9  # 文本域
+        self.FIELD_TYPE_ATTACHMENT = 10  # 附件，多个附件使用逗号隔开。调用方自己实现上传功能
+        self.FIELD_TYPE_USERNAME = 11  # 用户名
+        self.FIELD_TYPE_MULTI_USERNAME = 12  # 多选用户名,多人情况逗号隔开
 
         self.FIELD_ATTRIBUTE_RO = 1  # 只读
         self.FIELD_ATTRIBUTE_REQUIRED = 2  # 必填
