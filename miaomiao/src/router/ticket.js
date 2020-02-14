@@ -1,5 +1,6 @@
 import NewTicket from "@/views/ticket/NewTicket.vue";
 import MyTicket from "@/views/ticket/MyTicket.vue";
+import TicketDetail from "@/views/ticket/TicketDetail.vue";
 export default [
   {
     path: "ticket/new",
@@ -19,6 +20,6 @@ export default [
   },
   {
     path: "ticket/detail/:id",
-    component: MyTicket
+    component: TicketDetail
   }
 ];

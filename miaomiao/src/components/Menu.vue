@@ -89,12 +89,12 @@ export default {
           ]
         },
         {
-          icon: "mdi-settings",
+          icon: "mdi-tune",
           text: "流程管理",
           children: [
             {
               to: "/ticket/new",
-              icon: "mdi-new",
+              icon: "mdi-add-outline",
               text: "新建流程"
             },
             {
@@ -104,12 +104,12 @@ export default {
             },
             {
               to: "/ticket/working",
-              icon: "mdi-comment-add-outline",
+              icon: "mdi-alarm",
               text: "我待办的"
             },
             {
               to: "/ticket/finish",
-              icon: "mdi-account-multiple",
+              icon: "mdi-archive",
               text: "已完成的"
             }
           ]

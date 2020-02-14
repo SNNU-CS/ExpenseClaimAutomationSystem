@@ -37,7 +37,7 @@ class StateSerializer(serializers.ModelSerializer):
     workflow = serializers.CharField(read_only=True, source='workflow.name')
 
     def get_creator(self, obj):
-        return obj.creator.username
+        return obj.creator.username if obj.creator else '--'
 
     class Meta:
         model = State

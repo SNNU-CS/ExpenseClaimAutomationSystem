@@ -26,3 +26,27 @@ export function DeleteTicket(id) {
     method: "delete"
   });
 }
+export function DetailTicket(id) {
+  return request({
+    url: "workflow/tickets/" + id + "/",
+    method: "get"
+  });
+}
+export function TicketLogs(ticketId) {
+  return request({
+    url: "workflow/tickets/" + ticketId + "/flowlogs/",
+    method: "get"
+  });
+}
+export function TicketTransitions(ticketId) {
+  return request({
+    url: "workflow/tickets/" + ticketId + "/transitions/",
+    method: "get"
+  });
+}
+export function TicketStep(ticketId) {
+  return request({
+    url: "workflow/tickets/" + ticketId + "/steps/",
+    method: "get"
+  });
+}

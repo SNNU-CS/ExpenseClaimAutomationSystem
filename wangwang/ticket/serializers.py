@@ -6,6 +6,7 @@ from workflow.models import State, Workflow
 from workflow.serializers import StateSerializer, TransitionSerializer, WorkflowSerializer
 
 from .models import TicketFile, TicketFlowLog, TicketRecord
+from workflow.serializers import CustomFieldSerializer
 
 
 class TicketRecordSerializer(serializers.ModelSerializer):
@@ -13,6 +14,7 @@ class TicketRecordSerializer(serializers.ModelSerializer):
     state = StateSerializer()
     creator = serializers.SerializerMethodField()
     participant_type = serializers.CharField(source='get_participant_type_display')
+    fields = CustomFieldSerializer(source='workflow.workflow_fields', many=True)
 
     def get_creator(self, obj):
         return obj.creator.username
@@ -58,11 +60,12 @@ class CreateTicketRecordSerializer(serializers.ModelSerializer):
 
 class TicketFlowLogSerializer(serializers.ModelSerializer):
     transition = TransitionSerializer()
+    state = serializers.CharField(source='state.name')
+    participant_type = serializers.CharField(source='get_participant_type_display')
 
     class Meta:
         model = TicketFlowLog
         fields = '__all__'
-        # depth = 3
 
 
 class DealTicketSerializer(serializers.Serializer):
