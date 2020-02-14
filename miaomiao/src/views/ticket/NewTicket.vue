@@ -292,7 +292,7 @@ export default {
       });
     },
     reset() {
-      this.$refs.form.reset();
+      this.$refs.newForm.reset();
     },
     close() {
       this.$router.back(-1);
