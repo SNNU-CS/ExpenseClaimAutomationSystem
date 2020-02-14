@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title>
-      <!-- <v-btn color="info" @click="addState">新增状态</v-btn> -->
+      <v-btn color="info" @click="addState">新增状态</v-btn>
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
@@ -21,7 +21,6 @@
 <script>
 export default {
   name: "StateSet",
-  components: {},
   data() {
     return {
       headers: [
@@ -43,7 +42,8 @@ export default {
       states: [],
       search: "",
       state: {},
-      loading: true
+      loading: true,
+      workflowId: this.$route.params.id
     };
   },
   mounted() {
@@ -53,14 +53,12 @@ export default {
     listState() {
       let self = this;
       self.loading = true;
-      this.$api.ListState().then(function(response) {
+      this.$api.ListWorkflowState(this.workflowId).then(function(response) {
         self.loading = false;
         self.states = response.result;
       });
     },
-    editState(item) {
-      // this.$router.push("/workflow/")
-    },
+    editState(item) {},
     deleteState(item) {
       let self = this;
       const index = this.states.indexOf(item);
@@ -69,10 +67,8 @@ export default {
           self.$message.success("删除状态'" + item.name + "'成功!");
           self.listState();
         });
-    }
-    // addState() {
-    //   this.$router.push("workflow/newstate");
-    // }
+    },
+    addState() {}
   }
 };
 </script>
