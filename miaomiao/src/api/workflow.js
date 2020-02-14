@@ -18,9 +18,9 @@ export function GetInitState(workflowId) {
     method: "get"
   });
 }
-export function ListState() {
+export function ListWorkflowState(id) {
   return request({
-    url: "workflow/states/",
+    url: "workflow/workflows/" + id + "/states/",
     method: "get"
   });
 }

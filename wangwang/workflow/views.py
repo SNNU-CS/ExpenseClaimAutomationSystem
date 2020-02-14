@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -19,8 +19,6 @@ class WorkflowView(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == 'create':
             return CreateWorkflowSerializer
-        elif self.action == 'add_state':
-            return AddWorkflowStateSerializer
         return super().get_serializer_class()
 
     @action(detail=True, methods=['get'], url_path="init_state")
@@ -42,16 +40,6 @@ class WorkflowView(viewsets.ModelViewSet):
         ret = StateSerializer(states_queryset, many=True).data
         return Response(ret)
 
-    @action(detail=True, methods=['post'], url_path="states")
-    def add_state(self, request, pk=None):
-        workflow = self.get_object()
-        serializer = AddWorkflowStateSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.validated_data['creator'] = request.user
-        serializer.validated_data['workflow'] = workflow
-        serializer.save()
-        return Response(serializer.data)
-
     @action(detail=True, methods=['get'], url_path="transitions")
     def get_transitions(self, request, pk=None):
         workflow = self.get_object()
@@ -67,13 +55,24 @@ class WorkflowView(viewsets.ModelViewSet):
         return Response(ret)
 
 
-class StateView(viewsets.ModelViewSet):
+class StateView(viewsets.ReadOnlyModelViewSet, generics.CreateAPIView):
     http_method_names = ['get', 'post', 'put', 'delete', 'options']
     serializer_class = StateSerializer
     queryset = State.objects.order_by('id')
 
     def get_serializer_class(self):
+        if self.action == 'create':
+            return AddWorkflowStateSerializer
         return super().get_serializer_class()
+
+    def create(self, request):
+        workflow = self.get_object()
+        serializer = AddWorkflowStateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.validated_data['creator'] = request.user
+        serializer.validated_data['workflow'] = workflow
+        serializer.save()
+        return Response(serializer.data)
 
 
 class TransitionView(viewsets.ModelViewSet):
