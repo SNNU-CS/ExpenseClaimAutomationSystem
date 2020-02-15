@@ -34,7 +34,7 @@ export function CreateState(params) {
   return request({
     url: "workflow/states/",
     method: "post",
-    data: paramsid
+    data: params
   });
 }
 export function WorkflowTransitions(id) {
@@ -51,7 +51,7 @@ export function ListWorkflowFields(id) {
 }
 export function ListTran(id) {
   return request({
-    url: "workflow/workflows/"+id+"/transitions/",
+    url: "workflow/workflows/" + id + "/transitions/",
     method: "get"
   });
 }
@@ -64,7 +64,7 @@ export function DeleteTran(id) {
 }
 export function ListDIY(id) {
   return request({
-    url: "workflow/workflows/"+id+"/custom_fields/",
+    url: "workflow/workflows/" + id + "/custom_fields/",
     method: "get"
   });
 }
@@ -72,5 +72,12 @@ export function DeleteDIY(id) {
   return request({
     url: "workflow/custom_fields/states/" + id + "/",
     method: "delete"
+  });
+}
+export function CreateWorkflow(params) {
+  return request({
+    url: "workflow/workflows/",
+    method: "post",
+    data: params
   });
 }

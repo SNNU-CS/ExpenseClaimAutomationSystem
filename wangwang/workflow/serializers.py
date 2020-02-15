@@ -9,7 +9,7 @@ class WorkflowSerializer(serializers.ModelSerializer):
     creator = serializers.SerializerMethodField(read_only=True)
 
     def get_creator(self, obj):
-        return obj.creator.username
+        return obj.creator.username if obj.creator else "--"
 
     class Meta:
         model = Workflow

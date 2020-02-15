@@ -10,8 +10,8 @@
     <v-card-text>
       <v-data-table :headers="headers" :items="workflows" sort-by="id" :search="search" :loading="loading">
         <template v-slot:item.action="{ item }">
-          <v-icon small color="warning" @click="editWorkflow(item)">mdi-pencil</v-icon>
-          <v-icon color="red" small @click="deleteWorkflow(item)">mdi-delete</v-icon>
+          <v-btn small color="warning" @click="editWorkflow(item)">配置</v-btn>
+          <v-btn class="ml-1" color="error" small @click="deleteWorkflow(item)">删除</v-btn>
         </template>
         <template v-slot:item.flowchart="{ item }">
           <v-btn color="info" @click="showChart(item)">查看</v-btn>
@@ -70,7 +70,7 @@ export default {
         });
     },
     showChart(item) {
-      this.$router.push('/workflow/'+item.id+"/flow-chart")
+      this.$router.push("/workflow/" + item.id + "/flow-chart");
     }
   }
 };
