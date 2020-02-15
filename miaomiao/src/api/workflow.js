@@ -32,6 +32,13 @@ export function DeleteState(id) {
 }
 export function CreateState(params) {
   return request({
+    url: "workflow/transitions/",
+    method: "post",
+    data: paramsid
+  });
+}
+export function CreateTran(params) {
+  return request({
     url: "workflow/states/",
     method: "post",
     data: params
