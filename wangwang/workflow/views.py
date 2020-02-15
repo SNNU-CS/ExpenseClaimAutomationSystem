@@ -6,8 +6,8 @@ from utils.exceptions import InitStateNotConfig
 
 from .models import CustomField, State, Transition, Workflow
 from .serializers import (
-    AddWorkflowStateSerializer, CreateWorkflowSerializer, CustomFieldSerializer, StateSerializer, TransitionSerializer,
-    WorkflowSerializer
+    AddWorkflowStateSerializer, CreateWorkflowSerializer, CustomFieldDetailSerializer, CustomFieldSerializer,
+    StateSerializer, TransitionSerializer, WorkflowSerializer
 )
 
 
@@ -51,7 +51,7 @@ class WorkflowView(viewsets.ModelViewSet):
     def get_custom_fields(self, request, pk=None):
         workflow = self.get_object()
         queryset = workflow.workflow_fields
-        ret = CustomFieldSerializer(queryset, many=True).data
+        ret = CustomFieldDetailSerializer(queryset, many=True).data
         return Response(ret)
 
 

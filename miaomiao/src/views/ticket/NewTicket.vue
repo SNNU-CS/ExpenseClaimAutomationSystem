@@ -186,7 +186,7 @@ export default {
         case 3:
           return "time";
         case 4:
-          return "datetime-local";
+          return "datetime";
       }
     },
     upload(item) {
