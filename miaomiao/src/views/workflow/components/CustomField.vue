@@ -58,7 +58,6 @@ export default {
         self.diys = response.result;
       });
     },
-
     deleteDIY(item) {
       let self = this;
       const index = this.diys.indexOf(item);
@@ -69,7 +68,7 @@ export default {
         });
     },
     addDIY() {
-      this.$router.push("/workflow/" + this.workflowId + "fields/new");
+      this.$router.push("/workflow/" + this.workflowId + "/fields/new");
     }
   }
 };

@@ -64,19 +64,26 @@ export function DeleteTran(id) {
 }
 export function ListDIY(id) {
   return request({
-    url: "workflow/workflows/" + id + "/custom_fields/",
+    url: "workflow/workflows/" + id + "/fields/",
     method: "get"
   });
 }
 export function DeleteDIY(id) {
   return request({
-    url: "workflow/custom_fields/states/" + id + "/",
+    url: "workflow/fields/" + id + "/",
     method: "delete"
   });
 }
 export function CreateWorkflow(params) {
   return request({
     url: "workflow/workflows/",
+    method: "post",
+    data: params
+  });
+}
+export function CreateCustomField(params) {
+  return request({
+    url: "workflow/fields/",
     method: "post",
     data: params
   });
