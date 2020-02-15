@@ -7,7 +7,7 @@ from utils.exceptions import InitStateNotConfig
 from .models import CustomField, State, Transition, Workflow
 from .serializers import (
     AddWorkflowStateSerializer, CreateWorkflowSerializer, CustomFieldDetailSerializer, CustomFieldSerializer,
-    StateSerializer, TransitionSerializer, WorkflowSerializer, CreateCustomFieldSerializer
+    StateSerializer, TransitionSerializer, WorkflowSerializer, CreateCustomFieldSerializer, CreateTransitionSerializer
 )
 
 
@@ -80,6 +80,13 @@ class TransitionView(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         return super().get_serializer_class()
+
+    def create(self, request):
+        serializer = CreateTransitionSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.validated_data['creator'] = request.user
+        serializer.save()
+        return Response(serializer.data)
 
 
 class CustomFieldView(viewsets.ModelViewSet):
