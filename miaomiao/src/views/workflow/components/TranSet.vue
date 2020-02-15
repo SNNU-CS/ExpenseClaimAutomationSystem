@@ -10,7 +10,6 @@
     <v-card-text>
       <v-data-table :headers="headers" :items="trans" sort-by="id" :search="search" :loading="loading">
         <template v-slot:item.action="{ item }">
-         
           <v-icon color="red" small @click="deleteTran(item)">mdi-delete</v-icon>
         </template>
       </v-data-table>
@@ -55,7 +54,7 @@ export default {
         self.trans = response.result;
       });
     },
-   
+
     deleteTran(item) {
       let self = this;
       const index = this.trans.indexOf(item);
@@ -65,7 +64,9 @@ export default {
           self.listTran();
         });
     },
-    addTran() { this.$router.push("/workflow/newtran");}
+    addTran() {
+      this.$router.push("/workflow/" + this.workflowId + "/trans/new");
+    }
   }
 };
 </script>
