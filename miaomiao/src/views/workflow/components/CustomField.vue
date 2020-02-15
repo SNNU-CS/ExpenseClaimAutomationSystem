@@ -10,7 +10,6 @@
     <v-card-text>
       <v-data-table :headers="headers" :items="diys" sort-by="id" :search="search" :loading="loading">
         <template v-slot:item.action="{ item }">
-         
           <v-icon color="red" small @click="deleteDIY(item)">mdi-delete</v-icon>
         </template>
         <template v-slot:item.required="{ item }">
@@ -54,22 +53,24 @@ export default {
     listDIY() {
       let self = this;
       self.loading = true;
-      this.$api.ListDIY(this.workflowId).then(function(response) {
+      this.$api.ListWorkflowFields(this.workflowId).then(function(response) {
         self.loading = false;
         self.diys = response.result;
       });
     },
-   
+
     deleteDIY(item) {
       let self = this;
       const index = this.diys.indexOf(item);
       confirm("确定要删除自定义项'" + item.field_name + "'吗?") &&
         this.$api.DeleteDIY(item.id).then(function(response) {
           self.$message.success("删除自定义项'" + item.field_name + "'成功!");
-          self.listTran();
+          self.listDIY();
         });
     },
-    addDIY() { this.$router.push("/workflow/newtran");}
+    addDIY() {
+      this.$router.push("/workflow/" + this.workflowId + "fields/new");
+    }
   }
 };
 </script>

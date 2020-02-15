@@ -43,3 +43,9 @@ export function WorkflowTransitions(id) {
     method: "get"
   });
 }
+export function ListWorkflowFields(id) {
+  return request({
+    url: "workflow/workflows/" + id + "/fields/",
+    method: "get"
+  });
+}

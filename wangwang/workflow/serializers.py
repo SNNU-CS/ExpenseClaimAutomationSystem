@@ -1,7 +1,8 @@
 from rest_framework import serializers
 
-from .models import CustomField, State, Transition, Workflow
 from utils.exceptions import WorkflowDoesNoeExist
+
+from .models import CustomField, State, Transition, Workflow
 
 
 class WorkflowSerializer(serializers.ModelSerializer):
@@ -55,6 +56,11 @@ class StateSerializer(serializers.ModelSerializer):
 
 
 class CustomFieldSerializer(serializers.ModelSerializer):
+    workflow = serializers.CharField(source='workflow.name', read_only=True)
+    sub_workflow = serializers.CharField(source='sub_workflow.name', read_only=True)
+    field_type = serializers.CharField(source="get_field_type_display", read_only=True)
+    creator = serializers.CharField(read_only=True, source="creator.username")
+
     class Meta:
         model = CustomField
         fields = '__all__'
@@ -65,6 +71,7 @@ class TransitionSerializer(serializers.ModelSerializer):
     destination_state = StateSerializer(read_only=True)
     attribute_type = serializers.CharField(source='get_attribute_type_display', read_only=True)
     workflow = serializers.CharField(source='workflow.name', read_only=True)
+
     class Meta:
         model = Transition
         fields = '__all__'

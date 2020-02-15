@@ -1,4 +1,4 @@
-from rest_framework import viewsets, generics
+from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -47,7 +47,7 @@ class WorkflowView(viewsets.ModelViewSet):
         ret = TransitionSerializer(queryset, many=True).data
         return Response(ret)
 
-    @action(detail=True, methods=['get'], url_path="custom_fields")
+    @action(detail=True, methods=['get'], url_path="fields")
     def get_custom_fields(self, request, pk=None):
         workflow = self.get_object()
         queryset = workflow.workflow_fields
