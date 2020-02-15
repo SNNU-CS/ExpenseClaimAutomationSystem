@@ -30,7 +30,6 @@ export default {
         { text: "名称", value: "name" },
         { text: "状态类型", value: "state_type" },
         { text: "状态顺序", value: "order" },
-        { text: "分配方式", value: "distribute_type" },
         { text: "参与者类型", value: "participant_type" },
         { text: "创建人", value: "creator" },
         { text: "参与者", value: "participant" },

@@ -1,4 +1,4 @@
-import request from "@/utils/request"; //
+import request from "@/utils/request";
 
 export function ListWorkflow() {
   return request({
@@ -47,5 +47,30 @@ export function ListWorkflowFields(id) {
   return request({
     url: "workflow/workflows/" + id + "/fields/",
     method: "get"
+  });
+}
+export function ListTran(id) {
+  return request({
+    url: "workflow/workflows/"+id+"/transitions/",
+    method: "get"
+  });
+}
+
+export function DeleteTran(id) {
+  return request({
+    url: "workflow/transitions/states/" + id + "/",
+    method: "delete"
+  });
+}
+export function ListDIY(id) {
+  return request({
+    url: "workflow/workflows/"+id+"/custom_fields/",
+    method: "get"
+  });
+}
+export function DeleteDIY(id) {
+  return request({
+    url: "workflow/custom_fields/states/" + id + "/",
+    method: "delete"
   });
 }

@@ -10,7 +10,7 @@
           <state-set></state-set>
         </v-tab-item>
         <v-tab-item>
-          <custom-field></custom-field>
+          <tran-set></tran-set>
         </v-tab-item>
         <v-tab-item>
           <custom-field></custom-field>
@@ -21,12 +21,16 @@
 </template>
 
 <script>
+//
 import StateSet from "./components/StateSet";
 import CustomField from "./components/CustomField";
+import TranSet from "./components/TranSet";
+
 export default {
   components: {
     "state-set": StateSet,
-    "custom-field": CustomField
+    "custom-field": CustomField,
+    "tran-set": TranSet
   },
   data() {
     return {};
