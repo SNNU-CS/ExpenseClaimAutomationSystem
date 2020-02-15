@@ -7,7 +7,7 @@ from utils.exceptions import InitStateNotConfig
 from .models import CustomField, State, Transition, Workflow
 from .serializers import (
     AddWorkflowStateSerializer, CreateWorkflowSerializer, CustomFieldDetailSerializer, CustomFieldSerializer,
-    StateSerializer, TransitionSerializer, WorkflowSerializer
+    StateSerializer, TransitionSerializer, WorkflowSerializer, CreateCustomFieldSerializer
 )
 
 
@@ -88,4 +88,13 @@ class CustomFieldView(viewsets.ModelViewSet):
     queryset = CustomField.objects.order_by('id')
 
     def get_serializer_class(self):
+        if self.action == 'create':
+            return CreateCustomFieldSerializer
         return super().get_serializer_class()
+
+    def create(self, request):
+        serializer = CreateCustomFieldSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.validated_data['creator'] = request.user
+        serializer.save()
+        return Response(serializer.data)

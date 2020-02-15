@@ -19,7 +19,7 @@ class WorkflowSerializer(serializers.ModelSerializer):
 class CreateWorkflowSerializer(serializers.ModelSerializer):
     class Meta:
         model = Workflow
-        fields = '__all__'
+        fields = ('name', 'description')
 
 
 class AddWorkflowStateSerializer(serializers.ModelSerializer):
@@ -82,4 +82,21 @@ class TransitionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Transition
+        fields = '__all__'
+
+
+class CreateCustomFieldSerializer(serializers.ModelSerializer):
+    workflow = serializers.IntegerField(write_only=True)
+
+    def validate_workflow(self, value):
+        obj = Workflow.objects.filter(pk=value).first()
+        if not obj:
+            raise WorkflowDoesNoeExist
+        return obj
+
+    def to_representation(self, obj):
+        return CustomFieldDetailSerializer(obj).data
+
+    class Meta:
+        model = CustomField
         fields = '__all__'

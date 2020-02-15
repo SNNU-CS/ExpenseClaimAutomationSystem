@@ -132,7 +132,6 @@ export default {
         params["sub_workflow"] = parseInt(this.workflowId);
       }
       let self = this;
-      console.log(params);
       if (this.$refs.form.validate()) {
         this.$api.CreateState(params).then(function(response) {
           self.$message.success("状态添加成功!");
