@@ -68,7 +68,7 @@ export default {
           self.listState();
         });
     },
-    addState() {}
+    addState() { this.$router.push("/workflow/newstate");}
   }
 };
 </script>

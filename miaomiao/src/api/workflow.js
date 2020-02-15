@@ -1,4 +1,4 @@
-import request from "@/utils/request";
+import request from "@/utils/request";//
 
 export function ListWorkflow() {
   return request({
@@ -28,5 +28,12 @@ export function DeleteState(id) {
   return request({
     url: "workflow/states/" + id + "/",
     method: "delete"
+  });
+}
+export function CreateState(params) {
+  return request({
+    url: "workflow/states/",
+    method: "post",
+    data: params
   });
 }
