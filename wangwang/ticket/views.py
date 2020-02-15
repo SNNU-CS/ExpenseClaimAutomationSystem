@@ -18,6 +18,18 @@ class TicketView(viewsets.ModelViewSet):
     queryset = TicketRecord.objects.all()
     serializer_class = TicketRecordSerializer
 
+    def get_queryset(self):
+        category = self.request.query_params.get('category', None)
+        queryset = TicketRecord.objects.all()
+        if category == 'owner':
+            print(123)
+            return queryset.filter(creator=self.request.user)
+        elif category == 'todo':
+            pass
+        elif category == 'all':
+            pass
+        return queryset
+
     def get_serializer_class(self):
         if self.action == 'deal_ticket':
             return DealTicketSerializer
