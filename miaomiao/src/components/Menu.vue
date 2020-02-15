@@ -94,12 +94,12 @@ export default {
           children: [
             {
               to: "/ticket/new",
-              icon: "mdi-add-outline",
+              icon: "mdi-pencil",
               text: "新建流程"
             },
             {
               to: "/ticket/my",
-              icon: "mdi-account-multiple",
+              icon: "mdi-timeline",
               text: "我创建的"
             },
             {
