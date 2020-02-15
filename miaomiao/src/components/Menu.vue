@@ -108,9 +108,9 @@ export default {
               text: "我待办的"
             },
             {
-              to: "/ticket/finish",
+              to: "/ticket/all",
               icon: "mdi-archive",
-              text: "已完成的"
+              text: "全部流程"
             }
           ]
         }

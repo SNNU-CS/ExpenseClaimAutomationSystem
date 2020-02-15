@@ -14,10 +14,11 @@ export function UploadTicketFile(files) {
     data: files
   });
 }
-export function ListTicket() {
+export function ListTicket(params) {
   return request({
     url: "workflow/tickets/",
-    method: "get"
+    method: "get",
+    params: params
   });
 }
 export function DeleteTicket(id) {

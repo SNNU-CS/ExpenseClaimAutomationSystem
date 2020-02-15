@@ -60,7 +60,12 @@ export default {
     listTicket() {
       let self = this;
       self.loading = true;
-      this.$api.ListTicket().then(function(response) {
+      // fxr friend
+      // 下面两行是刚加的筛选的
+      let params = {
+        category: "owner"
+      };
+      this.$api.ListTicket(params).then(function(response) {
         self.loading = false;
         self.tickets = response.result;
       });
