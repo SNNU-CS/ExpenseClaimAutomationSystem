@@ -64,7 +64,7 @@ class TransitionSerializer(serializers.ModelSerializer):
     source_state = StateSerializer(read_only=True)
     destination_state = StateSerializer(read_only=True)
     attribute_type = serializers.CharField(source='get_attribute_type_display', read_only=True)
-
+    workflow = serializers.CharField(source='workflow.name', read_only=True)
     class Meta:
         model = Transition
         fields = '__all__'

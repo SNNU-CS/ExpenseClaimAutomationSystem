@@ -1,4 +1,4 @@
-import request from "@/utils/request";//
+import request from "@/utils/request"; //
 
 export function ListWorkflow() {
   return request({
@@ -34,6 +34,12 @@ export function CreateState(params) {
   return request({
     url: "workflow/states/",
     method: "post",
-    data: params
+    data: paramsid
+  });
+}
+export function WorkflowTransitions(id) {
+  return request({
+    url: "workflow/workflows/" + id + "/transitions/",
+    method: "get"
   });
 }
