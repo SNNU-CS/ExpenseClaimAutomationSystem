@@ -3,10 +3,9 @@ from rest_framework import serializers
 from utils.exceptions import WorkflowDoesNoeExist
 from utils.service import CONSTANT_SERVICE
 from workflow.models import State, Workflow
-from workflow.serializers import StateSerializer, TransitionSerializer, WorkflowSerializer
+from workflow.serializers import CustomFieldSerializer, StateSerializer, TransitionSerializer, WorkflowSerializer
 
 from .models import TicketFile, TicketFlowLog, TicketRecord
-from workflow.serializers import CustomFieldSerializer
 
 
 class TicketRecordSerializer(serializers.ModelSerializer):

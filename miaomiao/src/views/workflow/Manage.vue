@@ -10,10 +10,10 @@
           <state-set></state-set>
         </v-tab-item>
         <v-tab-item>
-          <v-btn color="success">text</v-btn>
+          <custom-field></custom-field>
         </v-tab-item>
         <v-tab-item>
-          <v-btn color="success">text</v-btn>
+          <custom-field></custom-field>
         </v-tab-item>
       </v-tabs>
     </v-card-text>
@@ -22,9 +22,11 @@
 
 <script>
 import StateSet from "./components/StateSet";
+import CustomField from "./components/CustomField";
 export default {
   components: {
-    "state-set": StateSet
+    "state-set": StateSet,
+    "custom-field": CustomField
   },
   data() {
     return {};
