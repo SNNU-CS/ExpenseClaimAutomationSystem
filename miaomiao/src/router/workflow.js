@@ -1,8 +1,6 @@
 import Manage from "@/views/workflow/Manage.vue";
 import Workflow from "@/views/workflow/Workflow.vue";
-import NewState from "@/views/workflow/NewState.vue";
-import StateSet from "@/views/workflow/components/StateSet.vue";
-import EditWorkflow from "@/views/workflow/EditWorkflow.vue";
+import NewState from "@/views/workflow/components/NewState.vue";
 import NewWorkflow from "@/views/workflow/NewWorkflow.vue";
 export default [
   {
@@ -10,15 +8,7 @@ export default [
     component: Workflow
   },
   {
-    path: "workflow/edit/:id",
-    component: EditWorkflow
-  },
-  {
-    path: "workflow/StateSet",
-    component: StateSet
-  },
-  {
-    path: "workflow/newstate",
+    path: "workflow/:id/state/new",
     component: NewState
   },
   {
@@ -28,6 +18,5 @@ export default [
   {
     path: "workflow/manage/:id",
     component: Manage
-  },
-
+  }
 ];

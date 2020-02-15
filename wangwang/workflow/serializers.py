@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from .models import CustomField, State, Transition, Workflow
+from utils.exceptions import WorkflowDoesNoeExist
 
 
 class WorkflowSerializer(serializers.ModelSerializer):
@@ -21,9 +22,18 @@ class CreateWorkflowSerializer(serializers.ModelSerializer):
 
 
 class AddWorkflowStateSerializer(serializers.ModelSerializer):
+    workflow = serializers.IntegerField(write_only=True, required=True)
+
     class Meta:
         model = State
-        exclude = ('workflow', 'creator')
+        exclude = ('creator', )
+
+    def validate_workflow(self, value):
+
+        obj = Workflow.objects.filter(pk=value).first()
+        if not obj:
+            raise WorkflowDoesNoeExist
+        return obj
 
     def to_representation(self, obj):
         return StateSerializer(obj).data

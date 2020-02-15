@@ -10,7 +10,7 @@
     <v-card-text>
       <v-data-table :headers="headers" :items="states" sort-by="id" :search="search" :loading="loading">
         <template v-slot:item.action="{ item }">
-          <v-icon small color="warning" @click="editState(item)">mdi-pencil</v-icon>
+          <!-- <v-icon small color="warning" @click="editState(item)">mdi-pencil</v-icon> -->
           <v-icon color="red" small @click="deleteState(item)">mdi-delete</v-icon>
         </template>
       </v-data-table>
@@ -58,7 +58,6 @@ export default {
         self.states = response.result;
       });
     },
-    editState(item) {},
     deleteState(item) {
       let self = this;
       const index = this.states.indexOf(item);
@@ -68,7 +67,9 @@ export default {
           self.listState();
         });
     },
-    addState() { this.$router.push("/workflow/newstate");}
+    addState() {
+      this.$router.push("/workflow/" + this.workflowId + "/state/new");
+    }
   }
 };
 </script>

@@ -55,7 +55,7 @@ class WorkflowView(viewsets.ModelViewSet):
         return Response(ret)
 
 
-class StateView(viewsets.ReadOnlyModelViewSet, generics.CreateAPIView):
+class StateView(viewsets.ModelViewSet):
     http_method_names = ['get', 'post', 'put', 'delete', 'options']
     serializer_class = StateSerializer
     queryset = State.objects.order_by('id')
@@ -66,11 +66,9 @@ class StateView(viewsets.ReadOnlyModelViewSet, generics.CreateAPIView):
         return super().get_serializer_class()
 
     def create(self, request):
-        workflow = self.get_object()
         serializer = AddWorkflowStateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.validated_data['creator'] = request.user
-        serializer.validated_data['workflow'] = workflow
         serializer.save()
         return Response(serializer.data)
 
