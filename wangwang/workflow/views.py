@@ -6,8 +6,8 @@ from utils.exceptions import InitStateNotConfig
 
 from .models import CustomField, State, Transition, Workflow
 from .serializers import (
-    AddWorkflowStateSerializer, CreateWorkflowSerializer, CustomFieldDetailSerializer, CustomFieldSerializer,
-    StateSerializer, TransitionSerializer, WorkflowSerializer, CreateCustomFieldSerializer, CreateTransitionSerializer
+    AddWorkflowStateSerializer, CreateCustomFieldSerializer, CreateTransitionSerializer, CreateWorkflowSerializer,
+    CustomFieldDetailSerializer, CustomFieldSerializer, StateSerializer, TransitionSerializer, WorkflowSerializer
 )
 
 

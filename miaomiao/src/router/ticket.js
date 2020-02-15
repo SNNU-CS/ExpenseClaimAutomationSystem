@@ -15,7 +15,7 @@ export default [
     component: MyTicket
   },
   {
-    path: "ticket/finish",
+    path: "ticket/all",
     component: MyTicket
   },
   {
