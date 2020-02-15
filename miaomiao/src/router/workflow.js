@@ -4,6 +4,7 @@ import NewState from "@/views/workflow/components/NewState.vue";
 import NewWorkflow from "@/views/workflow/NewWorkflow.vue";
 import FlowChart from "@/views/workflow/FlowChart.vue";
 import NewField from "@/views/workflow/components/NewField.vue";
+import NewTran from "@/views/workflow/components/NewTran.vue";
 export default [
   {
     path: "workflow",
@@ -25,10 +26,10 @@ export default [
     path: "workflow/:id/flow-chart",
     component: FlowChart
   },
-  // {
-  //   path: "workflow/:id/trans/new",
-  //   component: NewState
-  // },
+  {
+    path: "workflow/:id/trans/new",
+    component: NewTran
+  },
   {
     path: "workflow/:id/fields/new",
     component: NewField
