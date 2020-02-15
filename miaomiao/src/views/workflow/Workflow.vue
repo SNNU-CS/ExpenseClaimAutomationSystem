@@ -14,7 +14,7 @@
           <v-icon color="red" small @click="deleteWorkflow(item)">mdi-delete</v-icon>
         </template>
         <template v-slot:item.flowchart="{ item }">
-          <v-btn color="info" @click="see(item)">查看</v-btn>
+          <v-btn color="info" @click="showChart(item)">查看</v-btn>
         </template>
       </v-data-table>
     </v-card-text>
@@ -68,6 +68,9 @@ export default {
           self.$message.success("删除工作流'" + item.name + "'成功!");
           self.listWorkflow();
         });
+    },
+    showChart(item) {
+      this.$router.push('/workflow/'+item.id+"/flow-chart")
     }
   }
 };
