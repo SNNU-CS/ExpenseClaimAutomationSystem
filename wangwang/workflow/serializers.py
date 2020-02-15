@@ -85,6 +85,23 @@ class TransitionSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class CreateTransitionSerializer(serializers.ModelSerializer):
+    workflow = serializers.IntegerField(write_only=True)
+
+    def validate_workflow(self, value):
+        obj = Workflow.objects.filter(pk=value).first()
+        if not obj:
+            raise WorkflowDoesNoeExist
+        return obj
+
+    def to_representation(self, obj):
+        return TransitionSerializer(obj).data
+
+    class Meta:
+        model = Transition
+        fields = '__all__'
+
+
 class CreateCustomFieldSerializer(serializers.ModelSerializer):
     workflow = serializers.IntegerField(write_only=True)
 
