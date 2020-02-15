@@ -56,6 +56,12 @@ class StateSerializer(serializers.ModelSerializer):
 
 
 class CustomFieldSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomField
+        fields = '__all__'
+
+
+class CustomFieldDetailSerializer(serializers.ModelSerializer):
     workflow = serializers.CharField(source='workflow.name', read_only=True)
     sub_workflow = serializers.CharField(source='sub_workflow.name', read_only=True)
     field_type = serializers.CharField(source="get_field_type_display", read_only=True)
@@ -70,7 +76,9 @@ class TransitionSerializer(serializers.ModelSerializer):
     source_state = StateSerializer(read_only=True)
     destination_state = StateSerializer(read_only=True)
     attribute_type = serializers.CharField(source='get_attribute_type_display', read_only=True)
+    transition_type = serializers.CharField(source="get_transition_type_display", read_only=True)
     workflow = serializers.CharField(source='workflow.name', read_only=True)
+    creator = serializers.CharField(read_only=True, source="creator.username")
 
     class Meta:
         model = Transition
