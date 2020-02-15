@@ -103,7 +103,7 @@ class TicketView(viewsets.ModelViewSet):
     def get_steps(self, request, pk=None):
         ticket = self.get_object()
         steps = StateSerializer(ticket.workflow.workflow_states.order_by('order'), many=True).data
-        ret = {'index': 3, 'steps': steps}
+        ret = {'index': ticket.state, 'steps': steps}
         return Response(ret)
 
     @action(detail=False, methods=['post'], url_path="upload")
