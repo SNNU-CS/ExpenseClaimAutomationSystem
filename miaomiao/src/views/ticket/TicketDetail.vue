@@ -263,7 +263,7 @@ export default {
       let self = this;
       this.$api.TicketStep(this.ticketId).then(function(response) {
         self.steps = response.result.steps;
-        self.stepp = response.result.index;
+        self.stepp = response.result.index + 1;
       });
     },
     dealTicket(transId) {
