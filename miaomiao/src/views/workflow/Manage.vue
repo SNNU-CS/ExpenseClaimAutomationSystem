@@ -1,7 +1,10 @@
 <template>
   <v-card>
+    <v-card-title primary-title>
+      <v-btn @click="showChart" text color="info">查看流程图</v-btn>
+    </v-card-title>
     <v-card-text>
-      <v-tabs grow icons-and-text>
+      <v-tabs grow icons-and-text dense>
         <v-tabs-slider></v-tabs-slider>
         <v-tab>状态管理<v-icon>mdi-phone</v-icon> </v-tab>
         <v-tab>流转配置<v-icon>mdi-phone</v-icon> </v-tab>
@@ -21,7 +24,6 @@
 </template>
 
 <script>
-//
 import StateSet from "./components/StateSet";
 import CustomField from "./components/CustomField";
 import TranSet from "./components/TranSet";
@@ -33,9 +35,15 @@ export default {
     "tran-set": TranSet
   },
   data() {
-    return {};
+    return {
+      workflowId: this.$route.params.id
+    };
   },
-  methods: {}
+  methods: {
+    showChart() {
+      this.$router.push("/workflow/" + this.workflowId + "/flow-chart");
+    }
+  }
 };
 </script>
 
