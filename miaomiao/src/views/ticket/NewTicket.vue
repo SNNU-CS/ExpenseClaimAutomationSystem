@@ -184,9 +184,9 @@ export default {
         case 1:
           return "number";
         case 3:
-          return "time";
+          return "date";
         case 4:
-          return "datetime";
+          return "datetime-local";
       }
     },
     upload(item) {
