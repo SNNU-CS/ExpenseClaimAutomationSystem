@@ -67,9 +67,9 @@ class User(AbstractBaseUser):
     def authenticate(self, password):
         return self.check_password(password)
 
-    def delete(self):
-        self.is_active = False
-        self.save(update_fields=['is_active'])
+    # def delete(self):
+    #     self.is_active = False
+    #     self.save(update_fields=['is_active'])
 
     class Meta:
         ordering = ['username']
