@@ -30,7 +30,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn @click="login()" color="primary">登录</v-btn>
+                <v-btn @click="login()" :disabled="loading" :loading="loading" color="primary">登录</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -48,8 +48,17 @@ export default {
     username: "",
     password: "",
     nameRules: [(v) => !!v || "用户名是必填项", (v) => (v && v.length <= 10) || "用户名长度不能超过10字符"],
-    passwordRules: [(v) => !!v || "密码是必填项"]
+    passwordRules: [(v) => !!v || "密码是必填项"],
+    loading: false
   }),
+  mounted() {
+    let self = this;
+    document.onkeydown = function(e) {
+      if (e.code == "Enter" || e.code == "enter") {
+        self.login();
+      }
+    };
+  },
   methods: {
     login() {
       let self = this;
@@ -58,16 +67,23 @@ export default {
         password: this.password
       };
       if (this.$refs.form.validate()) {
-        this.$api.Login(parms).then(function(response) {
-          let result = response.result;
-          localStorage.Token = result.token;
-          localStorage.username = result.user.username;
-          localStorage.avatar = result.user.avatar;
-          let name = result.user.full_name;
-          self.$message.success("登录成功!欢迎回来," + result.user.organization.org_name + "的" + name + "!");
-          let redirect = decodeURIComponent(self.$router.currentRoute.query.redirect || "/");
-          router.push(redirect);
-        });
+        self.loading = true;
+        this.$api
+          .Login(parms)
+          .then(function(response) {
+            self.loading = false;
+            let result = response.result;
+            localStorage.Token = result.token;
+            localStorage.username = result.user.username;
+            localStorage.avatar = result.user.avatar;
+            let name = result.user.full_name;
+            self.$message.success("登录成功!欢迎回来," + result.user.organization.org_name + "的" + name + "!");
+            let redirect = decodeURIComponent(self.$router.currentRoute.query.redirect || "/");
+            router.push(redirect);
+          })
+          .catch((error) => {
+            self.loading = false;
+          });
       }
     }
   }
