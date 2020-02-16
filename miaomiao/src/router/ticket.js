@@ -1,6 +1,8 @@
 import NewTicket from "@/views/ticket/NewTicket.vue";
 import MyTicket from "@/views/ticket/MyTicket.vue";
 import TicketDetail from "@/views/ticket/TicketDetail.vue";
+import Working from "@/views/ticket/Working.vue";
+import Finish from "@/views/ticket/Finish.vue";
 export default [
   {
     path: "ticket/new",
@@ -12,11 +14,11 @@ export default [
   },
   {
     path: "ticket/working",
-    component: MyTicket
+    component: Working
   },
   {
     path: "ticket/all",
-    component: MyTicket
+    component: Finish
   },
   {
     path: "ticket/detail/:id",
