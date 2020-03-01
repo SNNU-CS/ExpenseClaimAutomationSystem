@@ -3,7 +3,7 @@ LABEL maintainer="zhaoqi99@outlook.com"
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-    postgresql-client gettext 
+    postgresql-client gettext vim
 
 RUN mkdir -p /usr/src/wangwang
 WORKDIR /usr/src/wangwang
