@@ -1,10 +1,9 @@
-FROM python:3.6
+FROM python:3.6-slim
 LABEL maintainer="zhaoqi99@outlook.com"
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-    postgresql-client gettext \
-    && rm -rf /var/lib/apt/lists/*
+    postgresql-client gettext 
 
 RUN mkdir -p /usr/src/wangwang
 WORKDIR /usr/src/wangwang
