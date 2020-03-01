@@ -57,6 +57,8 @@ class MyMiddleware:
         # Todo auth role
         if request.path.startswith('/admin') or request.path == '/api/account/login/':
             return None
+        if request.path.startswith('/static'):
+            return None
         if settings.DEBUG is True and not request.path.startswith('/api/workflow/'):
             return None
         try:
