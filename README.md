@@ -139,9 +139,9 @@ yapf --recursive -i .
 
 - 作者:
 
-  - Qi Zhao([zhaoqi99@outlook.com](mailto:zhaoqi99@outlook.com))
-  - Xiangrong Feng
-  - Xuying Meng
-  - Yali Chen
+  - [Qi Zhao]()([zhaoqi99@outlook.com](mailto:zhaoqi99@outlook.com))
+  - [Xuying Meng](https://github.com/Icey116)
+  - [Xiangrong Feng](https://github.com/FengXiangrong) 
+  - [Yali Chen](https://github.com/cylhappy)
 
 - 开源协议:[GNU General Public License v3.0](https://github.com/snnucs/ExpenseClaimAutomationSystem/blob/master/LICENSE)
